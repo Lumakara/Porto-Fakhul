@@ -15,9 +15,8 @@ The core portfolio UI redesign and the comprehensive Motion Design Audit are com
 - **New Components:** Built a seamless, pure-CSS `Marquee.tsx` component and a cinematic `Preloader.tsx`.
 
 ## Pending Tasks
-- **Performance Optimization:** Implement React.lazy() / Code Splitting for modals and heavy sections.
-- **Backend Integration:** Wire up the Contact form to a real email delivery service (e.g., Resend, Formspree).
-- **SEO & Metadata:** Add comprehensive `<meta>` tags, OpenGraph images, and semantic structured data.
+- **WebGL / 3D Canvas:** Consider adding a lightweight Three.js/React Three Fiber background to the Hero section to solidify the "Creative Developer" branding.
+- **Custom 404 Page:** Design a premium 'Not Found' page matching the site's aesthetic.
 - **Assets:** Ensure all imported images/videos (if any are added) are highly compressed and responsive.
 
 ## Architecture Decisions
@@ -36,6 +35,6 @@ The core portfolio UI redesign and the comprehensive Motion Design Audit are com
 - `src/index.css` (Updated with new variables and utilities)
 
 ## Next Priorities
-1. Performance audit via Lighthouse to hit 90+ targets.
-2. Implement lazy-loading for off-screen components.
-3. Hook up the contact form to a live serverless function.
+1. Build custom WebGL/Three.js hero background or 3D elements.
+2. Design custom 404 page.
+3. Prepare repository for deployment (e.g., Vercel, Netlify).
