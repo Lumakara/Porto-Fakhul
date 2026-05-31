@@ -138,7 +138,7 @@ Creating meaningful solutions and experiences with precision, innovation, and pu
         transition={{ duration: 1.4, delay: 2.1, ease: premiumEase }}
         className="absolute bottom-0 left-0 right-0 z-10 border-t border-charcoal/5"
       >
-        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 divide-x divide-charcoal/5">
+        <div className="max-w-6xl mx-auto w-full grid md:grid-cols-3 divide-x divide-charcoal/5">
           {stats.map((stat, idx) => (
             <div
               key={stat.label}
