@@ -6,13 +6,13 @@ interface PreloaderProps {
 }
 
 const statusReadouts = [
-  'INITIALIZING...',
-  'LOADING ASSETS...',
-  'PREPARING TYPOGRAPHY...',
-  'CALCULATING LAYOUTS...',
-  'REFINING DETAILS...',
-  'ALMOST THERE...',
-  'READY.'
+  'HALO KAMU...',
+  'IYA, KAMU YANG LAGI NUNGGU...',
+  'MAKASIH UDAH MAMPIR...',
+  'AKU LAGI NATA-NATA DULU...',
+  'BIAR KELIHATAN RAPI...',
+  'JANGAN KEMANA-MANA...',
+  'UDAH SIAP NIH!'
 ];
 
 export const Preloader = ({ onComplete }: PreloaderProps) => {
@@ -145,13 +145,13 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
 
           {/* Top/Bottom borders */}
           <div className="absolute top-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-charcoal-light z-[100001] select-none pointer-events-none">
-            <span>TOKYO, JAPAN</span>
-            <span>PORTFOLIO 2026</span>
+            <span>Depok, Jawa Barat</span>
+            <span>Profile Saya</span>
           </div>
 
           <div className="absolute bottom-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-charcoal-light z-[100001] select-none pointer-events-none">
-            <span>SORA TAKAHASHI</span>
-            <span>CREATIVE DEVELOPER</span>
+            <span>Fakhul Rohman Nurokhim</span>
+            <span>Masih Loading Yakkk...</span>
           </div>
         </div>
       )}

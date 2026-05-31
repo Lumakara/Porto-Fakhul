@@ -138,7 +138,7 @@ Creating meaningful solutions and experiences with precision, innovation, and pu
         transition={{ duration: 1.4, delay: 2.1, ease: premiumEase }}
         className="absolute bottom-0 left-0 right-0 z-10 border-t border-charcoal/5"
       >
-        <div className="max-w-6xl mx-auto w-full grid grid-cols-2 md:grid-cols-3 divide-x divide-charcoal/5">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 divide-x divide-charcoal/5">
           {stats.map((stat, idx) => (
             <div
               key={stat.label}
@@ -160,7 +160,7 @@ Creating meaningful solutions and experiences with precision, innovation, and pu
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 3.0, duration: 0.8 }}
-        className="absolute bottom-28 md:bottom-32 z-10 flex flex-col items-center space-y-2 cursor-none select-none"
+        className="absolute bottom-22 md:bottom-27 z-10 flex flex-col items-center space-y-2 cursor-none select-none"
         onClick={handleScrollDown}
         data-cursor="magnetic"
       >

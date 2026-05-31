@@ -78,8 +78,8 @@ export const Navbar = () => {
               <div className="absolute inset-0 rounded-full border border-sakura/10 animate-ping group-hover:border-cyber/20" />
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-black text-white tracking-widest font-display">桜未来</span>
-              <span className="text-[8px] font-hud tracking-[0.2em] text-cyber/80 group-hover:text-sakura/80 transition-colors duration-300">SAKURA.SYS</span>
+              <span className="text-sm font-black text-white tracking-widest font-display">Icon</span>
+              <span className="text-[8px] font-hud tracking-[0.2em] text-cyber/80 group-hover:text-sakura/80 transition-colors duration-300">Profile Fakhul</span>
             </div>
           </button>
 
