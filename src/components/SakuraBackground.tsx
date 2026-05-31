@@ -27,9 +27,11 @@ export const SakuraBackground = () => {
     let animationId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
+    
+    const isMobile = width < 768;
 
     // Dynamic petal count based on screen width (fewer on mobile to save battery)
-    const maxPetals = width < 768 ? 35 : 75;
+const maxPetals = width < 768 ? 15 : 40;
     const petals: Petal[] = [];
 
     const colors = [
@@ -41,7 +43,7 @@ export const SakuraBackground = () => {
 
     // Helper to generate a new petal
     const createPetal = (isInitial = false): Petal => {
-      const size = Math.random() * 8 + 4;
+const size = Math.random() * 6 + 3;
       return {
         x: Math.random() * width,
         // If initial, scatter across the screen; otherwise, spawn just above the top border
@@ -74,10 +76,16 @@ export const SakuraBackground = () => {
       mouseRef.current.targetX = e.clientX;
       mouseRef.current.targetY = e.clientY;
     };
-    window.addEventListener('mousemove', handleMouseMove);
+if (!isMobile) {
+  window.addEventListener('mousemove', handleMouseMove);
+}
 
     // Render loop
-    const animate = () => {
+const animate = () => {
+  if (isPaused) {
+    animationId = requestAnimationFrame(animate);
+    return;
+  }
       ctx.clearRect(0, 0, width, height);
 
       // Smooth mouse coordinates tracking (damping/easing)
@@ -100,7 +108,7 @@ export const SakuraBackground = () => {
 
         ctx.fillStyle = `${p.color}${p.opacity})`;
         ctx.shadowColor = 'rgba(255, 117, 151, 0.4)';
-        ctx.shadowBlur = 4;
+        ctx.shadowBlur = 1;
         ctx.fill();
         ctx.restore();
 
@@ -116,14 +124,13 @@ export const SakuraBackground = () => {
         const distance = Math.sqrt(dx * dx + dy * dy);
         const repelRadius = 140; // Pixels surrounding mouse that pushes petals
 
-        if (distance < repelRadius) {
-          const force = (repelRadius - distance) / repelRadius; // 0 to 1
-          const angle = Math.atan2(dy, dx);
-          
-          // Apply horizontal and vertical repulsion forces
-          p.x += Math.cos(angle) * force * 4;
-          p.y += Math.sin(angle) * force * 4;
-        }
+if (!isMobile && distance < repelRadius) {
+  const force = (repelRadius - distance) / repelRadius;
+  const angle = Math.atan2(dy, dx);
+
+  p.x += Math.cos(angle) * force * 4;
+  p.y += Math.sin(angle) * force * 4;
+}
 
         // Recycle petals that drift out of bounds
         if (p.y > height + 20 || p.x > width + 20 || p.x < -20) {
@@ -135,12 +142,27 @@ export const SakuraBackground = () => {
     };
 
     animate();
+return () => {
+  window.removeEventListener('resize', handleResize);
+  if (!isMobile) {
+    window.removeEventListener('mousemove', handleMouseMove);
+  }
+  document.removeEventListener(
+    'visibilitychange',
+    handleVisibilityChange
+  );
+  cancelAnimationFrame(animationId);
+};
+let isPaused = false;
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      cancelAnimationFrame(animationId);
-    };
+const handleVisibilityChange = () => {
+  isPaused = document.hidden;
+};
+
+document.addEventListener(
+  'visibilitychange',
+  handleVisibilityChange
+);
   }, []);
 
   return (

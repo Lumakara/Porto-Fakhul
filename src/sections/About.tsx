@@ -43,9 +43,9 @@ export const About = () => {
               transition={{ duration: 1.4, delay: 0.1, ease: premiumEase }}
               className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-charcoal tracking-tight leading-[0.95]"
             >
-              Sora
+              Fakhul
               <br />
-              <span className="italic font-light text-charcoal-light">Takahashi</span>
+              <span className="italic font-light text-charcoal-light">Rohman</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
