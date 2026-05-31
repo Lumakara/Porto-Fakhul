@@ -44,7 +44,7 @@ export const About = () => {
               className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-charcoal tracking-tight leading-[0.95]"
             >
               Fakhul
-              <br />
+              <br kon />
               <span className="italic font-light text-charcoal-light">Rohman</span>
             </motion.h2>
             <motion.p
@@ -54,7 +54,7 @@ export const About = () => {
               transition={{ delay: 0.2, duration: 1.2, ease: premiumEase }}
               className="text-sm text-charcoal-light font-hud tracking-wider uppercase mt-4"
             >
-              Web Dev | Garphic & Video Editor | Quality Controll
+              Web Dev <br|/> Editing <br|/> Quality Controll
             </motion.p>
           </div>
 
@@ -67,10 +67,7 @@ export const About = () => {
               transition={{ delay: 0.3, duration: 1.2, ease: premiumEase }}
               className="text-base md:text-lg text-charcoal-light font-sans leading-relaxed"
             >
-              I'm a creative developer based in Tokyo with 6+ years of experience 
-              building award-worthy web experiences. I combine meticulous frontend 
-              architecture with expressive motion design to create interfaces that 
-              don't just function — they <em className="text-charcoal not-italic font-semibold">leave a lasting impression</em>.
+              Lulusann SMK Jurusan Aktuntansi dengan pengalaman praktik kerja di bidang <em className="text-charcoal not-italic font-semibold">Finishing & Teknologi</em>. Memiliki kemampuan dalam Teknologi, Design, dan perawatan dasar mesin. Terbiasa bekerja secara teliti, disiplin dan berorientasi pada hasil untuk memastikan semua  sesuai dengan standar perusahaan.
             </motion.p>
 
             {/* Quick info pills */}
@@ -83,15 +80,15 @@ export const About = () => {
             >
               <div className="flex items-center space-x-2 bg-white border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
                 <MapPin className="w-3.5 h-3.5 text-terracotta" />
-                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">Tokyo, Japan</span>
+                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">Depok, Jawa Barat</span>
               </div>
               <div className="flex items-center space-x-2 bg-white border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
                 <Briefcase className="w-3.5 h-3.5 text-sage" />
-                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">6+ Years</span>
+                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">2+ Years</span>
               </div>
               <div className="flex items-center space-x-2 bg-white border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
                 <Cpu className="w-3.5 h-3.5 text-charcoal-light" />
-                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">React · TypeScript · GSAP</span>
+                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">Adaptability & Flexibility</span>
               </div>
             </motion.div>
           </div>
