@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Magnetic } from '../components/Magnetic';
-import { premiumEase, springEase } from '../components/Section';
+import { premiumEase } from '../components/Section';
 import { WebGLBackground } from '../components/WebGLBackground';
 
 // Animated counter hook
@@ -26,14 +26,16 @@ const useCounter = (target: number, duration: number = 2000, delay: number = 0) 
 };
 
 const stats = [
-  { value: 2, suffix: '+', label: 'YEARS EXP' },
-  { value: 15, suffix: '+', label: 'ORGANIZATION' },
+  { suffix: '+', label: 'YEARS EXP' },
+  { suffix: '+', label: 'ORGANIZATIONS' },
+  { suffix: '+', label: 'PROJECTS'},
 ];
 
 export const Hero = () => {
   const years = useCounter(2, 1800, 2200);
-  const Organization = useCounter(15, 2000, 2400);
-  const counters = [years, Organization];
+  const organization = useCounter(15, 2000, 2400);
+  const projects = useCounter(7, 2300, 2600);
+  const counters = [years, organization, projects];
 
   const handleScrollDown = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
@@ -136,7 +138,7 @@ Creating meaningful solutions and experiences with precision, innovation, and pu
         transition={{ duration: 1.4, delay: 2.1, ease: premiumEase }}
         className="absolute bottom-0 left-0 right-0 z-10 border-t border-charcoal/5"
       >
-        <div className="max-w-6xl mx-auto w-full grid grid-cols-2 md:grid-cols-2 divide-x divide-charcoal/5">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-2 md:grid-cols-3 divide-x divide-charcoal/5">
           {stats.map((stat, idx) => (
             <div
               key={stat.label}
