@@ -26,18 +26,14 @@ const useCounter = (target: number, duration: number = 2000, delay: number = 0) 
 };
 
 const stats = [
-  { value: 6, suffix: '+', label: 'YEARS EXP' },
-  { value: 40, suffix: '+', label: 'PROJECTS' },
-  { value: 15, suffix: '+', label: 'CLIENTS' },
-  { value: 99, suffix: '%', label: 'ON TIME' },
+  { value: 2, suffix: '+', label: 'YEARS EXP' },
+  { value: 15, suffix: '+', label: 'ORGANIZATION' },
 ];
 
 export const Hero = () => {
-  const years = useCounter(6, 1800, 2200);
-  const projects = useCounter(40, 2000, 2400);
-  const clients = useCounter(15, 1800, 2600);
-  const ontime = useCounter(99, 2200, 2800);
-  const counters = [years, projects, clients, ontime];
+  const years = useCounter(2, 1800, 2200);
+  const Organization = useCounter(15, 2000, 2400);
+  const counters = [years, Organization];
 
   const handleScrollDown = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
@@ -56,22 +52,6 @@ export const Hero = () => {
 
       {/* Main content — centered */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 pt-28 pb-40 max-w-6xl mx-auto w-full">
-        
-        {/* Availability pill */}
-        <motion.div
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.6, ease: springEase }}
-          className="flex items-center space-x-2.5 bg-white border border-charcoal/10 px-5 py-2 rounded-full mb-10 shadow-sm"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-sage" />
-          </span>
-          <span className="text-[10px] md:text-xs font-hud text-charcoal-light font-medium tracking-widest uppercase">
-            Available for work — 2026
-          </span>
-        </motion.div>
 
         {/* Kicker */}
         <motion.span
@@ -80,7 +60,7 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 0.8, ease: premiumEase }}
           className="text-[10px] md:text-xs font-hud text-terracotta tracking-[0.4em] uppercase mb-6 block"
         >
-          [ Creative Developer & Motion Designer ]
+[ DESIGN • TECHNOLOGY • INNOVATION ]
         </motion.span>
 
         {/* Giant Headline */}
@@ -91,7 +71,7 @@ export const Hero = () => {
             transition={{ duration: 1.4, delay: 1.0, ease: premiumEase }}
             className="text-fluid-hero-sm font-display italic text-charcoal-light tracking-tight block transform-style-3d"
           >
-            I Build
+            Where
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
@@ -99,7 +79,7 @@ export const Hero = () => {
             transition={{ duration: 1.6, delay: 1.15, ease: premiumEase }}
             className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
-            Digital
+            Creativity
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
@@ -107,7 +87,7 @@ export const Hero = () => {
             transition={{ duration: 1.6, delay: 1.3, ease: premiumEase }}
             className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
-            Experiences
+            Meets Technology
           </motion.span>
         </h1>
 
@@ -118,7 +98,7 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 1.5, ease: premiumEase }}
           className="text-sm md:text-base lg:text-lg text-charcoal-light max-w-2xl font-sans leading-relaxed mt-8 md:mt-10"
         >
-          Crafting premium interfaces, creative motion systems & immersive web experiences from Tokyo.
+Creating meaningful solutions and experiences with precision, innovation, and purpose.
         </motion.p>
 
         {/* CTAs */}
@@ -128,7 +108,7 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 1.7, ease: premiumEase }}
           className="flex flex-wrap items-center justify-center gap-6 mt-10"
         >
-          <Magnetic range={0.3}>
+          <Magnetic range={0.15}>
             <button
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               className="group relative cursor-none bg-charcoal text-sand font-hud text-xs tracking-widest px-10 py-4.5 rounded-full overflow-hidden transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-terracotta"
@@ -156,7 +136,7 @@ export const Hero = () => {
         transition={{ duration: 1.4, delay: 2.1, ease: premiumEase }}
         className="absolute bottom-0 left-0 right-0 z-10 border-t border-charcoal/5"
       >
-        <div className="max-w-6xl mx-auto w-full grid grid-cols-2 md:grid-cols-4 divide-x divide-charcoal/5">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-2 md:grid-cols-2 divide-x divide-charcoal/5">
           {stats.map((stat, idx) => (
             <div
               key={stat.label}
