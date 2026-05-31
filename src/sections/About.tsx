@@ -54,7 +54,7 @@ export const About = () => {
               transition={{ delay: 0.2, duration: 1.2, ease: premiumEase }}
               className="text-sm text-charcoal-light font-hud tracking-wider uppercase mt-4"
             >
-              Creative Frontend Architect
+              Web Dev | Garphic & Video Editor | Quality Controll
             </motion.p>
           </div>
 
