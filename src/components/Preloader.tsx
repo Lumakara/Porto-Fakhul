@@ -6,14 +6,13 @@ interface PreloaderProps {
 }
 
 const statusReadouts = [
-  'INITIALIZING SYSTEM ARCHITECTURE...',
-  'CONNECTING CYBER UPLINK...',
-  'RENDERING NEON AURORAS...',
-  'INJECTING FLUENT LENIS ENGINE...',
-  'COMPILING SAKURA BLOSSOM SIMULATOR...',
-  'CALCULATING GRAVITATIONAL DRIFT...',
-  'POLISHING GLASSMORPHIC SURFACES...',
-  'BOOT SEQUENCE SECURE. WELCOME.'
+  'INITIALIZING...',
+  'LOADING ASSETS...',
+  'PREPARING TYPOGRAPHY...',
+  'CALCULATING LAYOUTS...',
+  'REFINING DETAILS...',
+  'ALMOST THERE...',
+  'READY.'
 ];
 
 export const Preloader = ({ onComplete }: PreloaderProps) => {
@@ -86,24 +85,21 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
         <div className="fixed inset-0 z-[99999] overflow-hidden flex flex-col justify-between font-hud">
           {/* Upper Curtain */}
           <motion.div 
-            className="absolute top-0 left-0 w-full h-[50.5%] bg-space-black border-b border-sakura/10 flex flex-col justify-end items-center pb-8"
+            className="absolute top-0 left-0 w-full h-[50.5%] bg-sand border-b border-charcoal/5 flex flex-col justify-end items-center pb-8"
             variants={upperCurtainVariants}
             exit="exit"
           />
 
           {/* Lower Curtain */}
           <motion.div 
-            className="absolute bottom-0 left-0 w-full h-[50.5%] bg-space-black border-t border-sakura/10 flex flex-col justify-start items-center pt-8"
+            className="absolute bottom-0 left-0 w-full h-[50.5%] bg-sand border-t border-charcoal/5 flex flex-col justify-start items-center pt-8"
             variants={lowerCurtainVariants}
             exit="exit"
           />
 
-          {/* Glowing Grid Overlay */}
-          <div className="absolute inset-0 cyber-grid opacity-15 pointer-events-none" />
-          
           {/* Floating auroras */}
-          <div className="absolute top-[20%] left-[20%] w-[300px] h-[300px] bg-sakura/5 rounded-full blur-[100px] pointer-events-none" />
-          <div className="absolute bottom-[20%] right-[20%] w-[300px] h-[300px] bg-cyber/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute top-[20%] left-[20%] w-[300px] h-[300px] bg-terracotta/5 rounded-full blur-[100px] pointer-events-none" />
+          <div className="absolute bottom-[20%] right-[20%] w-[300px] h-[300px] bg-sage/5 rounded-full blur-[100px] pointer-events-none" />
 
           {/* Foreground content - needs absolute positioning in the screen center */}
           <motion.div 
@@ -111,51 +107,51 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
             variants={contentVariants}
             exit="exit"
           >
-            {/* Japanese Logo */}
+            {/* Logo */}
             <div className="mb-8 relative">
-              <span className="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sakura via-violet to-cyber tracking-[0.25em] pl-[0.25em] uppercase text-glow-sakura select-none">
-                桜未来
+              <span className="text-4xl md:text-5xl font-display font-medium text-charcoal tracking-[0.25em] pl-[0.25em] uppercase select-none">
+                SORA
               </span>
-              <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.5em] text-cyber font-medium select-none uppercase opacity-80">
-                Sakura Future
+              <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.5em] text-charcoal-light font-medium select-none uppercase opacity-80">
+                Portfolio 2026
               </span>
             </div>
 
-            {/* Glowing Main Counter */}
+            {/* Main Counter */}
             <div className="relative mb-6">
-              <span className="text-8xl md:text-9xl font-extrabold text-white tracking-tighter select-none tabular-nums text-glow-sakura">
+              <span className="text-8xl md:text-9xl font-display font-semibold text-charcoal tracking-tighter select-none tabular-nums">
                 {progress.toString().padStart(3, '0')}
               </span>
-              <span className="absolute -top-1 -right-4 text-xs font-bold text-cyber uppercase">
-                SYS_BOOT
+              <span className="absolute -top-1 -right-4 text-xs font-hud text-terracotta uppercase tracking-widest">
+                INIT
               </span>
             </div>
 
             {/* Status readouts with indicator */}
             <div className="max-w-[400px] w-full flex flex-col items-center">
-              <div className="w-full bg-space-card border border-glass-border h-[4px] rounded-full overflow-hidden mb-4 p-[1px]">
+              <div className="w-full bg-charcoal/5 border border-charcoal/5 h-[4px] rounded-full overflow-hidden mb-4 p-[1px]">
                 <motion.div 
-                  className="bg-gradient-to-r from-sakura to-cyber h-full rounded-full" 
+                  className="bg-charcoal h-full rounded-full" 
                   style={{ width: `${progress}%` }}
                 />
               </div>
               
-              <div className="flex items-center space-x-2 text-[10px] text-gray-400 select-none tracking-widest uppercase font-medium h-[15px]">
-                <span className="w-1.5 h-1.5 bg-cyber rounded-full animate-ping" />
+              <div className="flex items-center space-x-2 text-[10px] text-charcoal-light select-none tracking-widest uppercase font-medium h-[15px] font-hud">
+                <span className="w-1.5 h-1.5 bg-terracotta rounded-full animate-ping" />
                 <span>{statusReadouts[statusIdx]}</span>
               </div>
             </div>
           </motion.div>
 
-          {/* Top/Bottom Cyber borders */}
-          <div className="absolute top-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-gray-500 z-[100001] select-none pointer-events-none">
-            <span>UPLINK ID: ANTIGRAVITY_SYS_446B</span>
-            <span>MODEL: GEMINI_3.5_FLASH</span>
+          {/* Top/Bottom borders */}
+          <div className="absolute top-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-charcoal-light z-[100001] select-none pointer-events-none">
+            <span>TOKYO, JAPAN</span>
+            <span>PORTFOLIO 2026</span>
           </div>
 
-          <div className="absolute bottom-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-gray-500 z-[100001] select-none pointer-events-none">
-            <span>TOKYO FUTURISTIC CREATIVE HUB</span>
-            <span>ALL SYSTEMS OPERATIONAL</span>
+          <div className="absolute bottom-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-charcoal-light z-[100001] select-none pointer-events-none">
+            <span>SORA TAKAHASHI</span>
+            <span>CREATIVE DEVELOPER</span>
           </div>
         </div>
       )}

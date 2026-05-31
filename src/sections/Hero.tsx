@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Magnetic } from '../components/Magnetic';
-import { premiumEase, springEase, Parallax } from '../components/Section';
+import { premiumEase, springEase } from '../components/Section';
+import { WebGLBackground } from '../components/WebGLBackground';
 
 // Animated counter hook
 const useCounter = (target: number, duration: number = 2000, delay: number = 0) => {
@@ -48,18 +49,10 @@ export const Hero = () => {
       className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden"
     >
       {/* Background layers */}
-      <Parallax offset={60} className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-aurora-sakura opacity-50" />
-      </Parallax>
-      <Parallax offset={120} className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-aurora-cyber opacity-30" />
-      </Parallax>
-      <Parallax offset={180} className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 cyber-grid opacity-8" />
-      </Parallax>
+      <WebGLBackground />
       <div className="noise-overlay z-0" />
       {/* Center radial spotlight */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sakura/5 rounded-full blur-[200px] pointer-events-none z-0" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sage/5 rounded-full blur-[150px] pointer-events-none z-0" />
 
       {/* Main content — centered */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 pt-28 pb-40 max-w-6xl mx-auto w-full">
@@ -69,13 +62,13 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.6, ease: springEase }}
-          className="flex items-center space-x-2.5 bg-space-card/60 border border-sakura/20 px-5 py-2 rounded-full mb-10"
+          className="flex items-center space-x-2.5 bg-white border border-charcoal/10 px-5 py-2 rounded-full mb-10 shadow-sm"
         >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-sage" />
           </span>
-          <span className="text-[10px] md:text-xs font-hud text-gray-300 font-medium tracking-widest uppercase">
+          <span className="text-[10px] md:text-xs font-hud text-charcoal-light font-medium tracking-widest uppercase">
             Available for work — 2026
           </span>
         </motion.div>
@@ -85,7 +78,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.8, ease: premiumEase }}
-          className="text-[10px] md:text-xs font-hud text-cyber tracking-[0.4em] uppercase mb-6 block"
+          className="text-[10px] md:text-xs font-hud text-terracotta tracking-[0.4em] uppercase mb-6 block"
         >
           [ Creative Developer & Motion Designer ]
         </motion.span>
@@ -96,7 +89,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 60, rotateX: -20, filter: 'blur(10px)' }}
             animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
             transition={{ duration: 1.4, delay: 1.0, ease: premiumEase }}
-            className="text-fluid-hero-sm font-display font-light text-gray-500 tracking-tight block transform-style-3d"
+            className="text-fluid-hero-sm font-display italic text-charcoal-light tracking-tight block transform-style-3d"
           >
             I Build
           </motion.span>
@@ -104,7 +97,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
             animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
             transition={{ duration: 1.6, delay: 1.15, ease: premiumEase }}
-            className="text-fluid-hero font-display font-black text-white tracking-tighter block leading-none transform-style-3d"
+            className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
             Digital
           </motion.span>
@@ -112,7 +105,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
             animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
             transition={{ duration: 1.6, delay: 1.3, ease: premiumEase }}
-            className="text-fluid-hero font-display font-black text-gradient-sakura tracking-tighter block leading-none transform-style-3d"
+            className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
             Experiences
           </motion.span>
@@ -123,7 +116,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1.5, ease: premiumEase }}
-          className="text-sm md:text-base lg:text-lg text-gray-400 max-w-2xl font-sans leading-relaxed mt-8 md:mt-10"
+          className="text-sm md:text-base lg:text-lg text-charcoal-light max-w-2xl font-sans leading-relaxed mt-8 md:mt-10"
         >
           Crafting premium interfaces, creative motion systems & immersive web experiences from Tokyo.
         </motion.p>
@@ -138,21 +131,20 @@ export const Hero = () => {
           <Magnetic range={0.3}>
             <button
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group relative cursor-none bg-gradient-to-r from-sakura to-violet text-white font-hud text-xs font-bold tracking-widest px-10 py-4.5 rounded-full overflow-hidden transition-all duration-300 shadow-[0_0_30px_rgba(255,117,151,0.25)] hover:shadow-[0_0_50px_rgba(255,117,151,0.5)]"
+              className="group relative cursor-none bg-charcoal text-sand font-hud text-xs tracking-widest px-10 py-4.5 rounded-full overflow-hidden transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-terracotta"
               data-cursor="grow"
             >
-              <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
               <span className="relative z-10">VIEW PROJECTS</span>
             </button>
           </Magnetic>
 
           <button
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            className="relative font-hud text-xs text-gray-400 hover:text-cyber transition-all duration-300 tracking-widest uppercase bg-transparent border-none cursor-none group"
+            className="relative font-hud text-xs text-charcoal-light hover:text-terracotta transition-all duration-300 tracking-widest uppercase bg-transparent border-none cursor-none group"
             data-cursor="magnetic"
           >
             <span>Get in touch</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-cyber group-hover:w-full transition-all duration-300" />
+            <span className="absolute -bottom-1 left-0 w-0 h-px bg-terracotta group-hover:w-full transition-all duration-300" />
           </button>
         </motion.div>
       </div>
@@ -162,18 +154,18 @@ export const Hero = () => {
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.4, delay: 2.1, ease: premiumEase }}
-        className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/5"
+        className="absolute bottom-0 left-0 right-0 z-10 border-t border-charcoal/5"
       >
-        <div className="max-w-6xl mx-auto w-full grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-2 md:grid-cols-4 divide-x divide-charcoal/5">
           {stats.map((stat, idx) => (
             <div
               key={stat.label}
               className="flex flex-col items-center justify-center py-6 md:py-8 px-4"
             >
-              <span className="text-2xl md:text-3xl lg:text-4xl font-display font-black text-white tabular-nums">
+              <span className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-charcoal tabular-nums">
                 {counters[idx]}{stat.suffix}
               </span>
-              <span className="text-[9px] md:text-[10px] font-hud text-gray-500 tracking-widest uppercase mt-1.5">
+              <span className="text-[9px] md:text-[10px] font-hud text-charcoal-light tracking-widest uppercase mt-1.5">
                 {stat.label}
               </span>
             </div>
@@ -190,11 +182,11 @@ export const Hero = () => {
         onClick={handleScrollDown}
         data-cursor="magnetic"
       >
-        <div className="w-5 h-8 border border-gray-600/50 rounded-full flex justify-center p-1">
+        <div className="w-5 h-8 border border-charcoal/20 rounded-full flex justify-center p-1">
           <motion.div 
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-0.5 h-1.5 bg-sakura/60 rounded-full"
+            className="w-0.5 h-1.5 bg-terracotta/60 rounded-full"
           />
         </div>
       </motion.div>

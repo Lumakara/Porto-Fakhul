@@ -30,8 +30,8 @@ const projectsData: Project[] = [
     tech: ['React Three Fiber', 'Three.js', 'GLSL Shaders', 'GSAP'],
     challenge: 'Achieving stable 60fps on mobile touch interfaces while rendering complex vector fluid math in real-time.',
     solution: 'Optimized fragment shaders by utilizing downscaled physics framebuffers and custom linear interpolation matrices, maintaining high-fidelity particle trails at low processing costs.',
-    color: 'from-[#ff7597] to-[#8b5cf6]',
-    gradient: 'linear-gradient(135deg, #ff7597 0%, #8b5cf6 50%, #4c1d95 100%)',
+    color: 'from-[#A3B19B] to-[#C68A7C]',
+    gradient: 'linear-gradient(135deg, #E5E2DA 0%, #A3B19B 100%)',
     cyberId: 'PRJ_NODE_09X',
   },
   {
@@ -44,8 +44,8 @@ const projectsData: Project[] = [
     tech: ['React', 'TypeScript', 'TailwindCSS', 'Recharts', 'Aria-Specs'],
     challenge: 'Satisfying extreme Web Accessibility (WCAG 2.1 AA) criteria while delivering deep sensory motion styling and complex dark aesthetics.',
     solution: 'Engineered custom semantic ARIA focus-traps and styled fully customizable glowing borders using standard utility tokens that respect user high-contrast system requests.',
-    color: 'from-[#8b5cf6] to-[#00f0ff]',
-    gradient: 'linear-gradient(135deg, #8b5cf6 0%, #00f0ff 50%, #0e7490 100%)',
+    color: 'from-[#C68A7C] to-[#D4AF37]',
+    gradient: 'linear-gradient(135deg, #F5F2EB 0%, #C68A7C 100%)',
     cyberId: 'PRJ_NODE_404',
   },
   {
@@ -58,8 +58,8 @@ const projectsData: Project[] = [
     tech: ['React', 'HTML5 Canvas', 'Framer Motion', 'Lenis Scroll'],
     challenge: 'Simulating natural light particle scatter that sways organically in 2.5D space while responding to multi-scroll coordinates.',
     solution: 'Crafted a customized vector gravity loop calculating shadow intersections on canvas layers synced smoothly with Lenis scroll positions.',
-    color: 'from-[#00f0ff] to-[#10b981]',
-    gradient: 'linear-gradient(135deg, #00f0ff 0%, #10b981 50%, #065f46 100%)',
+    color: 'from-[#A3B19B] to-[#F5F2EB]',
+    gradient: 'linear-gradient(135deg, #FDFBF7 0%, #A3B19B 100%)',
     cyberId: 'PRJ_NODE_77K',
   },
   {
@@ -72,8 +72,8 @@ const projectsData: Project[] = [
     tech: ['React', 'NodeJS', 'Xterm.js', 'TailwindCSS', 'WebSockets'],
     challenge: 'Creating a highly secure, sandboxed terminal dashboard delivering real-time logs and process controls in active windows.',
     solution: 'Established secure, authenticated WebSocket pipelines paired with lightweight Docker containers, providing instantaneous feedback loops.',
-    color: 'from-[#ff7597] to-[#00f0ff]',
-    gradient: 'linear-gradient(135deg, #ff7597 0%, #00f0ff 50%, #0e7490 100%)',
+    color: 'from-[#E5E2DA] to-[#2A2A2A]',
+    gradient: 'linear-gradient(135deg, #E5E2DA 0%, #C68A7C 100%)',
     cyberId: 'PRJ_NODE_11B',
   },
 ];
@@ -148,8 +148,7 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.15 }}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-sakura/10 hover:border-cyber/30 transition-all duration-500 cursor-none ${wrapperClasses[layout]}`}
-      style={{ background: 'rgba(18, 15, 28, 0.45)' }}
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-charcoal/5 hover:border-charcoal/20 hover:shadow-lg transition-all duration-500 cursor-none bg-white/70 ${wrapperClasses[layout]}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
@@ -171,19 +170,19 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
           style={{ background: project.gradient }}
         >
           {/* Dark overlay so watermark shows subtly */}
-          <div className="absolute inset-0 bg-space-black/40" />
+          <div className="absolute inset-0 bg-sand/30" />
 
           {/* Ghosted watermark title */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
             <span
-              className={`font-display font-black text-white opacity-[0.08] leading-none whitespace-nowrap ${watermarkSize[layout]}`}
+              className={`font-display font-medium text-charcoal opacity-[0.08] leading-none whitespace-nowrap ${watermarkSize[layout]}`}
             >
               {project.title}
             </span>
           </div>
 
           {/* Noise texture overlay */}
-          <div className="absolute inset-0 bg-space-black/10 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-charcoal/5 mix-blend-overlay" />
 
           {/* Hover scale animation on gradient area */}
           <motion.div
@@ -196,15 +195,15 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
 
           {/* Category pill – top-left */}
           <div className="absolute top-4 left-4 z-10">
-            <span className="px-2.5 py-1 rounded-full bg-space-black/60 border border-white/10 text-[9px] font-hud text-white/80 uppercase tracking-widest backdrop-blur-sm">
+            <span className="px-2.5 py-1 rounded-full bg-white/80 border border-charcoal/10 text-[9px] font-hud text-charcoal font-medium uppercase tracking-widest backdrop-blur-sm shadow-sm">
               {project.categoryLabel}
             </span>
           </div>
 
           {/* Arrow icon – top-right, appears on hover */}
           <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0">
-            <div className="w-9 h-9 rounded-full bg-space-black/60 border border-cyber/40 flex items-center justify-center backdrop-blur-sm">
-              <ArrowUpRight className="w-4 h-4 text-cyber" />
+            <div className="w-9 h-9 rounded-full bg-white border border-charcoal/10 flex items-center justify-center backdrop-blur-sm shadow-sm">
+              <ArrowUpRight className="w-4 h-4 text-charcoal" />
             </div>
           </div>
         </div>
@@ -213,24 +212,24 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
         <div className={`flex flex-col justify-between p-5 md:p-6 ${contentSize[layout]} ${isFeatured ? 'md:py-8 md:px-8' : ''}`}>
           <div className="flex flex-col space-y-3">
             {/* Cyber ID */}
-            <div className="flex items-center space-x-2 font-hud text-[9px] text-cyber/60 tracking-widest">
+            <div className="flex items-center space-x-2 font-hud text-[9px] text-sage tracking-widest">
               <Terminal className="w-3 h-3" />
               <span>{project.cyberId}</span>
             </div>
 
             {/* Title */}
-            <h3 className={`font-display font-black text-white tracking-wide leading-tight group-hover:text-cyber transition-colors duration-300 ${titleSize[layout]}`}>
+            <h3 className={`font-display font-medium text-charcoal tracking-wide leading-tight group-hover:text-terracotta transition-colors duration-300 ${titleSize[layout]}`}>
               {project.title}
             </h3>
 
             {/* Tagline */}
-            <p className="font-sans text-gray-400 text-sm leading-relaxed line-clamp-2">
+            <p className="font-sans text-charcoal-light text-sm leading-relaxed line-clamp-2">
               {project.tagline}
             </p>
 
             {/* Extended description for featured card */}
             {isFeatured && (
-              <p className="font-sans text-gray-500 text-xs leading-relaxed line-clamp-3 mt-1">
+              <p className="font-sans text-charcoal-light/80 text-xs leading-relaxed line-clamp-3 mt-1">
                 {project.description}
               </p>
             )}
@@ -241,7 +240,7 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
             {project.tech.map((t) => (
               <span
                 key={t}
-                className="px-2 py-0.5 rounded bg-space-black/60 border border-white/5 text-[9px] font-hud text-gray-500 uppercase tracking-wider"
+                className="px-2 py-0.5 rounded bg-white border border-charcoal/10 text-[9px] font-hud text-charcoal-light uppercase tracking-wider"
               >
                 {t}
               </span>
@@ -251,7 +250,7 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
       </div>
 
       {/* Bottom hover glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyber/0 to-transparent group-hover:via-cyber/40 transition-all duration-700" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-terracotta/0 to-transparent group-hover:via-terracotta/40 transition-all duration-700" />
     </motion.div>
   );
 };
@@ -272,23 +271,23 @@ export const Projects = () => {
   }, [selectedProject]);
 
   return (
-    <Section id="projects" className="min-h-screen relative px-4 md:px-12 bg-space-black">
+    <Section id="projects" className="min-h-screen relative px-4 md:px-12 bg-sand">
       {/* Aurora glow overlays */}
       <div className="absolute inset-0 bg-aurora-sakura opacity-35 pointer-events-none" />
       <div className="absolute inset-0 bg-aurora-cyber opacity-30 pointer-events-none" />
       <div className="absolute inset-0 cyber-grid opacity-5 pointer-events-none" />
 
-      <div className="w-full max-w-7xl flex flex-col space-y-12 md:space-y-16 z-10">
+      <div className="w-full max-w-7xl flex flex-col space-y-12 md:space-y-16 z-10 mx-auto">
 
         {/* ── Section Header – Centered ── */}
         <div className="flex flex-col items-center text-center space-y-4">
-          <span className="font-hud text-cyber text-xs tracking-[0.3em] uppercase">
+          <span className="font-hud text-terracotta text-xs tracking-[0.3em] uppercase">
             SELECTED WORKS
           </span>
-          <h2 className="text-4xl md:text-6xl font-display font-black text-white">
+          <h2 className="text-4xl md:text-6xl font-display font-medium text-charcoal">
             <TextReveal text="PROJECT ARCHIVE" />
           </h2>
-          <p className="text-gray-400 font-sans text-sm max-w-md">
+          <p className="text-charcoal-light font-sans text-sm max-w-md">
             Curated selection of creative and technical projects
           </p>
         </div>
@@ -337,7 +336,7 @@ export const Projects = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedProject(null)}
-              className="absolute inset-0 bg-space-black/85 backdrop-blur-md"
+              className="absolute inset-0 bg-sand/80 backdrop-blur-md"
             />
 
             {/* Modal */}
@@ -347,33 +346,33 @@ export const Projects = () => {
               exit={{ opacity: 0, scale: 0.95, y: -20, rotateX: -10, filter: 'blur(10px)' }}
               transition={{ duration: 0.8, ease: premiumEase }}
               style={{ perspective: 1000 }}
-              className="w-full max-w-2xl bg-space-deep/90 border border-cyber/30 rounded-2xl p-6 md:p-8 text-left z-10 glassmorphism-cyber relative overflow-hidden font-sans max-h-[90vh] overflow-y-auto transform-style-3d"
+              className="w-full max-w-2xl bg-white/95 border border-charcoal/10 rounded-2xl p-6 md:p-8 text-left z-10 glassmorphism-cyber relative overflow-hidden font-sans max-h-[90vh] overflow-y-auto transform-style-3d shadow-xl"
             >
               {/* Glow accent */}
-              <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-cyber/10 rounded-full blur-[80px] pointer-events-none" />
+              <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-sage/10 rounded-full blur-[80px] pointer-events-none" />
 
               {/* Close */}
               <button
                 onClick={() => setSelectedProject(null)}
                 aria-label="Close project details"
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-space-black/60 border border-cyber/35 flex items-center justify-center text-white cursor-none hover:border-sakura hover:text-sakura transition-colors duration-300"
+                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-sand border border-charcoal/10 flex items-center justify-center text-charcoal cursor-none hover:bg-terracotta hover:text-white transition-colors duration-300"
                 data-cursor="magnetic"
               >
                 <X className="w-4 h-4" />
               </button>
 
               {/* Telemetry */}
-              <div className="font-hud text-[9px] text-cyber/80 flex items-center space-x-2 mb-6">
-                <Laptop className="w-4 h-4 text-cyber" />
+              <div className="font-hud text-[9px] text-sage flex items-center space-x-2 mb-6">
+                <Laptop className="w-4 h-4 text-sage" />
                 <span className="tracking-widest uppercase">{selectedProject.categoryLabel} // {selectedProject.cyberId}</span>
               </div>
 
               {/* Title & Tagline */}
               <div className="flex flex-col space-y-1 mb-6">
-                <h3 className="text-2xl md:text-3xl font-black font-display text-white tracking-wide uppercase">
+                <h3 className="text-2xl md:text-3xl font-medium font-display text-charcoal tracking-wide uppercase">
                   {selectedProject.title}
                 </h3>
-                <p className="text-xs font-hud text-sakura text-glow-sakura uppercase tracking-widest">
+                <p className="text-xs font-hud text-terracotta uppercase tracking-widest">
                   {selectedProject.tagline}
                 </p>
               </div>
@@ -381,29 +380,29 @@ export const Projects = () => {
               {/* Detailed Breakdown */}
               <div className="space-y-6 text-sm">
                 <div className="flex flex-col space-y-2">
-                  <span className="font-hud text-[10px] text-gray-500 uppercase tracking-widest border-b border-sakura/10 pb-1 w-fit">
+                  <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
                     01 // PROJECT OVERVIEW
                   </span>
-                  <p className="text-gray-300 leading-relaxed font-sans">
+                  <p className="text-charcoal leading-relaxed font-sans">
                     {selectedProject.description}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col space-y-2">
-                    <span className="font-hud text-[10px] text-gray-500 uppercase tracking-widest border-b border-sakura/10 pb-1 w-fit">
+                    <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
                       02 // TECHNICAL CHALLENGE
                     </span>
-                    <p className="text-gray-400 text-xs leading-relaxed font-sans">
+                    <p className="text-charcoal-light text-xs leading-relaxed font-sans">
                       {selectedProject.challenge}
                     </p>
                   </div>
 
                   <div className="flex flex-col space-y-2">
-                    <span className="font-hud text-[10px] text-gray-500 uppercase tracking-widest border-b border-sakura/10 pb-1 w-fit">
+                    <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
                       03 // ENGINEERING SOLUTION
                     </span>
-                    <p className="text-gray-400 text-xs leading-relaxed font-sans">
+                    <p className="text-charcoal-light text-xs leading-relaxed font-sans">
                       {selectedProject.solution}
                     </p>
                   </div>
@@ -411,14 +410,14 @@ export const Projects = () => {
 
                 {/* Tech specs */}
                 <div className="flex flex-col space-y-3">
-                  <span className="font-hud text-[10px] text-gray-500 uppercase tracking-widest border-b border-sakura/10 pb-1 w-fit">
+                  <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
                     04 // INTEGRATED CORE ARCHITECTURE
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.tech.map((t) => (
                       <span
                         key={t}
-                        className="px-3 py-1 rounded-md bg-space-black border border-glass-border text-[10px] font-hud text-white uppercase tracking-wider"
+                        className="px-3 py-1 rounded-md bg-white border border-charcoal/10 text-[10px] font-hud text-charcoal uppercase tracking-wider shadow-sm"
                       >
                         {t}
                       </span>
@@ -428,8 +427,8 @@ export const Projects = () => {
               </div>
 
               {/* Modal footer */}
-              <div className="mt-8 pt-6 border-t border-sakura/15 flex justify-between items-center text-xs font-hud">
-                <span className="text-[8px] text-gray-500 select-none uppercase">
+              <div className="mt-8 pt-6 border-t border-charcoal/10 flex justify-between items-center text-xs font-hud">
+                <span className="text-[8px] text-charcoal-light select-none uppercase">
                   ACTIVE_LINK_SECURE // GEMINI_SYS
                 </span>
 
@@ -437,7 +436,7 @@ export const Projects = () => {
                   <a
                     href="#"
                     onClick={(e) => e.preventDefault()}
-                    className="flex items-center space-x-2 bg-sakura/20 text-sakura border border-sakura/35 px-4 py-2 rounded-full font-bold text-glow-sakura cursor-none hover:bg-sakura/30 hover:border-sakura transition-all duration-300"
+                    className="flex items-center space-x-2 bg-charcoal text-white px-4 py-2 rounded-full font-medium cursor-none hover:bg-terracotta hover:shadow-md transition-all duration-300"
                     data-cursor="magnetic"
                   >
                     <span>LAUNCH_SITE</span>
