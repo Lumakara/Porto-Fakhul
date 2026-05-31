@@ -44,7 +44,7 @@ export const About = () => {
               className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-charcoal tracking-tight leading-[0.95]"
             >
               Fakhul
-              <br kon />
+              <br/>
               <span className="italic font-light text-charcoal-light">Rohman</span>
             </motion.h2>
             <motion.p
