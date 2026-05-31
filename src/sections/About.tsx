@@ -54,7 +54,7 @@ export const About = () => {
               transition={{ delay: 0.2, duration: 1.2, ease: premiumEase }}
               className="text-sm text-charcoal-light font-hud tracking-wider uppercase mt-4"
             >
-              Web Dev <br|/> Editing <br|/> Quality Controll
+              Web Dev | Editing | Quality Controll
             </motion.p>
           </div>
 
