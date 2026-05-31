@@ -15,7 +15,7 @@ const FloatingShape = ({ position, color, speed, distort, radius }: any) => {
   });
 
   return (
-    <Sphere ref={meshRef} args={[radius, 64, 64]} position={position}>
+    <Sphere ref={meshRef} args={[radius, 24, 24]} position={position}>
       <MeshDistortMaterial
         color={color}
         envMapIntensity={0.8}
@@ -32,8 +32,8 @@ const FloatingShape = ({ position, color, speed, distort, radius }: any) => {
 
 export const WebGLBackground = () => {
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-multiply">
-      <Canvas camera={{ position: [0, 0, 10], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+    <div className="absolute inset-0 z-0 pointer-events-none opacity-20 mix-blend-multiply">
+      <Canvas camera={{ position: [0, 0, 10], fov: 45 }} gl={{ antialias: false, alpha: true }}>
         <ambientLight intensity={1.5} />
         <directionalLight position={[10, 10, 5]} intensity={2} color="#ffffff" />
         <directionalLight position={[-10, -10, -5]} intensity={1} color="#eaddd7" />
@@ -42,9 +42,8 @@ export const WebGLBackground = () => {
         <FloatingShape position={[-4, 2, -2]} color="#eaddd7" speed={0.5} distort={0.4} radius={3} />
         <FloatingShape position={[5, -2, -4]} color="#bd6b58" speed={0.6} distort={0.5} radius={4} />
         <FloatingShape position={[0, -4, -6]} color="#a8b5a1" speed={0.4} distort={0.3} radius={3.5} />
-        <FloatingShape position={[-6, -3, -8]} color="#f3f2ed" speed={0.3} distort={0.6} radius={5} />
         
-        <Environment preset="city" />
+        <Environment preset="sunset" />
       </Canvas>
     </div>
   );

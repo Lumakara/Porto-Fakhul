@@ -177,16 +177,13 @@ export const About = () => {
                         <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 bg-terracotta rounded-full shadow-sm" />
                         <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-1">
                           <h4 className="text-base font-display font-medium text-charcoal">
-                            Senior Creative Engineer
+                            ION Network
                           </h4>
-                          <span className="text-[10px] font-hud text-terracotta tracking-wider">2024 — Present</span>
+                          <span className="text-[10px] font-hud text-terracotta tracking-wider">2025 — 2026 ( 7Bln )</span>
                         </div>
-                        <span className="text-sm text-terracotta font-medium font-hud">Tokyo Digital Craft Co.</span>
+                        <span className="text-sm text-terracotta font-medium font-hud">Technical Network & CCTV</span>
                         <p className="text-sm text-charcoal-light font-sans leading-relaxed mt-2">
-                          Leading frontend architecture for premium brand experiences. 
-                          Built Awwwards-recognized creative websites using React, GSAP, 
-                          and custom WebGL shaders. Mentoring junior developers on motion 
-                          design principles.
+Spesialis jaringan komputer dan CCTV dengan kemampuan instalasi, konfigurasi, troubleshooting, maintenance, serta optimasi sistem untuk memastikan stabilitas dan keamanan jaringan.
                         </p>
                       </div>
 
@@ -195,31 +192,13 @@ export const About = () => {
                         <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 bg-sage rounded-full shadow-sm" />
                         <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-1">
                           <h4 className="text-base font-display font-medium text-charcoal">
-                            Frontend System Architect
+                            Restaurant A&W
                           </h4>
-                          <span className="text-[10px] font-hud text-charcoal-light tracking-wider">2021 — 2024</span>
+                          <span className="text-[10px] font-hud text-charcoal-light tracking-wider">2025 ( 3bln )</span>
                         </div>
-                        <span className="text-sm text-sage font-medium font-hud">Design Studio</span>
+                        <span className="text-sm text-sage font-medium font-hud">Staff Kitchen</span>
                         <p className="text-sm text-charcoal-light font-sans leading-relaxed mt-2">
-                          Architected complex dashboard applications with strict accessibility 
-                          standards (WCAG 2.1 AA). Optimized Lighthouse scores to 95+ across 
-                          all metrics for enterprise clients.
-                        </p>
-                      </div>
-
-                      {/* Entry 3 */}
-                      <div className="relative pl-8 border-l border-charcoal/10">
-                        <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 bg-charcoal-light rounded-full" />
-                        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between mb-1">
-                          <h4 className="text-base font-display font-medium text-charcoal">
-                            Frontend Developer
-                          </h4>
-                          <span className="text-[10px] font-hud text-charcoal-light tracking-wider">2020 — 2021</span>
-                        </div>
-                        <span className="text-sm text-charcoal-light font-medium font-hud">Freelance / Open Source</span>
-                        <p className="text-sm text-charcoal-light font-sans leading-relaxed mt-2">
-                          Built responsive web applications for startups and small businesses. 
-                          Contributed to open-source React component libraries and animation toolkits.
+Terampil dalam operasional dapur, persiapan bahan, dan pengolahan makanan dengan mengutamakan kualitas, kebersihan, keselamatan kerja, dan kerja sama tim.
                         </p>
                       </div>
                     </div>
