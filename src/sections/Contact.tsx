@@ -20,7 +20,7 @@ export const Contact = () => {
       'Establishing secure connection...',
       'Encrypting message payload...',
       'Validating email integrity...',
-      'Routing via Tokyo relay node...'
+      'Routing via jkt relay node...'
     ];
 
     for (let i = 0; i < logs.length; i++) {
@@ -120,9 +120,7 @@ export const Contact = () => {
             className="lg:col-span-5 flex flex-col space-y-8 text-left"
           >
             <p className="text-base text-charcoal-light font-sans leading-relaxed">
-              Whether you're a recruiter looking for a premium frontend architect, 
-              a creative agency seeking a freelance motion developer, or a fellow 
-              technologist — I'd love to hear from you.
+Have a project, opportunity, or collaboration in mind? Feel free to get in touch and let's create something meaningful together.
             </p>
 
             {/* Contact details */}
@@ -133,7 +131,7 @@ export const Contact = () => {
                 </div>
                 <div className="flex flex-col">
                   <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">Location</span>
-                  <span className="text-sm text-charcoal font-medium font-sans">Tokyo, Japan — GMT+9</span>
+                  <span className="text-sm text-charcoal font-medium font-sans">Jawa Barat, Indonesia </span>
                 </div>
               </div>
 
@@ -144,11 +142,11 @@ export const Contact = () => {
                 <div className="flex flex-col">
                   <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">Email</span>
                   <a 
-                    href="mailto:hello@sakurafuture.io" 
+                    href="Fakhulrohman2@gmail.com" 
                     className="text-sm text-charcoal font-medium font-sans hover:text-terracotta transition-colors duration-300 cursor-none"
                     data-cursor="grow"
                   >
-                    hello@sakurafuture.io
+                    fakhulrohman2@gmail.com
                   </a>
                 </div>
               </div>
@@ -165,7 +163,7 @@ export const Contact = () => {
                     </svg>
                   ), 
                   label: 'GitHub', 
-                  href: 'https://github.com' 
+                  href: 'https://github.com/lumakara' 
                 },
                 { 
                   icon: (
@@ -176,16 +174,7 @@ export const Contact = () => {
                     </svg>
                   ), 
                   label: 'LinkedIn', 
-                  href: 'https://linkedin.com' 
-                },
-                { 
-                  icon: (
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-                    </svg>
-                  ), 
-                  label: 'Twitter', 
-                  href: 'https://twitter.com' 
+                  href: 'https://www.linkedin.com/in/fakhul-rohman-nurokhim-b24276411?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
                 },
               ].map((soc) => (
                 <Magnetic key={soc.label} range={0.3}>
@@ -241,7 +230,7 @@ export const Contact = () => {
                           value={formData.name}
                           onChange={handleInputChange}
                           required
-                          placeholder="John Doe"
+                          placeholder="Fakhul Rohman"
                           className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
                           data-cursor="grow"
                         />
@@ -259,7 +248,7 @@ export const Contact = () => {
                           value={formData.email}
                           onChange={handleInputChange}
                           required
-                          placeholder="john@company.com"
+                          placeholder="Fakhulrohman2@gmail.com"
                           className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
                           data-cursor="grow"
                         />
