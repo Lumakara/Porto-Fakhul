@@ -1,13 +1,11 @@
 {
   "nav": {
-    "home": "// BERANDA",
-    "about": "// CETAK BIRU",
-    "projects": "// ARSIP",
-    "skills": "// MATRIKS",
-    "contact": "// UPLINK",
+    "home": "Beranda",
+    "about": "Tentang",
+    "projects": "Proyek",
+    "contact": "Kontak",
     "logo": "FR",
-    "logoSub": "PORTOFOLIO",
-    "status": "UPLINK_ON"
+    "logoSub": "PORTOFOLIO"
   },
   "menu": {
     "tableOfContents": "Daftar Isi",
@@ -103,7 +101,7 @@
       "tabs": {
         "story": "Cerita",
         "experience": "Pengalaman",
-        "approach": "Pendekatan"
+        "skills": "Soft & Hard Skills"
       },
       "story": {
         "title": "Dari Akuntansi ke Teknologi",
@@ -141,6 +139,12 @@
             "desc": "Perbedaan antara baik dan luar biasa terletak pada detail: mikro-interaksi, kurva easing, spacing responsif, dan presisi piksel."
           }
         }
+      },
+      "skills": {
+        "softTitle": "Soft Skills",
+        "hardTitle": "Hard Skills",
+        "soft": ["Komunikasi", "Kerja Tim", "Adaptabilitas", "Pemecahan Masalah", "Manajemen Waktu", "Kepemimpinan"],
+        "hard": ["React/Next.js", "TypeScript", "Tailwind CSS", "Git/GitHub", "Figma", "Node.js"]
       }
     },
     "projects": {
@@ -151,22 +155,15 @@
       "selectedWorks": "KARYA TERPILIH",
       "projectArchive": "ARSIP PROYEK",
       "subtitleDesc": "Pilihan kurasi proyek kreatif dan teknis",
-      "modal": {
-        "overview": "01 // GAMBARAN PROYEK",
-        "challenge": "02 // TANTANGAN TEKNIS",
-        "solution": "03 // SOLUSI REKAYASA",
-        "architecture": "04 // ARSITEKTUR INTI TERINTEGRASI",
-        "launchSite": "BUKA_SITUS",
-        "closeLabel": "Tutup detail proyek"
+      "detail": {
+        "back": "Kembali",
+        "overview": "Gambaran",
+        "challenge": "Tantangan",
+        "solution": "Solusi",
+        "tech": "Teknologi",
+        "category": "Kategori",
+        "id": "ID Proyek"
       }
-    },
-    "skills": {
-      "title": "Matriks",
-      "subtitle": "Tumpukan Teknologi",
-      "expertise": "Keahlian",
-      "technicalMatrix": "Teknis",
-      "matrixItalic": "Matriks",
-      "alsoProficient": "Juga mahir dalam"
     },
     "contact": {
       "title": "Uplink",
@@ -179,7 +176,9 @@
       "locationValue": "Jawa Barat, Indonesia",
       "emailLabel": "Email",
       "github": "GitHub",
+      "githubHover": "Lihat repositori saya",
       "linkedin": "LinkedIn",
+      "linkedinHover": "Mari terhubung",
       "form": {
         "nameLabel": "Nama Anda",
         "namePlaceholder": "Fakhul Rohman",
@@ -204,7 +203,14 @@
         "title": "Pesan terkirim!",
         "description": "Terima kasih telah menghubungi. Saya akan membalas dalam 24 jam.",
         "sendAnother": "Kirim lagi"
-      }
+      },
+      "error": {
+        "title": "Transmisi gagal",
+        "description": "Terjadi kesalahan saat mengirim pesan Anda. Silakan coba lagi.",
+        "retry": "Coba Lagi",
+        "backToForm": "Kembali ke formulir"
+      },
+      "charCount": "{count}/{max}"
     }
   },
   "common": {

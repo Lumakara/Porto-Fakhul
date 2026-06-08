@@ -23,7 +23,7 @@ export const NotFound = () => {
         transition={{ duration: 1.4, ease: premiumEase }}
         className="relative z-10 flex flex-col items-center text-center max-w-2xl"
       >
-        <div className="mb-8 w-16 h-16 rounded-full bg-white border border-charcoal/10 flex items-center justify-center shadow-sm">
+        <div className="mb-8 w-16 h-16 rounded-full bg-surface border border-charcoal/10 flex items-center justify-center shadow-sm">
           <Compass className="w-6 h-6 text-terracotta" />
         </div>
 

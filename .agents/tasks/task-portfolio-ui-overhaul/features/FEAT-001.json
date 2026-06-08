@@ -1,0 +1,23 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Simplify Navbar design and make it ultra-functional. Reduce visual complexity, make the navigation bar cleaner with minimal elements, improve mobile menu UX. The current navbar has excessive cyber-themed elements (UPLINK_ON status, animated ping circles, complex glass morphism). Simplify to a clean, minimal floating nav pill with essential navigation links and a streamlined mobile menu.",
+  "status": "completed",
+  "steps": [
+    "Rewrite src/components/Navbar.tsx: Remove the 'UPLINK_ON' status indicator, simplify the logo to just text 'FR' without the ping animation circle. Keep navigation links but make them cleaner (remove // prefix from labels). Make the glass capsule always visible with subtle background. Simplify the mobile hamburger button.",
+    "Simplify the mobile menu panel: Remove the tab switcher (navigation/settings), merge it into a single clean panel with navigation links at top, a compact theme toggle (light/dark/system), and language switcher at bottom. Remove the TableOfContents component with its scroll progress bar - just use simple nav links. Keep the SettingsPanel accessible via a gear icon button that opens the full settings.",
+    "Update src/components/menu/TableOfContents.tsx: Simplify or remove - navigation links will be directly in the mobile menu panel.",
+    "Update nav item labels in all locale files (src/locales/en.json, id.json, zh.json): Change from '// HOME', '// BLUEPRINT' etc to cleaner labels: 'Home', 'About', 'Projects', 'Skills', 'Contact' (and translations).",
+    "Ensure the navbar works well in both light and dark themes with proper color transitions."
+  ],
+  "acceptance_criteria": [
+    "Navbar is visually simpler - no cyber-themed decorations, no ping animations, no UPLINK_ON status",
+    "Desktop nav shows clean text links with active indicator",
+    "Mobile menu opens as a slide panel with direct navigation links, theme toggle, and language switcher",
+    "All navigation functionality preserved (scroll to section, active section tracking)",
+    "Build passes with npm run build"
+  ],
+  "verification": ["npm run build"],
+  "blocked_reason": null,
+  "findings": "Build passes cleanly. Removed Radio/SettingsPanel/TableOfContents/RippleEffect imports from Navbar. Added Sun/Moon/Monitor icons and usePreferences for compact theme toggle in mobile menu. TableOfContents component still exists on disk but is no longer imported. The nav.status key was removed from all locale files without issue."
+}

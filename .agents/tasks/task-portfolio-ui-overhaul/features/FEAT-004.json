@@ -1,0 +1,25 @@
+{
+  "id": "FEAT-004",
+  "type": "feat",
+  "description": "Redesign the About section tabs: make them horizontal (not vertical on desktop) with horizontal swipe capability (left/right). Change the 'Approach' tab to become 'Soft Skill & Hard Skill' with appropriate content replacing the current approach cards.",
+  "status": "completed",
+  "steps": [
+    "In src/sections/About.tsx: Change the tab layout from the current lg:col-span-3 vertical sidebar to a horizontal tab bar that spans the full width above the content. Make tabs swipeable on mobile using framer-motion drag gestures (dragX) or touch swipe detection to switch between tabs.",
+    "Change the tab type from 'story' | 'experience' | 'approach' to 'story' | 'experience' | 'skills'. Rename the third tab from 'Approach' (Pendekatan) to 'Soft Skill & Hard Skill'.",
+    "Replace the approach tab content: Instead of the 3 numbered approach items, create two sub-sections: (a) Soft Skills - a list/grid of soft skills like Communication, Teamwork, Adaptability, Problem Solving, Time Management, Leadership; (b) Hard Skills - a list/grid of hard skills like React, TypeScript, Tailwind CSS, Git, Figma, Node.js. Display them as interactive pills or cards with hover effects.",
+    "Implement horizontal swipe: Use framer-motion's drag='x' on the tab content container with dragConstraints, or detect swipe gestures to automatically switch to next/previous tab. Add visual indicators (dots or a progress bar) showing which tab is active.",
+    "Update locale files (en.json, id.json, zh.json): Change 'sections.about.tabs.approach' to 'Soft Skill & Hard Skill' (and translations). Add new locale keys for soft skills and hard skills items under 'sections.about.skills.soft' and 'sections.about.skills.hard'.",
+    "Update the grid layout: Remove the lg:grid-cols-12 split (3+9). Make it full width with tabs on top, content below."
+  ],
+  "acceptance_criteria": [
+    "Tabs are displayed horizontally above content (not as a vertical sidebar)",
+    "Users can swipe left/right on mobile to switch between tabs",
+    "The third tab is labeled 'Soft Skill & Hard Skill' instead of 'Approach'",
+    "The skills tab shows categorized soft skills and hard skills",
+    "Tab transitions are smooth with animations",
+    "Build passes with npm run build"
+  ],
+  "verification": ["npm run build"],
+  "blocked_reason": null,
+  "findings": "Replaced Zap with Target icon. Used framer-motion drag='x' with PanInfo for swipe detection. Skills data stored as JSON arrays in locale files, cast via 'as unknown as string[]' for type safety. Build passes cleanly."
+}

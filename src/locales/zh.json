@@ -1,13 +1,11 @@
 {
   "nav": {
-    "home": "// \u9996\u9875",
-    "about": "// \u84dd\u56fe",
-    "projects": "// \u6863\u6848",
-    "skills": "// \u77e9\u9635",
-    "contact": "// \u94fe\u63a5",
+    "home": "\u9996\u9875",
+    "about": "\u5173\u4e8e",
+    "projects": "\u9879\u76ee",
+    "contact": "\u8054\u7cfb",
     "logo": "FR",
-    "logoSub": "\u4f5c\u54c1\u96c6",
-    "status": "UPLINK_ON"
+    "logoSub": "\u4f5c\u54c1\u96c6"
   },
   "menu": {
     "tableOfContents": "\u76ee\u5f55",
@@ -103,7 +101,7 @@
       "tabs": {
         "story": "\u6545\u4e8b",
         "experience": "\u7ecf\u9a8c",
-        "approach": "\u65b9\u6cd5"
+        "skills": "\u8f6f\u6280\u80fd\u4e0e\u786c\u6280\u80fd"
       },
       "story": {
         "title": "\u4ece\u4f1a\u8ba1\u5230\u6280\u672f",
@@ -141,6 +139,12 @@
             "desc": "\u4f18\u79c0\u4e0e\u5353\u8d8a\u7684\u5dee\u522b\u5728\u4e8e\u7ec6\u8282\uff1a\u5fae\u4ea4\u4e92\u3001\u7f13\u52a8\u66f2\u7ebf\u3001\u54cd\u5e94\u5f0f\u95f4\u8ddd\u548c\u50cf\u7d20\u7ea7\u7cbe\u786e\u5ea6\u3002"
           }
         }
+      },
+      "skills": {
+        "softTitle": "\u8f6f\u6280\u80fd",
+        "hardTitle": "\u786c\u6280\u80fd",
+        "soft": ["\u6c9f\u901a", "\u56e2\u961f\u5408\u4f5c", "\u9002\u5e94\u80fd\u529b", "\u89e3\u51b3\u95ee\u9898", "\u65f6\u95f4\u7ba1\u7406", "\u9886\u5bfc\u529b"],
+        "hard": ["React/Next.js", "TypeScript", "Tailwind CSS", "Git/GitHub", "Figma", "Node.js"]
       }
     },
     "projects": {
@@ -151,22 +155,15 @@
       "selectedWorks": "\u7cbe\u9009\u4f5c\u54c1",
       "projectArchive": "\u9879\u76ee\u6863\u6848",
       "subtitleDesc": "\u7cbe\u5fc3\u6311\u9009\u7684\u521b\u610f\u4e0e\u6280\u672f\u9879\u76ee",
-      "modal": {
-        "overview": "01 // \u9879\u76ee\u6982\u8ff0",
-        "challenge": "02 // \u6280\u672f\u6311\u6218",
-        "solution": "03 // \u5de5\u7a0b\u89e3\u51b3\u65b9\u6848",
-        "architecture": "04 // \u96c6\u6210\u6838\u5fc3\u67b6\u6784",
-        "launchSite": "\u8bbf\u95ee\u7ad9\u70b9",
-        "closeLabel": "\u5173\u95ed\u9879\u76ee\u8be6\u60c5"
+      "detail": {
+        "back": "\u8fd4\u56de",
+        "overview": "\u6982\u8ff0",
+        "challenge": "\u6311\u6218",
+        "solution": "\u89e3\u51b3\u65b9\u6848",
+        "tech": "\u6280\u672f\u6808",
+        "category": "\u7c7b\u522b",
+        "id": "\u9879\u76eeID"
       }
-    },
-    "skills": {
-      "title": "\u77e9\u9635",
-      "subtitle": "\u6280\u672f\u6808",
-      "expertise": "\u4e13\u4e1a\u6280\u80fd",
-      "technicalMatrix": "\u6280\u672f",
-      "matrixItalic": "\u77e9\u9635",
-      "alsoProficient": "\u4e5f\u7cbe\u901a\u4e8e"
     },
     "contact": {
       "title": "\u94fe\u63a5",
@@ -179,7 +176,9 @@
       "locationValue": "\u5370\u5c3c \u897f\u722a\u54c7",
       "emailLabel": "\u7535\u5b50\u90ae\u4ef6",
       "github": "GitHub",
+      "githubHover": "\u67e5\u770b\u6211\u7684\u4ed3\u5e93",
       "linkedin": "LinkedIn",
+      "linkedinHover": "\u8ba9\u6211\u4eec\u8fde\u63a5",
       "form": {
         "nameLabel": "\u60a8\u7684\u59d3\u540d",
         "namePlaceholder": "Fakhul Rohman",
@@ -204,7 +203,14 @@
         "title": "\u6d88\u606f\u5df2\u53d1\u9001\uff01",
         "description": "\u611f\u8c22\u60a8\u7684\u8054\u7cfb\u3002\u6211\u4f1a\u572824\u5c0f\u65f6\u5185\u56de\u590d\u60a8\u3002",
         "sendAnother": "\u518d\u53d1\u4e00\u6761"
-      }
+      },
+      "error": {
+        "title": "\u4f20\u8f93\u5931\u8d25",
+        "description": "\u53d1\u9001\u6d88\u606f\u65f6\u51fa\u9519\u3002\u8bf7\u91cd\u8bd5\u3002",
+        "retry": "\u91cd\u8bd5",
+        "backToForm": "\u8fd4\u56de\u8868\u5355"
+      },
+      "charCount": "{count}/{max}"
     }
   },
   "common": {
