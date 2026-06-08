@@ -1,0 +1,25 @@
+{
+  "id": "FEAT-002",
+  "type": "fix",
+  "description": "Fix dark theme color inconsistencies. Currently the dark theme in index.css only overrides --color-sand, --color-sand-alt, --color-charcoal, --color-charcoal-light, and --color-surface. Many components use hardcoded 'bg-white', 'bg-white/50', 'border-charcoal/5', 'text-charcoal' that do not respond correctly because --color-surface and white backgrounds are not properly themed. Fix the [data-theme='dark'] CSS variables and update components to use theme-aware classes.",
+  "status": "pending",
+  "steps": [
+    "In src/index.css, expand the [data-theme='dark'] block to also override: --color-stone (currently #E5E2DA, should be darker like #3a3a3a), --color-sage (keep or slightly adjust for dark bg visibility), --color-terracotta (keep, works on dark), add a new override so glassmorphism and glassmorphism-cyber classes use dark-appropriate rgba values.",
+    "Add [data-theme='dark'] overrides for: .glassmorphism { background: rgba(40,40,40,0.7); border-color: rgba(255,255,255,0.08); }, .glassmorphism-cyber { background: rgba(35,35,35,0.8); border-color: rgba(255,255,255,0.05); }",
+    "In components that use hardcoded 'bg-white' or 'bg-white/50' or 'bg-white/70', replace with theme-aware alternatives: use 'bg-surface' (which maps to --color-surface) or add dark-mode-aware classes. Key files to update: src/sections/About.tsx (info pills use bg-white, tab content uses bg-white/50), src/sections/Projects.tsx (cards use bg-white/70, modal uses bg-white/95), src/sections/Skills.tsx (cards use bg-white, secondary strip uses bg-white/50), src/sections/Contact.tsx (form container uses bg-white/50, inputs use bg-white).",
+    "Update the scrollbar styles in index.css for dark theme.",
+    "Update the noise-overlay mix-blend-mode or opacity for dark theme to not look washed out.",
+    "Ensure the Navbar glassmorphism adapts to dark theme (bg-sand/80 should automatically work since --color-sand is overridden).",
+    "Add [data-theme='dark'] overrides for .bg-aurora-sakura, .bg-aurora-cyber, .bg-aurora-purple to use slightly brighter opacity values against dark backgrounds."
+  ],
+  "acceptance_criteria": [
+    "Switching to dark theme makes ALL components properly dark - no white backgrounds leak through",
+    "Text remains readable in dark theme (charcoal becomes light, charcoal-light becomes medium gray)",
+    "Glassmorphism elements look correct with dark glass effect",
+    "Info pills, cards, form inputs, modals all have proper dark backgrounds",
+    "Build passes with npm run build"
+  ],
+  "verification": ["npm run build"],
+  "blocked_reason": null,
+  "findings": ""
+}

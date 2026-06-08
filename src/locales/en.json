@@ -1,13 +1,12 @@
 {
   "nav": {
-    "home": "// HOME",
-    "about": "// BLUEPRINT",
-    "projects": "// ARCHIVE",
-    "skills": "// MATRIX",
-    "contact": "// UPLINK",
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact",
     "logo": "FR",
-    "logoSub": "PORTFOLIO",
-    "status": "UPLINK_ON"
+    "logoSub": "PORTFOLIO"
   },
   "menu": {
     "tableOfContents": "Table of Contents",

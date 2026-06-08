@@ -1,32 +1,28 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Radio } from 'lucide-react';
+import { Menu, X, Sun, Moon, Monitor } from 'lucide-react';
 import { Magnetic } from './Magnetic';
 import { useLanguage } from '../contexts/LanguageContext';
+import { usePreferences } from '../contexts/PreferencesContext';
 import { useReducedMotion } from '../lib/motion';
 import { FocusTrap } from './menu/FocusTrap';
-import { TableOfContents } from './menu/TableOfContents';
-import { SettingsPanel } from './menu/SettingsPanel';
-import { RippleEffect } from './menu/RippleEffect';
-import type { Language } from '../types';
-
-type MenuTab = 'navigation' | 'settings';
+import type { Language, Theme } from '../types';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<MenuTab>('navigation');
 
   const { t, language, setLanguage } = useLanguage();
+  const { preferences, setTheme } = usePreferences();
   const reducedMotion = useReducedMotion();
 
   const navItems = [
-    { id: 'home', label: '// HOME' },
-    { id: 'about', label: '// BLUEPRINT' },
-    { id: 'projects', label: '// ARCHIVE' },
-    { id: 'skills', label: '// MATRIX' },
-    { id: 'contact', label: '// UPLINK' },
+    { id: 'home', labelKey: 'nav.home' },
+    { id: 'about', labelKey: 'nav.about' },
+    { id: 'projects', labelKey: 'nav.projects' },
+    { id: 'skills', labelKey: 'nav.skills' },
+    { id: 'contact', labelKey: 'nav.contact' },
   ];
 
   useEffect(() => {
@@ -37,7 +33,6 @@ export const Navbar = () => {
       rafId = requestAnimationFrame(() => {
         setIsScrolled(window.scrollY > 50);
 
-        // Track active section on scroll
         const sections = ['home', 'about', 'projects', 'skills', 'contact'];
         const scrollPosition = window.scrollY + window.innerHeight / 3;
 
@@ -88,22 +83,16 @@ export const Navbar = () => {
     }
   };
 
-  const handleMenuNavigate = useCallback((id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(id);
-    }
-    // Close menu after slight delay for scroll to begin
-    setTimeout(() => {
-      setIsMobileMenuOpen(false);
-    }, 300);
-  }, []);
-
-  const languagePills: { value: Language; label: string }[] = [
+  const languageOptions: { value: Language; label: string }[] = [
     { value: 'en', label: 'EN' },
     { value: 'id', label: 'ID' },
     { value: 'zh', label: 'ZH' },
+  ];
+
+  const themeOptions: { value: Theme; icon: typeof Sun }[] = [
+    { value: 'light', icon: Sun },
+    { value: 'dark', icon: Moon },
+    { value: 'system', icon: Monitor },
   ];
 
   const panelVariants = {
@@ -140,13 +129,13 @@ export const Navbar = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 1, 0.5, 1] }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 py-6 px-4 md:px-12 flex justify-center`}
+        className="fixed top-0 left-0 w-full z-50 transition-all duration-500 py-6 px-4 md:px-12 flex justify-center"
       >
         {/* Glass Nav capsule */}
-        <div 
+        <div
           className={`w-full max-w-7xl flex items-center justify-between transition-all duration-500 px-6 py-3 rounded-full ${
-            isScrolled 
-              ? 'glassmorphism border border-charcoal/5 bg-sand/80 shadow-lg backdrop-blur-md' 
+            isScrolled
+              ? 'glassmorphism border border-charcoal/5 bg-sand/80 shadow-lg backdrop-blur-md'
               : 'bg-transparent border border-transparent'
           }`}
         >
@@ -157,49 +146,40 @@ export const Navbar = () => {
             data-cursor="magnetic"
           >
             <div className="relative w-8 h-8 flex items-center justify-center rounded-full border border-terracotta/30 group-hover:border-sage/50 transition-colors duration-300">
-              <span className="text-xs font-black text-terracotta group-hover:text-sage transition-colors duration-300 font-hud">FR</span>
-              <div className="absolute inset-0 rounded-full border border-terracotta/10 animate-ping group-hover:border-sage/20" />
+              <span className="text-xs font-black text-terracotta group-hover:text-sage transition-colors duration-300 font-hud">
+                FR
+              </span>
             </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-black text-charcoal tracking-widest font-display">FR</span>
-              <span className="text-[8px] font-hud tracking-[0.2em] text-charcoal-light group-hover:text-terracotta transition-colors duration-300">PORTFOLIO</span>
-            </div>
+            <span className="text-sm font-black text-charcoal tracking-widest font-display">
+              FR
+            </span>
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-2 font-hud text-xs">
+          <nav className="hidden lg:flex items-center space-x-1 font-hud text-sm">
             {navItems.map((item) => (
               <Magnetic key={item.id} range={0.25}>
                 <button
                   onClick={() => handleNavClick(item.id)}
                   className={`px-4 py-2 rounded-full cursor-none transition-all duration-300 relative ${
-                    activeSection === item.id 
-                      ? 'text-terracotta font-bold' 
+                    activeSection === item.id
+                      ? 'text-terracotta font-medium'
                       : 'text-charcoal-light hover:text-charcoal'
                   }`}
                   data-cursor="magnetic"
                 >
-                  {/* Glowing background indicator */}
                   {activeSection === item.id && (
                     <motion.div
                       layoutId="activeNavBackground"
-                      className="absolute inset-0 bg-terracotta/10 rounded-full border border-terracotta/20 -z-10 shadow-[0_0_15px_rgba(198,138,124,0.1)]"
+                      className="absolute inset-0 bg-terracotta/10 rounded-full border border-terracotta/20 -z-10"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
-                  <span>{item.label}</span>
+                  <span>{t(item.labelKey)}</span>
                 </button>
               </Magnetic>
             ))}
           </nav>
-
-          {/* System status node */}
-          <div className="hidden lg:flex items-center space-x-3 text-[10px] text-charcoal-light font-hud">
-            <div className="flex items-center space-x-1.5 glassmorphism-cyber px-3 py-1.5 rounded-full border border-sage/20">
-              <Radio className="w-3 h-3 text-sage animate-pulse" />
-              <span className="text-sage font-medium tracking-wider">UPLINK_ON</span>
-            </div>
-          </div>
 
           {/* Mobile Hamburger Toggle */}
           <button
@@ -269,11 +249,8 @@ export const Navbar = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed right-0 top-0 bottom-0 w-full md:max-w-[400px] bg-sand/98 backdrop-blur-xl z-[70] lg:hidden flex flex-col shadow-2xl"
+              className="fixed right-0 top-0 bottom-0 w-full md:max-w-[360px] bg-sand/98 backdrop-blur-xl z-[70] lg:hidden flex flex-col shadow-2xl"
             >
-              {/* Noise overlay */}
-              <div className="noise-overlay rounded-l-2xl" />
-
               <FocusTrap active={isMobileMenuOpen} onEscape={closeMenu}>
                 <div className="relative flex flex-col h-full">
                   {/* Header */}
@@ -281,102 +258,92 @@ export const Navbar = () => {
                     <span className="font-hud text-xs font-medium text-charcoal-light tracking-widest uppercase">
                       {t('accessibility.mainNavigation')}
                     </span>
-                    <RippleEffect className="rounded-full">
-                      <button
-                        onClick={closeMenu}
-                        className="w-10 h-10 flex items-center justify-center rounded-full border border-stone text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 hover:bg-stone/30 transition-colors duration-200"
-                        aria-label={t('menu.close')}
-                        data-cursor="magnetic"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    </RippleEffect>
+                    <button
+                      onClick={closeMenu}
+                      className="w-10 h-10 flex items-center justify-center rounded-full border border-stone text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 hover:bg-stone/30 transition-colors duration-200"
+                      aria-label={t('menu.close')}
+                      data-cursor="magnetic"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
                   </div>
 
-                  {/* Tab switcher */}
-                  <div className="flex px-6 pt-4 pb-2 space-x-1" role="tablist">
-                    {([
-                      { id: 'navigation' as const, label: t('menu.tableOfContents') },
-                      { id: 'settings' as const, label: t('menu.settings') },
-                    ]).map((tab) => (
-                      <button
-                        key={tab.id}
-                        id={`menu-tab-${tab.id}`}
-                        onClick={() => setActiveTab(tab.id)}
-                        className={`relative flex-1 px-4 py-2 font-hud text-xs tracking-wide rounded-lg min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
-                          activeTab === tab.id
-                            ? 'text-terracotta font-medium'
-                            : 'text-charcoal-light hover:text-charcoal'
-                        }`}
-                        role="tab"
-                        aria-selected={activeTab === tab.id}
-                        aria-controls={`menu-tabpanel-${tab.id}`}
-                      >
-                        {activeTab === tab.id && (
-                          <motion.div
-                            layoutId="menu-tab-indicator"
-                            className="absolute inset-0 bg-terracotta/10 border border-terracotta/20 rounded-lg"
-                            transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 30 }}
-                          />
-                        )}
-                        <span className="relative z-10">{tab.label}</span>
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Content area */}
-                  <div
-                    className="flex-1 overflow-y-auto px-6 py-4"
-                    role="tabpanel"
-                    id={`menu-tabpanel-${activeTab}`}
-                    aria-labelledby={`menu-tab-${activeTab}`}
-                  >
-                    <AnimatePresence mode="wait">
-                      {activeTab === 'navigation' ? (
-                        <motion.div
-                          key="nav-content"
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: 10 }}
-                          transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
-                        >
-                          <TableOfContents
-                            activeSection={activeSection}
-                            onNavigate={handleMenuNavigate}
-                          />
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          key="settings-content"
-                          initial={{ opacity: 0, x: 10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -10 }}
-                          transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
-                        >
-                          <SettingsPanel />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Footer: Quick language switcher */}
-                  <div className="px-6 py-4 border-t border-stone/30">
-                    <div className="flex items-center justify-center space-x-2">
-                      {languagePills.map((pill) => (
-                        <RippleEffect key={pill.value} className="rounded-full">
-                          <button
-                            onClick={() => setLanguage(pill.value)}
-                            className={`px-4 py-2 rounded-full font-hud text-xs tracking-wide min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
-                              language === pill.value
-                                ? 'bg-terracotta text-white font-medium'
-                                : 'bg-stone/30 text-charcoal-light hover:text-charcoal hover:bg-stone/50'
-                            }`}
-                            aria-label={`${t('accessibility.languageSelector')}: ${pill.label}`}
-                            aria-pressed={language === pill.value}
+                  {/* Navigation Links */}
+                  <nav className="flex-1 overflow-y-auto px-6 py-6" aria-label={t('accessibility.mainNavigation')}>
+                    <ul className="flex flex-col space-y-1">
+                      {navItems.map((item, i) => {
+                        const isActive = activeSection === item.id;
+                        return (
+                          <motion.li
+                            key={item.id}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={
+                              reducedMotion
+                                ? { duration: 0 }
+                                : { delay: i * 0.05, duration: 0.3, ease: [0.16, 1, 0.3, 1] }
+                            }
                           >
-                            {pill.label}
+                            <button
+                              onClick={() => handleNavClick(item.id)}
+                              className={`w-full flex items-center px-4 py-3 rounded-lg text-left transition-all duration-200 min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 ${
+                                isActive
+                                  ? 'bg-terracotta/10 border-l-2 border-terracotta text-terracotta font-medium'
+                                  : 'text-charcoal-light hover:text-charcoal hover:bg-stone/30 border-l-2 border-transparent'
+                              }`}
+                              data-cursor="magnetic"
+                              aria-current={isActive ? 'true' : undefined}
+                            >
+                              <span className="font-hud text-sm tracking-wide">
+                                {t(item.labelKey)}
+                              </span>
+                            </button>
+                          </motion.li>
+                        );
+                      })}
+                    </ul>
+                  </nav>
+
+                  {/* Footer: Theme toggle + Language switcher */}
+                  <div className="px-6 py-4 border-t border-stone/30 space-y-4">
+                    {/* Theme toggle */}
+                    <div className="flex items-center justify-center space-x-1">
+                      {themeOptions.map((option) => {
+                        const Icon = option.icon;
+                        return (
+                          <button
+                            key={option.value}
+                            onClick={() => setTheme(option.value)}
+                            className={`flex items-center justify-center w-10 h-10 rounded-full cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
+                              preferences.theme === option.value
+                                ? 'bg-terracotta/10 text-terracotta border border-terracotta/20'
+                                : 'text-charcoal-light hover:text-charcoal hover:bg-stone/30'
+                            }`}
+                            aria-label={`${t('settings.theme.title')}: ${t(`settings.theme.${option.value}`)}`}
+                            aria-pressed={preferences.theme === option.value}
+                          >
+                            <Icon className="w-4 h-4" />
                           </button>
-                        </RippleEffect>
+                        );
+                      })}
+                    </div>
+
+                    {/* Language switcher */}
+                    <div className="flex items-center justify-center space-x-2">
+                      {languageOptions.map((pill) => (
+                        <button
+                          key={pill.value}
+                          onClick={() => setLanguage(pill.value)}
+                          className={`px-4 py-2 rounded-full font-hud text-xs tracking-wide min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
+                            language === pill.value
+                              ? 'bg-terracotta text-white font-medium'
+                              : 'bg-stone/30 text-charcoal-light hover:text-charcoal hover:bg-stone/50'
+                          }`}
+                          aria-label={`${t('accessibility.languageSelector')}: ${pill.label}`}
+                          aria-pressed={language === pill.value}
+                        >
+                          {pill.label}
+                        </button>
                       ))}
                     </div>
                   </div>

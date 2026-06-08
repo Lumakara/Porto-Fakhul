@@ -1,0 +1,24 @@
+{
+  "id": "FEAT-003",
+  "type": "feat",
+  "description": "Redesign the Projects section: on mobile, display projects in a 2-column grid. When a project is clicked, navigate to a dedicated project detail page (not a static modal panel). The detail page should be ultra-functional and ultra-interactive with animated sections, interactive tech stack visualization, challenge/solution expandable panels, and smooth page transitions.",
+  "status": "pending",
+  "steps": [
+    "In src/sections/Projects.tsx: Change the grid layout to show 2 columns on mobile (grid-cols-2) instead of the current grid-cols-1 on mobile. Remove the 'featured' and 'horizontal' layout variants for mobile - on mobile all cards should be equal-sized compact cards in a 2-col grid. On desktop keep the current bento layout.",
+    "Replace the modal/overlay approach with page-based navigation. Add a simple state-based 'router' in App.tsx: when a project is selected, show a ProjectDetail page component instead of the main content (or use a full-screen animated page transition). Add state management for selected project ID in App.tsx.",
+    "Create a new component src/sections/ProjectDetail.tsx: This is a full-page interactive project detail view. It should include: (a) A hero section with project title, category, and gradient background; (b) An animated tabbed interface with Overview, Challenge, Solution, and Tech Stack sections that the user can swipe or click through; (c) Interactive tech stack visualization (animated pills/cards that reveal more info on hover/click); (d) A back button that navigates back to the main page with smooth transition; (e) Framer Motion page enter/exit animations.",
+    "Remove the AnimatePresence modal code from Projects.tsx (the selectedProject overlay).",
+    "Update the ProjectCard component for mobile: make it more compact with just the gradient visual, title, and category pill. Remove extended descriptions on mobile.",
+    "Add locale entries for the project detail page in en.json, id.json, zh.json: keys like 'sections.projects.detail.back', 'sections.projects.detail.overview', 'sections.projects.detail.techStack', etc."
+  ],
+  "acceptance_criteria": [
+    "On mobile viewport (< 768px), projects display in a 2-column grid with compact cards",
+    "Clicking a project navigates to a full-page detail view (not a modal)",
+    "The detail page has interactive, animated sections (not a static panel)",
+    "Back button returns to the main page with smooth animation",
+    "Build passes with npm run build"
+  ],
+  "verification": ["npm run build"],
+  "blocked_reason": null,
+  "findings": ""
+}

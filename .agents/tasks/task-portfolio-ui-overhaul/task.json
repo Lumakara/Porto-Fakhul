@@ -1,0 +1,7 @@
+{
+  "task_id": "task-portfolio-ui-overhaul",
+  "task_description": "Major UI overhaul of the portfolio website: simplify navbar, fix dark theme, redesign projects section with mobile 2-col grid and detail pages, make About tabs horizontal/swipeable with soft/hard skills tab, remove Skills section entirely, and redesign Contact section to be ultra-interactive with bug fixes.",
+  "status": "in_progress",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004", "FEAT-005", "FEAT-006"],
+  "blocked_reason": null
+}

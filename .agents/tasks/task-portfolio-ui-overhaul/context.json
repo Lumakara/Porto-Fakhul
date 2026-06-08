@@ -1,0 +1,32 @@
+{
+  "project_type": "React + TypeScript + Vite portfolio website (SPA)",
+  "language": "TypeScript / TSX",
+  "build_system": "Vite 8 with @vitejs/plugin-react and @tailwindcss/vite",
+  "test_framework": "None (no tests configured)",
+  "build_command": "npm run build",
+  "test_command": "npm run build (TypeScript check + Vite build)",
+  "verification_instructions": "Run `npm run build` and check for zero errors. No test suite exists.",
+  "snapshot_or_generated_files": null,
+  "setup_instructions": "cd /projects/sandbox/Porto-Fakhul && npm install",
+  "environment_constraints": "OPEN_INTERNET - full access. Node v22, npm available. No Docker needed.",
+  "contribution_requirements": "No CONTRIBUTING.md exists. Follow existing code patterns.",
+  "key_patterns": "Components use framer-motion for animations, tailwindcss v4 with @theme for colors, Lucide icons, multi-language support via locales (en.json, id.json, zh.json) and LanguageContext. Dark theme uses [data-theme='dark'] CSS attribute with CSS variable overrides in index.css. Preferences are stored in PreferencesContext. Components use cursor-none and data-cursor attributes for custom cursor interactions.",
+  "relevant_files": [
+    "src/components/Navbar.tsx",
+    "src/components/menu/SettingsPanel.tsx",
+    "src/components/menu/TableOfContents.tsx",
+    "src/sections/About.tsx",
+    "src/sections/Projects.tsx",
+    "src/sections/Skills.tsx",
+    "src/sections/Contact.tsx",
+    "src/index.css",
+    "src/App.tsx",
+    "src/contexts/PreferencesContext.tsx",
+    "src/locales/en.json",
+    "src/locales/id.json",
+    "src/locales/zh.json",
+    "src/types/index.ts",
+    "src/components/Section.tsx"
+  ],
+  "directory_structure": "src/ contains: App.tsx (main app with router), components/ (Navbar, CustomCursor, Section, menu/), sections/ (Hero, About, Projects, Skills, Contact, NotFound), contexts/ (Language, Preferences), locales/ (en, id, zh JSON), lib/ (deviceCapability, motion, storage), types/ (index.ts)"
+}

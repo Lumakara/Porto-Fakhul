@@ -1,13 +1,12 @@
 {
   "nav": {
-    "home": "// BERANDA",
-    "about": "// CETAK BIRU",
-    "projects": "// ARSIP",
-    "skills": "// MATRIKS",
-    "contact": "// UPLINK",
+    "home": "Beranda",
+    "about": "Tentang",
+    "projects": "Proyek",
+    "skills": "Keahlian",
+    "contact": "Kontak",
     "logo": "FR",
-    "logoSub": "PORTOFOLIO",
-    "status": "UPLINK_ON"
+    "logoSub": "PORTOFOLIO"
   },
   "menu": {
     "tableOfContents": "Daftar Isi",

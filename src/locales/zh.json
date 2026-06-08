@@ -1,13 +1,12 @@
 {
   "nav": {
-    "home": "// \u9996\u9875",
-    "about": "// \u84dd\u56fe",
-    "projects": "// \u6863\u6848",
-    "skills": "// \u77e9\u9635",
-    "contact": "// \u94fe\u63a5",
+    "home": "\u9996\u9875",
+    "about": "\u5173\u4e8e",
+    "projects": "\u9879\u76ee",
+    "skills": "\u6280\u80fd",
+    "contact": "\u8054\u7cfb",
     "logo": "FR",
-    "logoSub": "\u4f5c\u54c1\u96c6",
-    "status": "UPLINK_ON"
+    "logoSub": "\u4f5c\u54c1\u96c6"
   },
   "menu": {
     "tableOfContents": "\u76ee\u5f55",
