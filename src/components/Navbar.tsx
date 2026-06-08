@@ -1,12 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Radio } from 'lucide-react';
 import { Magnetic } from './Magnetic';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useReducedMotion } from '../lib/motion';
+import { FocusTrap } from './menu/FocusTrap';
+import { TableOfContents } from './menu/TableOfContents';
+import { SettingsPanel } from './menu/SettingsPanel';
+import { RippleEffect } from './menu/RippleEffect';
+import type { Language } from '../types';
+
+type MenuTab = 'navigation' | 'settings';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<MenuTab>('navigation');
+
+  const { t, language, setLanguage } = useLanguage();
+  const reducedMotion = useReducedMotion();
 
   const navItems = [
     { id: 'home', label: '// HOME' },
@@ -41,14 +54,75 @@ export const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Scroll lock when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add('scroll-locked');
+    } else {
+      document.body.classList.remove('scroll-locked');
+    }
+    return () => {
+      document.body.classList.remove('scroll-locked');
+    };
+  }, [isMobileMenuOpen]);
+
+  const closeMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
+
   const handleNavClick = (id: string) => {
     setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
-      // Use native scrollIntoView; Lenis will automatically intercept and smooth it out!
       element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(id);
     }
+  };
+
+  const handleMenuNavigate = useCallback((id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setActiveSection(id);
+    }
+    // Close menu after slight delay for scroll to begin
+    setTimeout(() => {
+      setIsMobileMenuOpen(false);
+    }, 300);
+  }, []);
+
+  const languagePills: { value: Language; label: string }[] = [
+    { value: 'en', label: 'EN' },
+    { value: 'id', label: 'ID' },
+    { value: 'zh', label: 'ZH' },
+  ];
+
+  const panelVariants = {
+    hidden: { x: '100%' },
+    visible: {
+      x: 0,
+      transition: reducedMotion
+        ? { duration: 0 }
+        : { type: 'spring' as const, stiffness: 300, damping: 30 },
+    },
+    exit: {
+      x: '100%',
+      transition: reducedMotion
+        ? { duration: 0 }
+        : { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const },
+    },
+  };
+
+  const backdropVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: reducedMotion ? { duration: 0 } : { duration: 0.2 },
+    },
+    exit: {
+      opacity: 0,
+      transition: reducedMotion ? { duration: 0 } : { duration: 0.2 },
+    },
   };
 
   return (
@@ -118,56 +192,182 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Hamburguer Toggle */}
+          {/* Mobile Hamburger Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full glassmorphism border border-charcoal/10 text-charcoal cursor-none"
+            className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full glassmorphism border border-charcoal/10 text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2"
             data-cursor="magnetic"
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={t('accessibility.menuToggle')}
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <AnimatePresence mode="wait" initial={false}>
+              {isMobileMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ scale: 0, rotate: -90 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  exit={{ scale: 0, rotate: 90 }}
+                  transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
+                >
+                  <X className="w-5 h-5" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ scale: 0, rotate: 90 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  exit={{ scale: 0, rotate: -90 }}
+                  transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
+                >
+                  <Menu className="w-5 h-5" />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </motion.header>
 
-      {/* Mobile Fullscreen Navigation Drawer */}
+      {/* Screen reader live region for menu state announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {isMobileMenuOpen ? t('menu.open') : ''}
+      </div>
+
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: '-100%' }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: '-100%' }}
-            transition={{ duration: 0.5, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 bg-sand/98 z-40 flex flex-col justify-center items-center px-6 lg:hidden"
-          >
-            {/* Background overlay */}
-            <div className="absolute inset-0 cyber-grid opacity-10 pointer-events-none" />
-            <div className="absolute top-[20%] left-[20%] w-[300px] h-[300px] bg-terracotta/5 rounded-full blur-[100px] pointer-events-none" />
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              variants={backdropVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed inset-0 bg-charcoal/20 backdrop-blur-sm z-[60] lg:hidden"
+              onClick={closeMenu}
+              aria-hidden="true"
+            />
 
-            <div className="flex flex-col space-y-6 text-center font-hud">
-              {navItems.map((item, idx) => (
-                <motion.button
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 * idx, duration: 0.5 }}
-                  onClick={() => handleNavClick(item.id)}
-                  className={`text-2xl font-bold tracking-wider relative cursor-none ${
-                    activeSection === item.id 
-                      ? 'text-terracotta' 
-                      : 'text-charcoal-light hover:text-charcoal'
-                  }`}
-                >
-                  {item.label}
-                </motion.button>
-              ))}
-            </div>
-            
-            {/* Drawer Footer details */}
-            <div className="absolute bottom-8 flex flex-col items-center text-[10px] text-charcoal-light font-hud tracking-widest uppercase">
-              <span className="text-sage">DEPOK, JAWA BARAT</span>
-              <span className="mt-1">WEB_DEVELOPER // 2026</span>
-            </div>
-          </motion.div>
+            {/* Panel */}
+            <motion.div
+              key="panel"
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label={t('accessibility.mainNavigation')}
+              variants={panelVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed right-0 top-0 bottom-0 w-full md:max-w-[400px] bg-sand/98 backdrop-blur-xl z-[70] lg:hidden flex flex-col shadow-2xl"
+            >
+              {/* Noise overlay */}
+              <div className="noise-overlay rounded-l-2xl" />
+
+              <FocusTrap active={isMobileMenuOpen} onEscape={closeMenu}>
+                <div className="relative flex flex-col h-full">
+                  {/* Header */}
+                  <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-stone/30">
+                    <span className="font-hud text-xs font-medium text-charcoal-light tracking-widest uppercase">
+                      {t('accessibility.mainNavigation')}
+                    </span>
+                    <RippleEffect className="rounded-full">
+                      <button
+                        onClick={closeMenu}
+                        className="w-10 h-10 flex items-center justify-center rounded-full border border-stone text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 hover:bg-stone/30 transition-colors duration-200"
+                        aria-label={t('menu.close')}
+                        data-cursor="magnetic"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </RippleEffect>
+                  </div>
+
+                  {/* Tab switcher */}
+                  <div className="flex px-6 pt-4 pb-2 space-x-1">
+                    {([
+                      { id: 'navigation' as const, label: t('menu.tableOfContents') },
+                      { id: 'settings' as const, label: t('menu.settings') },
+                    ]).map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`relative flex-1 px-4 py-2 font-hud text-xs tracking-wide rounded-lg min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
+                          activeTab === tab.id
+                            ? 'text-terracotta font-medium'
+                            : 'text-charcoal-light hover:text-charcoal'
+                        }`}
+                        role="tab"
+                        aria-selected={activeTab === tab.id}
+                      >
+                        {activeTab === tab.id && (
+                          <motion.div
+                            layoutId="menu-tab-indicator"
+                            className="absolute inset-0 bg-terracotta/10 border border-terracotta/20 rounded-lg"
+                            transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 30 }}
+                          />
+                        )}
+                        <span className="relative z-10">{tab.label}</span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Content area */}
+                  <div className="flex-1 overflow-y-auto px-6 py-4">
+                    <AnimatePresence mode="wait">
+                      {activeTab === 'navigation' ? (
+                        <motion.div
+                          key="nav-content"
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: 10 }}
+                          transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
+                        >
+                          <TableOfContents
+                            activeSection={activeSection}
+                            onNavigate={handleMenuNavigate}
+                          />
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="settings-content"
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -10 }}
+                          transition={reducedMotion ? { duration: 0 } : { duration: 0.2 }}
+                        >
+                          <SettingsPanel />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Footer: Quick language switcher */}
+                  <div className="px-6 py-4 border-t border-stone/30">
+                    <div className="flex items-center justify-center space-x-2">
+                      {languagePills.map((pill) => (
+                        <RippleEffect key={pill.value} className="rounded-full">
+                          <button
+                            onClick={() => setLanguage(pill.value)}
+                            className={`px-4 py-2 rounded-full font-hud text-xs tracking-wide min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
+                              language === pill.value
+                                ? 'bg-terracotta text-white font-medium'
+                                : 'bg-stone/30 text-charcoal-light hover:text-charcoal hover:bg-stone/50'
+                            }`}
+                            aria-label={`${t('accessibility.languageSelector')}: ${pill.label}`}
+                            aria-pressed={language === pill.value}
+                          >
+                            {pill.label}
+                          </button>
+                        </RippleEffect>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </FocusTrap>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

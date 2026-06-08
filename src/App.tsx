@@ -10,7 +10,7 @@ import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { TextReveal, premiumEase } from './components/Section';
 import { LanguageProvider } from './contexts/LanguageContext';
-import { PreferencesProvider } from './contexts/PreferencesContext';
+import { PreferencesProvider, usePreferences } from './contexts/PreferencesContext';
 
 import { NotFound } from './sections/NotFound';
 
@@ -18,6 +18,32 @@ import { NotFound } from './sections/NotFound';
 const Projects = lazy(() => import('./sections/Projects'));
 const Skills = lazy(() => import('./sections/Skills'));
 const Contact = lazy(() => import('./sections/Contact'));
+
+function ThemeApplicator() {
+  const { preferences } = usePreferences();
+
+  useEffect(() => {
+    const applyTheme = (dark: boolean) => {
+      document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    };
+
+    if (preferences.theme === 'dark') {
+      applyTheme(true);
+    } else if (preferences.theme === 'light') {
+      applyTheme(false);
+    } else {
+      // System preference
+      const mql = window.matchMedia('(prefers-color-scheme: dark)');
+      applyTheme(mql.matches);
+
+      const handler = (e: MediaQueryListEvent) => applyTheme(e.matches);
+      mql.addEventListener('change', handler);
+      return () => mql.removeEventListener('change', handler);
+    }
+  }, [preferences.theme]);
+
+  return null;
+}
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -65,6 +91,7 @@ function App() {
   return (
     <LanguageProvider>
     <PreferencesProvider>
+      <ThemeApplicator />
       {/* Cinematic Boot preloader */}
       <Preloader onComplete={() => setIsLoading(false)} />
 
