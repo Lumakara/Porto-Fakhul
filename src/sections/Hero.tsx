@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Magnetic } from '../components/Magnetic';
 import { premiumEase } from '../components/Section';
-import { WebGLBackground } from '../components/WebGLBackground';
+import { LazyWebGL } from '../components/LazyWebGL';
 import { useLanguage } from '../contexts/LanguageContext';
 
 // Animated counter hook
@@ -49,7 +49,7 @@ export const Hero = () => {
       className="relative min-h-[100dvh] w-full flex flex-col justify-center items-center overflow-hidden"
     >
       {/* Background layers */}
-      <WebGLBackground />
+      <LazyWebGL />
       <div className="noise-overlay z-0" />
       {/* Center radial spotlight */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sage/5 rounded-full blur-[150px] pointer-events-none z-0" />

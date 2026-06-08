@@ -81,6 +81,17 @@ if (!isMobile) {
 }
 
     // Render loop
+let isPaused = false;
+
+const handleVisibilityChange = () => {
+  isPaused = document.hidden;
+};
+
+document.addEventListener(
+  'visibilitychange',
+  handleVisibilityChange
+);
+
 const animate = () => {
   if (isPaused) {
     animationId = requestAnimationFrame(animate);
@@ -153,16 +164,6 @@ return () => {
   );
   cancelAnimationFrame(animationId);
 };
-let isPaused = false;
-
-const handleVisibilityChange = () => {
-  isPaused = document.hidden;
-};
-
-document.addEventListener(
-  'visibilitychange',
-  handleVisibilityChange
-);
   }, []);
 
   return (

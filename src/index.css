@@ -127,6 +127,14 @@ body {
   }
 }
 
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+
 /* Natural Grid Background overlay */
 .cyber-grid {
   background-image: radial-gradient(rgba(42, 42, 42, 0.05) 1px, transparent 1px);

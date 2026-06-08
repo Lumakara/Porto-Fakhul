@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useDeviceCapability } from '../lib/deviceCapability';
+import { usePreferences } from '../contexts/PreferencesContext';
 
-export const CustomCursor = () => {
+const CustomCursorInner = () => {
   const [hoveredType, setHoveredType] = useState<'none' | 'grow' | 'magnetic' | 'text'>('none');
   const [cursorText, setCursorText] = useState('');
   const [isVisible, setIsVisible] = useState(false);
@@ -166,4 +168,16 @@ export const CustomCursor = () => {
       />
     </>
   );
+};
+
+export const CustomCursor = () => {
+  const capability = useDeviceCapability();
+  const { preferences } = usePreferences();
+
+  // Skip rendering on low-end devices or if cursor effects disabled
+  if (capability === 'low' || !preferences.visualEffects.cursorEffects) {
+    return null;
+  }
+
+  return <CustomCursorInner />;
 };
