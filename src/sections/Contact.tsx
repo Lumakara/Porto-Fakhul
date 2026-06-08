@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import type { FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Terminal, Compass, Mail, ArrowUpRight, AlertCircle, RotateCcw } from 'lucide-react';
+import { Send, Terminal, Compass, Mail, ArrowUpRight, AlertCircle, RotateCcw, User, MessageSquare, Phone, Calendar, Quote } from 'lucide-react';
 import { Section, premiumEase, Parallax } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -192,7 +192,89 @@ export const Contact = () => {
             <br />
             <span className="italic font-light text-charcoal-light">{t('sections.contact.headingItalic')}</span>
           </motion.h2>
+
+          {/* Availability Status */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0, delay: 0.3, ease: premiumEase }}
+            className="flex items-center gap-2 mt-5"
+          >
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-availability-pulse absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+            </span>
+            <span className="text-xs font-hud text-charcoal-light tracking-wider">
+              {t('sections.contact.availabilityStatus')}
+            </span>
+          </motion.div>
         </div>
+
+        {/* Quick Contact Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12"
+        >
+          {/* WhatsApp Card */}
+          <Magnetic range={0.3}>
+            <a
+              href="https://wa.me/6281234567890"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-3 bg-surface/70 border border-charcoal/5 hover:border-green-400/30 px-5 py-4 rounded-xl transition-all duration-300 hover:shadow-md cursor-none"
+              data-cursor="magnetic"
+            >
+              <div className="p-2.5 rounded-lg bg-green-50 group-hover:bg-green-100 transition-colors duration-300">
+                <Phone className="w-4 h-4 text-green-600" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-charcoal font-sans">{t('sections.contact.whatsapp')}</span>
+                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.contact.quickContact')}</span>
+              </div>
+              <ArrowUpRight className="w-3.5 h-3.5 text-charcoal-light ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </a>
+          </Magnetic>
+
+          {/* Email Card */}
+          <Magnetic range={0.3}>
+            <a
+              href="mailto:fakhulrohman2@gmail.com"
+              className="group flex items-center gap-3 bg-surface/70 border border-charcoal/5 hover:border-terracotta/30 px-5 py-4 rounded-xl transition-all duration-300 hover:shadow-md cursor-none"
+              data-cursor="magnetic"
+            >
+              <div className="p-2.5 rounded-lg bg-terracotta/5 group-hover:bg-terracotta/10 transition-colors duration-300">
+                <Mail className="w-4 h-4 text-terracotta" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-charcoal font-sans">Email</span>
+                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.contact.quickContact')}</span>
+              </div>
+              <ArrowUpRight className="w-3.5 h-3.5 text-charcoal-light ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </a>
+          </Magnetic>
+
+          {/* Schedule Call Card */}
+          <Magnetic range={0.3}>
+            <a
+              href="mailto:fakhulrohman2@gmail.com?subject=Schedule%20a%20Call"
+              className="group flex items-center gap-3 bg-surface/70 border border-charcoal/5 hover:border-sage/30 px-5 py-4 rounded-xl transition-all duration-300 hover:shadow-md cursor-none"
+              data-cursor="magnetic"
+            >
+              <div className="p-2.5 rounded-lg bg-sage/5 group-hover:bg-sage/10 transition-colors duration-300">
+                <Calendar className="w-4 h-4 text-sage" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-charcoal font-sans">{t('sections.contact.scheduleCall')}</span>
+                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.contact.quickContact')}</span>
+              </div>
+              <ArrowUpRight className="w-3.5 h-3.5 text-charcoal-light ml-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </a>
+          </Magnetic>
+        </motion.div>
 
         {/* Dual Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -293,6 +375,29 @@ export const Contact = () => {
                 </Magnetic>
               ))}
             </div>
+
+            {/* Testimonial / Social Proof */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.0, delay: 0.4, ease: premiumEase }}
+              className="bg-surface/50 border border-charcoal/5 rounded-xl p-5 mt-4"
+            >
+              <Quote className="w-5 h-5 text-terracotta/40 mb-3" />
+              <p className="text-sm text-charcoal-light font-sans leading-relaxed italic">
+                &ldquo;{t('sections.contact.testimonial')}&rdquo;
+              </p>
+              <div className="flex items-center gap-2 mt-3">
+                <div className="w-7 h-7 rounded-full bg-sage/20 flex items-center justify-center">
+                  <User className="w-3.5 h-3.5 text-sage" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs font-medium text-charcoal font-sans">{t('sections.contact.testimonialAuthor')}</span>
+                  <span className="text-[10px] text-charcoal-light font-hud tracking-wider">{t('sections.contact.testimonialRole')}</span>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Right Column: Form */}
@@ -303,360 +408,364 @@ export const Contact = () => {
             transition={{ duration: 1.4, delay: 0.3, ease: premiumEase }}
             className="lg:col-span-7"
           >
-            <div className="bg-surface/50 border border-charcoal/5 rounded-2xl p-6 md:p-8 relative overflow-hidden min-h-[400px] flex flex-col justify-between shadow-sm">
+            {/* Gradient border wrapper */}
+            <div className="relative rounded-2xl p-[1px] animate-gradient-border">
+              <div className="glassmorphism rounded-2xl p-6 md:p-8 relative overflow-hidden min-h-[400px] flex flex-col justify-between">
               
-              {/* Subtle glow */}
-              <div className="absolute -top-20 -right-20 w-[200px] h-[200px] bg-sage/10 rounded-full blur-[80px] pointer-events-none" />
+                {/* Subtle glow */}
+                <div className="absolute -top-20 -right-20 w-[200px] h-[200px] bg-sage/10 rounded-full blur-[80px] pointer-events-none" />
 
-              <AnimatePresence mode="wait">
-                {status === 'idle' && (
-                  <motion.form
-                    key="form"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    onSubmit={handleSubmit}
-                    className="flex flex-col space-y-5 text-left w-full relative z-10"
-                  >
-                    {/* Progress indicator */}
-                    <div className="flex items-center gap-2 mb-1">
-                      {[0, 1, 2].map((i) => (
+                <AnimatePresence mode="wait">
+                  {status === 'idle' && (
+                    <motion.form
+                      key="form"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      onSubmit={handleSubmit}
+                      className="flex flex-col space-y-5 text-left w-full relative z-10"
+                    >
+                      {/* Progress indicator */}
+                      <div className="flex items-center gap-2 mb-1">
+                        {[0, 1, 2].map((i) => (
+                          <motion.div
+                            key={i}
+                            className="h-1 flex-1 rounded-full overflow-hidden bg-charcoal/5"
+                          >
+                            <motion.div
+                              className="h-full rounded-full bg-terracotta"
+                              initial={{ width: '0%' }}
+                              animate={{ width: filledCount > i ? '100%' : '0%' }}
+                              transition={{ duration: 0.4, ease: premiumEase }}
+                            />
+                          </motion.div>
+                        ))}
+                        <span className="text-[10px] font-hud text-charcoal-light ml-1">{filledCount}/3</span>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        {/* Name */}
+                        <div className="flex flex-col space-y-1">
+                          <div className="relative">
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 p-1 z-10 pointer-events-none">
+                              <User className="w-3.5 h-3.5 text-charcoal-light/40" />
+                            </div>
+                            <input
+                              id="name"
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleInputChange}
+                              onBlur={handleBlur}
+                              placeholder=" "
+                              className={`peer w-full bg-surface border rounded-xl pl-10 pr-4 pt-6 pb-2 text-charcoal text-sm font-sans outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm ${
+                                errors.name && touched.name
+                                  ? 'border-red-400 focus:border-red-400'
+                                  : 'border-charcoal/10 focus:border-terracotta/50'
+                              }`}
+                              data-cursor="grow"
+                            />
+                            <label
+                              htmlFor="name"
+                              className="absolute left-10 top-1/2 -translate-y-1/2 text-charcoal-light/50 text-sm font-sans pointer-events-none transition-all duration-300 peer-focus:top-3 peer-focus:text-[10px] peer-focus:font-hud peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-terracotta peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:font-hud peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest peer-[:not(:placeholder-shown)]:text-charcoal-light"
+                            >
+                              {t('sections.contact.form.nameLabel')}
+                            </label>
+                          </div>
+                          <AnimatePresence>
+                            {errors.name && touched.name && (
+                              <motion.span
+                                initial={{ opacity: 0, y: -4 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -4 }}
+                                className="text-[11px] text-red-400 font-sans pl-1"
+                              >
+                                {errors.name}
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                        
+                        {/* Email */}
+                        <div className="flex flex-col space-y-1">
+                          <div className="relative">
+                            <div className="absolute left-3 top-1/2 -translate-y-1/2 p-1 z-10 pointer-events-none">
+                              <Mail className="w-3.5 h-3.5 text-charcoal-light/40" />
+                            </div>
+                            <input
+                              id="email"
+                              type="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              onBlur={handleBlur}
+                              placeholder=" "
+                              className={`peer w-full bg-surface border rounded-xl pl-10 pr-4 pt-6 pb-2 text-charcoal text-sm font-sans outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm ${
+                                errors.email && touched.email
+                                  ? 'border-red-400 focus:border-red-400'
+                                  : 'border-charcoal/10 focus:border-terracotta/50'
+                              }`}
+                              data-cursor="grow"
+                            />
+                            <label
+                              htmlFor="email"
+                              className="absolute left-10 top-1/2 -translate-y-1/2 text-charcoal-light/50 text-sm font-sans pointer-events-none transition-all duration-300 peer-focus:top-3 peer-focus:text-[10px] peer-focus:font-hud peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-terracotta peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:font-hud peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest peer-[:not(:placeholder-shown)]:text-charcoal-light"
+                            >
+                              {t('sections.contact.form.emailLabel')}
+                            </label>
+                          </div>
+                          <AnimatePresence>
+                            {errors.email && touched.email && (
+                              <motion.span
+                                initial={{ opacity: 0, y: -4 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -4 }}
+                                className="text-[11px] text-red-400 font-sans pl-1"
+                              >
+                                {errors.email}
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      </div>
+
+                      {/* Message */}
+                      <div className="flex flex-col space-y-1">
+                        <div className="relative">
+                          <div className="absolute left-3 top-5 p-1 z-10 pointer-events-none">
+                            <MessageSquare className="w-3.5 h-3.5 text-charcoal-light/40" />
+                          </div>
+                          <textarea
+                            id="message"
+                            name="message"
+                            value={formData.message}
+                            onChange={handleInputChange}
+                            onBlur={handleBlur}
+                            rows={5}
+                            placeholder=" "
+                            className={`peer w-full bg-surface border rounded-xl pl-10 pr-4 pt-6 pb-2 text-charcoal text-sm font-sans outline-none transition-all duration-300 hover:border-charcoal/20 resize-none cursor-none shadow-sm ${
+                              errors.message && touched.message
+                                ? 'border-red-400 focus:border-red-400'
+                                : 'border-charcoal/10 focus:border-terracotta/50'
+                            }`}
+                            data-cursor="grow"
+                          />
+                          <label
+                            htmlFor="message"
+                            className="absolute left-10 top-5 text-charcoal-light/50 text-sm font-sans pointer-events-none transition-all duration-300 peer-focus:top-2 peer-focus:text-[10px] peer-focus:font-hud peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-terracotta peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:font-hud peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest peer-[:not(:placeholder-shown)]:text-charcoal-light"
+                          >
+                            {t('sections.contact.form.messageLabel')}
+                          </label>
+                        </div>
+                        <div className="flex items-center justify-between px-1">
+                          <AnimatePresence>
+                            {errors.message && touched.message && (
+                              <motion.span
+                                initial={{ opacity: 0, y: -4 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -4 }}
+                                className="text-[11px] text-red-400 font-sans"
+                              >
+                                {errors.message}
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
+                          <span className={`text-[11px] font-mono ml-auto ${
+                            formData.message.length > MAX_MESSAGE_LENGTH * 0.9
+                              ? 'text-red-400'
+                              : 'text-charcoal-light/60'
+                          }`}>
+                            {formData.message.length}/{MAX_MESSAGE_LENGTH}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Submit */}
+                      <div className="pt-2 flex justify-end">
+                        <Magnetic range={0.3}>
+                          <motion.button
+                            type="submit"
+                            disabled={!isFormValid()}
+                            className={`group font-hud text-xs tracking-widest px-8 py-4 rounded-full flex items-center space-x-2 transition-all duration-300 shadow-sm cursor-none relative overflow-hidden ${
+                              isFormValid()
+                                ? 'bg-charcoal text-sand hover:shadow-md hover:bg-terracotta'
+                                : 'bg-charcoal/40 text-sand/60 cursor-not-allowed'
+                            }`}
+                            animate={
+                              isFormValid()
+                                ? { boxShadow: ['0 0 0 0 rgba(185,111,89,0)', '0 0 12px 2px rgba(185,111,89,0.2)', '0 0 0 0 rgba(185,111,89,0)'] }
+                                : { boxShadow: '0 0 0 0 rgba(185,111,89,0)' }
+                            }
+                            transition={
+                              isFormValid()
+                                ? { duration: 2, repeat: Infinity, ease: 'easeInOut' }
+                                : { duration: 0.3 }
+                            }
+                            data-cursor="grow"
+                          >
+                            <span className="relative z-10">{t('sections.contact.form.submit')}</span>
+                            <Send className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </motion.button>
+                        </Magnetic>
+                      </div>
+                    </motion.form>
+                  )}
+
+                  {status === 'sending' && (
+                    <motion.div
+                      key="sending"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex flex-col items-stretch text-left h-full w-full relative z-10"
+                    >
+                      <div className="flex items-center space-x-2 text-terracotta font-hud text-xs font-medium uppercase tracking-wider mb-4">
+                        <Terminal className="w-4 h-4 animate-pulse" />
+                        <span>{t('sections.contact.sending.title')}</span>
+                      </div>
+
+                      {/* Progress bar */}
+                      <div className="w-full h-1 bg-charcoal/5 rounded-full mb-5 overflow-hidden">
                         <motion.div
-                          key={i}
-                          className="h-1 flex-1 rounded-full overflow-hidden bg-charcoal/5"
-                        >
-                          <motion.div
-                            className="h-full rounded-full bg-terracotta"
-                            initial={{ width: '0%' }}
-                            animate={{ width: filledCount > i ? '100%' : '0%' }}
-                            transition={{ duration: 0.4, ease: premiumEase }}
-                          />
-                        </motion.div>
-                      ))}
-                      <span className="text-[10px] font-hud text-charcoal-light ml-1">{filledCount}/3</span>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      {/* Name */}
-                      <div className="flex flex-col space-y-1">
-                        <div className="relative">
-                          <input
-                            id="name"
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            onBlur={handleBlur}
-                            placeholder=" "
-                            className={`peer w-full bg-surface border rounded-xl px-4 pt-6 pb-2 text-charcoal text-sm font-sans outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm ${
-                              errors.name && touched.name
-                                ? 'border-red-400 focus:border-red-400'
-                                : 'border-charcoal/10 focus:border-terracotta/50'
-                            }`}
-                            data-cursor="grow"
-                          />
-                          <label
-                            htmlFor="name"
-                            className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-light/50 text-sm font-sans pointer-events-none transition-all duration-300 peer-focus:top-3 peer-focus:text-[10px] peer-focus:font-hud peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-terracotta peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:font-hud peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest peer-[:not(:placeholder-shown)]:text-charcoal-light"
-                          >
-                            {t('sections.contact.form.nameLabel')}
-                          </label>
-                          {/* Focus border animation */}
-                          <motion.div
-                            className="absolute bottom-0 left-1/2 h-[2px] bg-terracotta rounded-full"
-                            initial={{ width: 0, x: '-50%' }}
-                            whileInView={{ width: 0, x: '-50%' }}
-                            animate={undefined}
-                            style={{ translateX: '-50%' }}
-                          />
-                        </div>
-                        <AnimatePresence>
-                          {errors.name && touched.name && (
-                            <motion.span
-                              initial={{ opacity: 0, y: -4 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -4 }}
-                              className="text-[11px] text-red-400 font-sans pl-1"
-                            >
-                              {errors.name}
-                            </motion.span>
-                          )}
-                        </AnimatePresence>
+                          className="h-full bg-terracotta rounded-full"
+                          initial={{ width: '0%' }}
+                          animate={{ width: `${sendingProgress}%` }}
+                          transition={{ duration: 0.5, ease: premiumEase }}
+                        />
                       </div>
-                      
-                      {/* Email */}
-                      <div className="flex flex-col space-y-1">
-                        <div className="relative">
-                          <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            onBlur={handleBlur}
-                            placeholder=" "
-                            className={`peer w-full bg-surface border rounded-xl px-4 pt-6 pb-2 text-charcoal text-sm font-sans outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm ${
-                              errors.email && touched.email
-                                ? 'border-red-400 focus:border-red-400'
-                                : 'border-charcoal/10 focus:border-terracotta/50'
-                            }`}
-                            data-cursor="grow"
-                          />
-                          <label
-                            htmlFor="email"
-                            className="absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-light/50 text-sm font-sans pointer-events-none transition-all duration-300 peer-focus:top-3 peer-focus:text-[10px] peer-focus:font-hud peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-terracotta peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:font-hud peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest peer-[:not(:placeholder-shown)]:text-charcoal-light"
-                          >
-                            {t('sections.contact.form.emailLabel')}
-                          </label>
-                        </div>
-                        <AnimatePresence>
-                          {errors.email && touched.email && (
-                            <motion.span
-                              initial={{ opacity: 0, y: -4 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -4 }}
-                              className="text-[11px] text-red-400 font-sans pl-1"
-                            >
-                              {errors.email}
-                            </motion.span>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </div>
 
-                    {/* Message */}
-                    <div className="flex flex-col space-y-1">
+                      {/* Console logs */}
+                      <div className="flex-1 w-full bg-surface rounded-xl border border-charcoal/10 shadow-inner p-5 font-mono text-xs text-charcoal space-y-2.5 overflow-y-auto select-none">
+                        {consoleLogs.map((log, idx) => (
+                          <motion.div 
+                            key={idx}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex items-start"
+                          >
+                            <span className="mr-2 text-sage font-bold select-none">&rarr;</span>
+                            <span>{log}</span>
+                          </motion.div>
+                        ))}
+                        
+                        {sendingProgress < 100 && (
+                          <div className="flex items-center space-x-1.5 text-charcoal-light animate-pulse mt-2">
+                            <span className="w-1.5 h-1.5 bg-terracotta rounded-full" />
+                            <span>{t('sections.contact.sending.processing')}</span>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {status === 'success' && (
+                    <motion.div
+                      key="success"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex flex-col items-center justify-center text-center my-auto py-12 space-y-6 w-full relative z-10"
+                    >
+                      {/* Celebration rings */}
                       <div className="relative">
-                        <textarea
-                          id="message"
-                          name="message"
-                          value={formData.message}
-                          onChange={handleInputChange}
-                          onBlur={handleBlur}
-                          rows={5}
-                          placeholder=" "
-                          className={`peer w-full bg-surface border rounded-xl px-4 pt-6 pb-2 text-charcoal text-sm font-sans outline-none transition-all duration-300 hover:border-charcoal/20 resize-none cursor-none shadow-sm ${
-                            errors.message && touched.message
-                              ? 'border-red-400 focus:border-red-400'
-                              : 'border-charcoal/10 focus:border-terracotta/50'
-                          }`}
-                          data-cursor="grow"
-                        />
-                        <label
-                          htmlFor="message"
-                          className="absolute left-4 top-5 text-charcoal-light/50 text-sm font-sans pointer-events-none transition-all duration-300 peer-focus:top-2 peer-focus:text-[10px] peer-focus:font-hud peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-terracotta peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:font-hud peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest peer-[:not(:placeholder-shown)]:text-charcoal-light"
-                        >
-                          {t('sections.contact.form.messageLabel')}
-                        </label>
-                      </div>
-                      <div className="flex items-center justify-between px-1">
-                        <AnimatePresence>
-                          {errors.message && touched.message && (
-                            <motion.span
-                              initial={{ opacity: 0, y: -4 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -4 }}
-                              className="text-[11px] text-red-400 font-sans"
-                            >
-                              {errors.message}
-                            </motion.span>
-                          )}
-                        </AnimatePresence>
-                        <span className={`text-[11px] font-mono ml-auto ${
-                          formData.message.length > MAX_MESSAGE_LENGTH * 0.9
-                            ? 'text-red-400'
-                            : 'text-charcoal-light/60'
-                        }`}>
-                          {formData.message.length}/{MAX_MESSAGE_LENGTH}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Submit */}
-                    <div className="pt-2 flex justify-end">
-                      <Magnetic range={0.3}>
-                        <motion.button
-                          type="submit"
-                          disabled={!isFormValid()}
-                          className={`group font-hud text-xs tracking-widest px-8 py-4 rounded-full flex items-center space-x-2 transition-all duration-300 shadow-sm cursor-none relative overflow-hidden ${
-                            isFormValid()
-                              ? 'bg-charcoal text-sand hover:shadow-md hover:bg-terracotta'
-                              : 'bg-charcoal/40 text-sand/60 cursor-not-allowed'
-                          }`}
-                          animate={
-                            isFormValid()
-                              ? { boxShadow: ['0 0 0 0 rgba(185,111,89,0)', '0 0 12px 2px rgba(185,111,89,0.2)', '0 0 0 0 rgba(185,111,89,0)'] }
-                              : { boxShadow: '0 0 0 0 rgba(185,111,89,0)' }
-                          }
-                          transition={
-                            isFormValid()
-                              ? { duration: 2, repeat: Infinity, ease: 'easeInOut' }
-                              : { duration: 0.3 }
-                          }
-                          data-cursor="grow"
-                        >
-                          <span className="relative z-10">{t('sections.contact.form.submit')}</span>
-                          <Send className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </motion.button>
-                      </Magnetic>
-                    </div>
-                  </motion.form>
-                )}
-
-                {status === 'sending' && (
-                  <motion.div
-                    key="sending"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex flex-col items-stretch text-left h-full w-full relative z-10"
-                  >
-                    <div className="flex items-center space-x-2 text-terracotta font-hud text-xs font-medium uppercase tracking-wider mb-4">
-                      <Terminal className="w-4 h-4 animate-pulse" />
-                      <span>{t('sections.contact.sending.title')}</span>
-                    </div>
-
-                    {/* Progress bar */}
-                    <div className="w-full h-1 bg-charcoal/5 rounded-full mb-5 overflow-hidden">
-                      <motion.div
-                        className="h-full bg-terracotta rounded-full"
-                        initial={{ width: '0%' }}
-                        animate={{ width: `${sendingProgress}%` }}
-                        transition={{ duration: 0.5, ease: premiumEase }}
-                      />
-                    </div>
-
-                    {/* Console logs */}
-                    <div className="flex-1 w-full bg-surface rounded-xl border border-charcoal/10 shadow-inner p-5 font-mono text-xs text-charcoal space-y-2.5 overflow-y-auto select-none">
-                      {consoleLogs.map((log, idx) => (
-                        <motion.div 
-                          key={idx}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="flex items-start"
-                        >
-                          <span className="mr-2 text-sage font-bold select-none">&rarr;</span>
-                          <span>{log}</span>
-                        </motion.div>
-                      ))}
-                      
-                      {sendingProgress < 100 && (
-                        <div className="flex items-center space-x-1.5 text-charcoal-light animate-pulse mt-2">
-                          <span className="w-1.5 h-1.5 bg-terracotta rounded-full" />
-                          <span>{t('sections.contact.sending.processing')}</span>
+                        {[0, 1, 2].map((i) => (
+                          <motion.div
+                            key={i}
+                            className="absolute inset-0 rounded-full border border-sage/30"
+                            initial={{ scale: 1, opacity: 0.6 }}
+                            animate={{ scale: 2.5 + i * 0.5, opacity: 0 }}
+                            transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity, repeatDelay: 2 }}
+                          />
+                        ))}
+                        <div className="w-16 h-16 rounded-full bg-sage/10 border border-sage/20 flex items-center justify-center relative">
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
+                          >
+                            <Send className="w-6 h-6 text-sage" />
+                          </motion.div>
                         </div>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
-
-                {status === 'success' && (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="flex flex-col items-center justify-center text-center my-auto py-12 space-y-6 w-full relative z-10"
-                  >
-                    {/* Celebration rings */}
-                    <div className="relative">
-                      {[0, 1, 2].map((i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute inset-0 rounded-full border border-sage/30"
-                          initial={{ scale: 1, opacity: 0.6 }}
-                          animate={{ scale: 2.5 + i * 0.5, opacity: 0 }}
-                          transition={{ duration: 1.5, delay: i * 0.3, repeat: Infinity, repeatDelay: 2 }}
-                        />
-                      ))}
-                      <div className="w-16 h-16 rounded-full bg-sage/10 border border-sage/20 flex items-center justify-center relative">
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.2 }}
-                        >
-                          <Send className="w-6 h-6 text-sage" />
-                        </motion.div>
                       </div>
-                    </div>
 
-                    <div className="space-y-3">
-                      <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">
-                        {t('sections.contact.success.title')}
-                      </h3>
-                      <p className="text-sm text-charcoal-light max-w-sm font-sans leading-relaxed">
-                        {t('sections.contact.success.description')}
-                      </p>
-                    </div>
+                      <div className="space-y-3">
+                        <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">
+                          {t('sections.contact.success.title')}
+                        </h3>
+                        <p className="text-sm text-charcoal-light max-w-sm font-sans leading-relaxed">
+                          {t('sections.contact.success.description')}
+                        </p>
+                      </div>
 
-                    <Magnetic range={0.35}>
-                      <button
-                        onClick={handleReset}
-                        className="bg-surface border border-charcoal/10 text-charcoal font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:bg-terracotta hover:text-white transition-all duration-300 cursor-none shadow-sm hover:shadow-md"
-                        data-cursor="magnetic"
-                      >
-                        {t('sections.contact.success.sendAnother')}
-                      </button>
-                    </Magnetic>
-                  </motion.div>
-                )}
-
-                {status === 'error' && (
-                  <motion.div
-                    key="error"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="flex flex-col items-center justify-center text-center my-auto py-12 space-y-6 w-full relative z-10"
-                  >
-                    <div className="w-16 h-16 rounded-full bg-terracotta/5 border border-terracotta/20 flex items-center justify-center">
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.1 }}
-                      >
-                        <AlertCircle className="w-6 h-6 text-red-400" />
-                      </motion.div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">
-                        {t('sections.contact.error.title')}
-                      </h3>
-                      <p className="text-sm text-charcoal-light max-w-sm font-sans leading-relaxed">
-                        {t('sections.contact.error.description')}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <Magnetic range={0.35}>
-                        <button
-                          onClick={handleRetry}
-                          className="bg-charcoal text-sand font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:bg-terracotta transition-all duration-300 cursor-none shadow-sm hover:shadow-md flex items-center gap-2"
-                          data-cursor="magnetic"
-                        >
-                          <RotateCcw className="w-3.5 h-3.5" />
-                          {t('sections.contact.error.retry')}
-                        </button>
-                      </Magnetic>
                       <Magnetic range={0.35}>
                         <button
                           onClick={handleReset}
-                          className="bg-surface border border-charcoal/10 text-charcoal font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:border-charcoal/20 transition-all duration-300 cursor-none shadow-sm"
+                          className="bg-surface border border-charcoal/10 text-charcoal font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:bg-terracotta hover:text-white transition-all duration-300 cursor-none shadow-sm hover:shadow-md"
                           data-cursor="magnetic"
                         >
-                          {t('sections.contact.error.backToForm')}
+                          {t('sections.contact.success.sendAnother')}
                         </button>
                       </Magnetic>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                    </motion.div>
+                  )}
+
+                  {status === 'error' && (
+                    <motion.div
+                      key="error"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex flex-col items-center justify-center text-center my-auto py-12 space-y-6 w-full relative z-10"
+                    >
+                      <div className="w-16 h-16 rounded-full bg-terracotta/5 border border-terracotta/20 flex items-center justify-center">
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.1 }}
+                        >
+                          <AlertCircle className="w-6 h-6 text-red-400" />
+                        </motion.div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">
+                          {t('sections.contact.error.title')}
+                        </h3>
+                        <p className="text-sm text-charcoal-light max-w-sm font-sans leading-relaxed">
+                          {t('sections.contact.error.description')}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Magnetic range={0.35}>
+                          <button
+                            onClick={handleRetry}
+                            className="bg-charcoal text-sand font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:bg-terracotta transition-all duration-300 cursor-none shadow-sm hover:shadow-md flex items-center gap-2"
+                            data-cursor="magnetic"
+                          >
+                            <RotateCcw className="w-3.5 h-3.5" />
+                            {t('sections.contact.error.retry')}
+                          </button>
+                        </Magnetic>
+                        <Magnetic range={0.35}>
+                          <button
+                            onClick={handleReset}
+                            className="bg-surface border border-charcoal/10 text-charcoal font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:border-charcoal/20 transition-all duration-300 cursor-none shadow-sm"
+                            data-cursor="magnetic"
+                          >
+                            {t('sections.contact.error.backToForm')}
+                          </button>
+                        </Magnetic>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </motion.div>
         </div>

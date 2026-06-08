@@ -223,7 +223,15 @@
         "retry": "Coba Lagi",
         "backToForm": "Kembali ke formulir"
       },
-      "charCount": "{count}/{max}"
+      "charCount": "{count}/{max}",
+      "availability": "Ketersediaan",
+      "availabilityStatus": "Tersedia untuk proyek",
+      "quickContact": "Kontak Cepat",
+      "whatsapp": "WhatsApp",
+      "scheduleCall": "Jadwalkan Panggilan",
+      "testimonial": "Bekerja dengan Fakhul adalah pengalaman yang luar biasa. Dia menghasilkan pekerjaan berkualitas dengan perhatian terhadap detail dan selalu memenuhi tenggat waktu.",
+      "testimonialAuthor": "Kolaborator Proyek",
+      "testimonialRole": "Ketua Tim"
     }
   },
   "common": {

@@ -223,7 +223,15 @@
         "retry": "Try Again",
         "backToForm": "Back to form"
       },
-      "charCount": "{count}/{max}"
+      "charCount": "{count}/{max}",
+      "availability": "Availability",
+      "availabilityStatus": "Available for projects",
+      "quickContact": "Quick Contact",
+      "whatsapp": "WhatsApp",
+      "scheduleCall": "Schedule a Call",
+      "testimonial": "Working with Fakhul was a great experience. He delivers quality work with attention to detail and meets deadlines consistently.",
+      "testimonialAuthor": "Project Collaborator",
+      "testimonialRole": "Team Lead"
     }
   },
   "common": {

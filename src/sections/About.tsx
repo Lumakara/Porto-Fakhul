@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
-import { Compass, Cpu, History, MapPin, Briefcase, Target } from 'lucide-react';
+import { Compass, Cpu, History, MapPin, Briefcase, Target, Zap, Layers } from 'lucide-react';
 import { Section, premiumEase, springEase, Parallax } from '../components/Section';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -292,7 +292,8 @@ export const About = () => {
                     >
                       {/* Soft Skills */}
                       <div className="space-y-4">
-                        <h3 className="text-lg md:text-xl font-display font-medium text-charcoal tracking-wide">
+                        <h3 className="text-lg md:text-xl font-display font-medium text-charcoal tracking-wide flex items-center gap-2">
+                          <Zap className="w-4 h-4 text-terracotta" />
                           {t('sections.about.skills.softTitle')}
                         </h3>
                         <div className="flex flex-wrap gap-3">
@@ -314,7 +315,8 @@ export const About = () => {
 
                       {/* Hard Skills */}
                       <div className="space-y-4">
-                        <h3 className="text-lg md:text-xl font-display font-medium text-charcoal tracking-wide">
+                        <h3 className="text-lg md:text-xl font-display font-medium text-charcoal tracking-wide flex items-center gap-2">
+                          <Layers className="w-4 h-4 text-sage" />
                           {t('sections.about.skills.hardTitle')}
                         </h3>
                         <div className="flex flex-wrap gap-3">

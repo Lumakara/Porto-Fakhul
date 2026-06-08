@@ -223,7 +223,15 @@
         "retry": "\u91cd\u8bd5",
         "backToForm": "\u8fd4\u56de\u8868\u5355"
       },
-      "charCount": "{count}/{max}"
+      "charCount": "{count}/{max}",
+      "availability": "\u53ef\u7528\u6027",
+      "availabilityStatus": "\u53ef\u63a5\u53d7\u9879\u76ee",
+      "quickContact": "\u5feb\u901f\u8054\u7cfb",
+      "whatsapp": "WhatsApp",
+      "scheduleCall": "\u9884\u7ea6\u901a\u8bdd",
+      "testimonial": "\u4e0eFakhul\u5408\u4f5c\u662f\u4e00\u6b21\u5f88\u68d2\u7684\u7ecf\u5386\u3002\u4ed6\u4ea4\u4ed8\u9ad8\u8d28\u91cf\u7684\u5de5\u4f5c\uff0c\u6ce8\u91cd\u7ec6\u8282\uff0c\u59cb\u7ec8\u6309\u65f6\u5b8c\u6210\u3002",
+      "testimonialAuthor": "\u9879\u76ee\u5408\u4f5c\u8005",
+      "testimonialRole": "\u56e2\u961f\u8d1f\u8d23\u4eba"
     }
   },
   "common": {

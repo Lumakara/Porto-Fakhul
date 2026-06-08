@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Code2, Palette, Sparkles } from 'lucide-react';
 import { Magnetic } from '../components/Magnetic';
 import { premiumEase } from '../components/Section';
 import { LazyWebGL } from '../components/LazyWebGL';
@@ -53,6 +54,16 @@ export const Hero = () => {
       <div className="noise-overlay z-0" />
       {/* Center radial spotlight */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sage/5 rounded-full blur-[150px] pointer-events-none z-0" />
+
+      {/* Decorative floating icons */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden" aria-hidden="true">
+        <Code2 className="absolute top-[15%] left-[8%] w-5 h-5 text-terracotta/20 animate-float-gentle" />
+        <Palette className="absolute top-[25%] right-[10%] w-6 h-6 text-sage/20 animate-float-gentle-delayed" />
+        <Sparkles className="absolute bottom-[30%] left-[12%] w-4 h-4 text-gold/25 animate-float-gentle-slow" />
+        <Code2 className="absolute bottom-[35%] right-[8%] w-4 h-4 text-charcoal/10 animate-float-gentle" />
+        <Sparkles className="absolute top-[40%] right-[20%] w-3 h-3 text-terracotta/15 animate-float-gentle-delayed" />
+        <Palette className="absolute top-[60%] left-[5%] w-5 h-5 text-sage/15 animate-float-gentle-slow" />
+      </div>
 
       {/* Main content — centered */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 pt-28 pb-40 max-w-6xl mx-auto w-full">

@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Heart, Coffee, Globe } from 'lucide-react';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
@@ -205,8 +206,9 @@ function AppContent() {
                 {/* Copyright */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-1">
                   <span className="text-charcoal font-medium tracking-wider text-sm font-display">Fakhul Rohman</span>
-                  <span className="text-charcoal-light text-[10px] tracking-widest uppercase font-hud">
+                  <span className="text-charcoal-light text-[10px] tracking-widest uppercase font-hud flex items-center gap-1.5">
                     {t('footer.copyright')}
+                    <Heart className="w-3 h-3 text-terracotta inline-block" />
                   </span>
                 </div>
 
@@ -226,7 +228,11 @@ function AppContent() {
 
                 {/* System Specs */}
                 <div className="flex items-center space-x-4 text-[10px] text-charcoal-light uppercase tracking-widest font-hud">
-                  <span>{t('footer.techStack')}</span>
+                  <span className="flex items-center gap-1.5">
+                    <Coffee className="w-3 h-3 text-charcoal-light" />
+                    {t('footer.techStack')}
+                  </span>
+                  <Globe className="w-3 h-3 text-charcoal-light" />
                   <div className="flex items-center space-x-1.5">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75" />
