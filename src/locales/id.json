@@ -155,6 +155,10 @@
       "selectedWorks": "KARYA TERPILIH",
       "projectArchive": "ARSIP PROYEK",
       "subtitleDesc": "Pilihan kurasi proyek kreatif dan teknis",
+      "filterAll": "Semua",
+      "filterCreative": "Kreatif",
+      "filterSystems": "Sistem",
+      "filterLab": "Lab",
       "detail": {
         "back": "Kembali",
         "overview": "Gambaran",
@@ -162,7 +166,16 @@
         "solution": "Solusi",
         "tech": "Teknologi",
         "category": "Kategori",
-        "id": "ID Proyek"
+        "id": "ID Proyek",
+        "features": "Fitur Utama",
+        "results": "Hasil & Metrik",
+        "role": "Peran",
+        "duration": "Durasi",
+        "liveDemo": "Demo Langsung",
+        "sourceCode": "Kode Sumber",
+        "nextProject": "Proyek Selanjutnya",
+        "prevProject": "Proyek Sebelumnya",
+        "allProjects": "Semua Proyek"
       }
     },
     "contact": {

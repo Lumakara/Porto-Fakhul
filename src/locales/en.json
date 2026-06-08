@@ -155,6 +155,10 @@
       "selectedWorks": "SELECTED WORKS",
       "projectArchive": "PROJECT ARCHIVE",
       "subtitleDesc": "Curated selection of creative and technical projects",
+      "filterAll": "All",
+      "filterCreative": "Creative",
+      "filterSystems": "Systems",
+      "filterLab": "Lab",
       "detail": {
         "back": "Back",
         "overview": "Overview",
@@ -162,7 +166,16 @@
         "solution": "Solution",
         "tech": "Tech Stack",
         "category": "Category",
-        "id": "Project ID"
+        "id": "Project ID",
+        "features": "Key Features",
+        "results": "Results & Metrics",
+        "role": "Role",
+        "duration": "Duration",
+        "liveDemo": "Live Demo",
+        "sourceCode": "Source Code",
+        "nextProject": "Next Project",
+        "prevProject": "Previous Project",
+        "allProjects": "All Projects"
       }
     },
     "contact": {

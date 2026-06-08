@@ -48,6 +48,22 @@ export const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16 md:mb-24">
           {/* Left: Large name & title */}
           <div className="lg:col-span-5 text-left">
+            {/* Profile Photo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.0, ease: premiumEase }}
+              className="mb-6"
+            >
+              <img
+                src="https://i.pravatar.cc/300?img=68"
+                alt="Fakhul Rohman - About profile"
+                loading="lazy"
+                className="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover border border-charcoal/10 shadow-md"
+              />
+            </motion.div>
+
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -90,6 +106,34 @@ export const About = () => {
             >
               {t('sections.about.bioText')}
             </motion.p>
+
+            {/* Contextual photos */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.35, duration: 1.0, ease: premiumEase }}
+              className="flex gap-3 mt-5"
+            >
+              <img
+                src="https://picsum.photos/seed/work-coding/120/80"
+                alt="Working on code"
+                loading="lazy"
+                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm"
+              />
+              <img
+                src="https://picsum.photos/seed/work-desk/120/80"
+                alt="Workspace setup"
+                loading="lazy"
+                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm"
+              />
+              <img
+                src="https://picsum.photos/seed/work-team/120/80"
+                alt="Team collaboration"
+                loading="lazy"
+                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm"
+              />
+            </motion.div>
 
             {/* Quick info pills */}
             <motion.div

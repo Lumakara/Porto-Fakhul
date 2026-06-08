@@ -57,6 +57,21 @@ export const Hero = () => {
       {/* Main content — centered */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 md:px-12 pt-28 pb-40 max-w-6xl mx-auto w-full">
 
+        {/* Profile Photo */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.0, delay: 0.5, ease: premiumEase }}
+          className="mb-6"
+        >
+          <img
+            src="https://i.pravatar.cc/300?img=68"
+            alt="Fakhul Rohman - Professional headshot"
+            loading="lazy"
+            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 border-surface shadow-lg"
+          />
+        </motion.div>
+
         {/* Kicker */}
         <motion.span
           initial={{ opacity: 0, y: 20 }}

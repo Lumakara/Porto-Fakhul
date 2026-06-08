@@ -155,6 +155,10 @@
       "selectedWorks": "\u7cbe\u9009\u4f5c\u54c1",
       "projectArchive": "\u9879\u76ee\u6863\u6848",
       "subtitleDesc": "\u7cbe\u5fc3\u6311\u9009\u7684\u521b\u610f\u4e0e\u6280\u672f\u9879\u76ee",
+      "filterAll": "\u5168\u90e8",
+      "filterCreative": "\u521b\u610f",
+      "filterSystems": "\u7cfb\u7edf",
+      "filterLab": "\u5b9e\u9a8c\u5ba4",
       "detail": {
         "back": "\u8fd4\u56de",
         "overview": "\u6982\u8ff0",
@@ -162,7 +166,16 @@
         "solution": "\u89e3\u51b3\u65b9\u6848",
         "tech": "\u6280\u672f\u6808",
         "category": "\u7c7b\u522b",
-        "id": "\u9879\u76eeID"
+        "id": "\u9879\u76eeID",
+        "features": "\u6838\u5fc3\u529f\u80fd",
+        "results": "\u6210\u679c\u4e0e\u6307\u6807",
+        "role": "\u89d2\u8272",
+        "duration": "\u65f6\u957f",
+        "liveDemo": "\u5728\u7ebf\u6f14\u793a",
+        "sourceCode": "\u6e90\u4ee3\u7801",
+        "nextProject": "\u4e0b\u4e00\u4e2a\u9879\u76ee",
+        "prevProject": "\u4e0a\u4e00\u4e2a\u9879\u76ee",
+        "allProjects": "\u6240\u6709\u9879\u76ee"
       }
     },
     "contact": {

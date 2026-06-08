@@ -113,6 +113,7 @@ function AppContent() {
             <ProjectDetail
               project={selectedProject}
               onBack={() => setSelectedProjectId(null)}
+              onNavigate={(id) => setSelectedProjectId(id)}
             />
           </Suspense>
         )}
