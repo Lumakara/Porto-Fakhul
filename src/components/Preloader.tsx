@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -7,12 +7,12 @@ interface PreloaderProps {
 }
 
 export const Preloader = ({ onComplete }: PreloaderProps) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [progress, setProgress] = useState(0);
   const [statusIdx, setStatusIdx] = useState(0);
   const [isDone, setIsDone] = useState(false);
 
-  const statusReadouts = [
+  const statusReadouts = useMemo(() => [
     t('preloader.status1'),
     t('preloader.status2'),
     t('preloader.status3'),
@@ -20,7 +20,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
     t('preloader.status5'),
     t('preloader.status6'),
     t('preloader.status7'),
-  ];
+  ], [language]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     // Fast but organic loading progression

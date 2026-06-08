@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import type { Language } from '../types';
 
@@ -71,14 +71,6 @@ export function LanguageProvider({ children }: LanguageProviderProps) {
       // localStorage unavailable
     }
   }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, language);
-    } catch {
-      // localStorage unavailable
-    }
-  }, [language]);
 
   const t = useCallback((key: string): string => {
     const value = getNestedValue(translations[language], key);

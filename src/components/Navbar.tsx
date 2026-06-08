@@ -285,13 +285,14 @@ export const Navbar = () => {
                   </div>
 
                   {/* Tab switcher */}
-                  <div className="flex px-6 pt-4 pb-2 space-x-1">
+                  <div className="flex px-6 pt-4 pb-2 space-x-1" role="tablist">
                     {([
                       { id: 'navigation' as const, label: t('menu.tableOfContents') },
                       { id: 'settings' as const, label: t('menu.settings') },
                     ]).map((tab) => (
                       <button
                         key={tab.id}
+                        id={`menu-tab-${tab.id}`}
                         onClick={() => setActiveTab(tab.id)}
                         className={`relative flex-1 px-4 py-2 font-hud text-xs tracking-wide rounded-lg min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
                           activeTab === tab.id
@@ -300,6 +301,7 @@ export const Navbar = () => {
                         }`}
                         role="tab"
                         aria-selected={activeTab === tab.id}
+                        aria-controls={`menu-tabpanel-${tab.id}`}
                       >
                         {activeTab === tab.id && (
                           <motion.div
@@ -314,7 +316,12 @@ export const Navbar = () => {
                   </div>
 
                   {/* Content area */}
-                  <div className="flex-1 overflow-y-auto px-6 py-4">
+                  <div
+                    className="flex-1 overflow-y-auto px-6 py-4"
+                    role="tabpanel"
+                    id={`menu-tabpanel-${activeTab}`}
+                    aria-labelledby={`menu-tab-${activeTab}`}
+                  >
                     <AnimatePresence mode="wait">
                       {activeTab === 'navigation' ? (
                         <motion.div

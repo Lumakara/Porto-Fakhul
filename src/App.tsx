@@ -218,7 +218,7 @@ function AppContent() {
   );
 }
 
-function App() {
+function AppRouter() {
   const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
@@ -232,11 +232,15 @@ function App() {
     return <NotFound />;
   }
 
+  return <AppContent />;
+}
+
+function App() {
   return (
     <LanguageProvider>
-    <PreferencesProvider>
-      <AppContent />
-    </PreferencesProvider>
+      <PreferencesProvider>
+        <AppRouter />
+      </PreferencesProvider>
     </LanguageProvider>
   );
 }
