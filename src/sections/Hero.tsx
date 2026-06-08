@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Magnetic } from '../components/Magnetic';
 import { premiumEase } from '../components/Section';
 import { WebGLBackground } from '../components/WebGLBackground';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Animated counter hook
 const useCounter = (target: number, duration: number = 2000, delay: number = 0) => {
@@ -25,17 +26,18 @@ const useCounter = (target: number, duration: number = 2000, delay: number = 0) 
   return count;
 };
 
-const stats = [
-  { suffix: '+', label: 'YEARS EXP' },
-  { suffix: '+', label: 'ORGANIZATIONS' },
-  { suffix: '+', label: 'PROJECTS'},
-];
-
 export const Hero = () => {
+  const { t } = useLanguage();
   const years = useCounter(2, 1800, 2200);
   const organization = useCounter(15, 2000, 2400);
   const projects = useCounter(7, 2300, 2600);
   const counters = [years, organization, projects];
+
+  const stats = [
+    { suffix: '+', label: t('sections.hero.yearsExp') },
+    { suffix: '+', label: t('sections.hero.organizations') },
+    { suffix: '+', label: t('sections.hero.projects') },
+  ];
 
   const handleScrollDown = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
@@ -62,7 +64,7 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 0.8, ease: premiumEase }}
           className="text-[10px] md:text-xs font-hud text-terracotta tracking-[0.4em] uppercase mb-6 block"
         >
-[ DESIGN • TECHNOLOGY • INNOVATION ]
+{t('sections.hero.kicker')}
         </motion.span>
 
         {/* Giant Headline */}
@@ -73,7 +75,7 @@ export const Hero = () => {
             transition={{ duration: 1.4, delay: 1.0, ease: premiumEase }}
             className="text-fluid-hero-sm font-display italic text-charcoal-light tracking-tight block transform-style-3d"
           >
-            Where
+            {t('sections.hero.where')}
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
@@ -81,7 +83,7 @@ export const Hero = () => {
             transition={{ duration: 1.6, delay: 1.15, ease: premiumEase }}
             className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
-            Creativity
+            {t('sections.hero.creativity')}
           </motion.span>
           <motion.span
             initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
@@ -89,7 +91,7 @@ export const Hero = () => {
             transition={{ duration: 1.6, delay: 1.3, ease: premiumEase }}
             className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
-            Meets Technology
+            {t('sections.hero.meetsTechnology')}
           </motion.span>
         </h1>
 
@@ -100,7 +102,7 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 1.5, ease: premiumEase }}
           className="text-sm md:text-base lg:text-lg text-charcoal-light max-w-2xl font-sans leading-relaxed mt-8 md:mt-10"
         >
-Creating meaningful solutions and experiences with precision, innovation, and purpose.
+{t('sections.hero.description')}
         </motion.p>
 
         {/* CTAs */}
@@ -116,7 +118,7 @@ Creating meaningful solutions and experiences with precision, innovation, and pu
               className="group relative cursor-none bg-charcoal text-sand font-hud text-xs tracking-widest px-10 py-4.5 rounded-full overflow-hidden transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-terracotta"
               data-cursor="grow"
             >
-              <span className="relative z-10">VIEW PROJECTS</span>
+              <span className="relative z-10">{t('sections.hero.viewProjects')}</span>
             </button>
           </Magnetic>
 
@@ -125,7 +127,7 @@ Creating meaningful solutions and experiences with precision, innovation, and pu
             className="relative font-hud text-xs text-charcoal-light hover:text-terracotta transition-all duration-300 tracking-widest uppercase bg-transparent border-none cursor-none group"
             data-cursor="magnetic"
           >
-            <span>Get in touch</span>
+            <span>{t('sections.hero.getInTouch')}</span>
             <span className="absolute -bottom-1 left-0 w-0 h-px bg-terracotta group-hover:w-full transition-all duration-300" />
           </button>
         </motion.div>

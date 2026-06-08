@@ -75,25 +75,136 @@
     "hero": {
       "title": "Creative Developer",
       "subtitle": "Frontend Architect & Motion Designer",
-      "cta": "View Projects"
+      "cta": "View Projects",
+      "kicker": "[ DESIGN \u2022 TECHNOLOGY \u2022 INNOVATION ]",
+      "where": "Where",
+      "creativity": "Creativity",
+      "meetsTechnology": "Meets Technology",
+      "description": "Creating meaningful solutions and experiences with precision, innovation, and purpose.",
+      "viewProjects": "VIEW PROJECTS",
+      "getInTouch": "Get in touch",
+      "yearsExp": "YEARS EXP",
+      "organizations": "ORGANIZATIONS",
+      "projects": "PROJECTS"
     },
     "about": {
       "title": "Blueprint",
-      "subtitle": "About Me"
+      "subtitle": "About Me",
+      "sectionLabel": "About",
+      "firstName": "Fakhul",
+      "lastName": "Rohman",
+      "role": "Web Dev | Editing | Quality Controll",
+      "bio": "Lulusann SMK Jurusan Aktuntansi dengan pengalaman praktik kerja di bidang <em>Finishing & Teknologi</em>. Memiliki kemampuan dalam Teknologi, Design, dan perawatan dasar mesin. Terbiasa bekerja secara teliti, disiplin dan berorientasi pada hasil untuk memastikan semua sesuai dengan standar perusahaan.",
+      "bioHighlight": "Finishing & Technology",
+      "bioText": "SMK Accounting graduate with practical work experience in Finishing & Technology. Skilled in Technology, Design, and basic machine maintenance. Accustomed to working meticulously, with discipline and result-oriented focus to ensure everything meets company standards.",
+      "location": "Depok, Jawa Barat",
+      "experience": "2+ Years",
+      "trait": "Adaptability & Flexibility",
+      "tabs": {
+        "story": "Story",
+        "experience": "Experience",
+        "approach": "Approach"
+      },
+      "story": {
+        "title": "From Accounting to Technology",
+        "p1": "My journey started from vocational school (SMK) majoring in Accounting, but during school I discovered a strong interest in the world of technology and web development. Curiosity about how websites and applications work pushed me to learn independently beyond the curriculum.",
+        "p2": "Work experience at ION Network as a network and CCTV technician taught me about technology infrastructure and problem-solving. Meanwhile at A&W Restaurant, I learned about discipline, teamwork, and the importance of quality control in every job. Both experiences shaped my attention to detail and quality standards.",
+        "p3": "Now I focus on building meaningful web experiences, combining technical abilities with creative vision. Based in Depok, West Java, I continue to develop skills in React, TypeScript, and other modern frontend technologies."
+      },
+      "experienceTimeline": {
+        "entry1": {
+          "company": "ION Network",
+          "period": "2025 — 2026 ( 7Months )",
+          "role": "Technical Network & CCTV",
+          "description": "Computer network and CCTV specialist with installation, configuration, troubleshooting, maintenance, and system optimization skills to ensure network stability and security."
+        },
+        "entry2": {
+          "company": "Restaurant A&W",
+          "period": "2025 ( 3Months )",
+          "role": "Staff Kitchen",
+          "description": "Skilled in kitchen operations, ingredient preparation, and food processing while prioritizing quality, hygiene, work safety, and teamwork."
+        }
+      },
+      "approach": {
+        "title": "How I work",
+        "items": {
+          "01": {
+            "title": "Architecture First",
+            "desc": "Every project starts with clean component architecture, typed interfaces, and a scalable design system before any visual work begins."
+          },
+          "02": {
+            "title": "Motion with Purpose",
+            "desc": "Animations aren't decoration — they guide attention, reveal content progressively, and create a sense of physical space in the interface."
+          },
+          "03": {
+            "title": "Obsessive Polish",
+            "desc": "The difference between good and extraordinary lives in the details: micro-interactions, easing curves, responsive spacing, and pixel precision."
+          }
+        }
+      }
     },
     "projects": {
       "title": "Archive",
       "subtitle": "Selected Works",
       "viewProject": "View Project",
-      "viewAll": "View All Projects"
+      "viewAll": "View All Projects",
+      "selectedWorks": "SELECTED WORKS",
+      "projectArchive": "PROJECT ARCHIVE",
+      "subtitleDesc": "Curated selection of creative and technical projects",
+      "modal": {
+        "overview": "01 // PROJECT OVERVIEW",
+        "challenge": "02 // TECHNICAL CHALLENGE",
+        "solution": "03 // ENGINEERING SOLUTION",
+        "architecture": "04 // INTEGRATED CORE ARCHITECTURE",
+        "launchSite": "LAUNCH_SITE",
+        "closeLabel": "Close project details"
+      }
     },
     "skills": {
       "title": "Matrix",
-      "subtitle": "Tech Stack"
+      "subtitle": "Tech Stack",
+      "expertise": "Expertise",
+      "technicalMatrix": "Technical",
+      "matrixItalic": "Matrix",
+      "alsoProficient": "Also proficient in"
     },
     "contact": {
       "title": "Uplink",
-      "subtitle": "Get in Touch"
+      "subtitle": "Get in Touch",
+      "sectionLabel": "Contact",
+      "heading": "Let's start a",
+      "headingItalic": "conversation",
+      "description": "Have a project, opportunity, or collaboration in mind? Feel free to get in touch and let's create something meaningful together.",
+      "locationLabel": "Location",
+      "locationValue": "Jawa Barat, Indonesia",
+      "emailLabel": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "form": {
+        "nameLabel": "Your name",
+        "namePlaceholder": "Fakhul Rohman",
+        "emailLabel": "Email address",
+        "emailPlaceholder": "Fakhulrohman2@gmail.com",
+        "messageLabel": "Your message",
+        "messagePlaceholder": "Tell me about your project...",
+        "submit": "SEND MESSAGE"
+      },
+      "sending": {
+        "title": "Sending message",
+        "initiating": "Initiating transmission...",
+        "establishing": "Establishing secure connection...",
+        "encrypting": "Encrypting message payload...",
+        "validating": "Validating email integrity...",
+        "routing": "Routing via jkt relay node...",
+        "success": "Message delivered successfully \u2713",
+        "error": "ERROR: Transmission failed. Retrying...",
+        "processing": "Processing..."
+      },
+      "success": {
+        "title": "Message sent!",
+        "description": "Thank you for reaching out. I'll get back to you within 24 hours.",
+        "sendAnother": "Send another"
+      }
     }
   },
   "common": {
@@ -115,11 +226,38 @@
     "readyToCollaborate": "Ready to collaborate?",
     "letsCreate": "Let's create",
     "somethingExtraordinary": "something extraordinary.",
-    "copyright": "© 2025 — Designed with precision",
+    "copyright": "\u00a9 2025 \u2014 Designed with precision",
     "location": "DEPOK, JAWA BARAT",
     "role": "WEB_DEVELOPER // 2026",
     "techStack": "React + Vite + Lenis",
+    "live": "Live",
+    "backToTop": "Back to top"
+  },
+  "footer": {
+    "readyToCollaborate": "Ready to collaborate?",
+    "letsCreate": "Let's create",
+    "somethingExtraordinary": "something extraordinary.",
+    "startProject": "START A PROJECT",
+    "copyright": "\u00a9 2025 \u2014 Designed with precision",
+    "backToTop": "Back to top",
+    "techStack": "React + Vite + Lenis",
     "live": "Live"
+  },
+  "preloader": {
+    "logo": "SORA",
+    "logoSub": "Portfolio 2026",
+    "init": "INIT",
+    "status1": "HEY YOU...",
+    "status2": "YES, YOU WHO'S WAITING...",
+    "status3": "THANKS FOR STOPPING BY...",
+    "status4": "I'M SETTING THINGS UP...",
+    "status5": "MAKING IT LOOK NEAT...",
+    "status6": "DON'T GO ANYWHERE...",
+    "status7": "ALL READY!",
+    "topLeft": "Depok, Jawa Barat",
+    "topRight": "My Profile",
+    "bottomLeft": "Fakhul Rohman Nurokhim",
+    "bottomRight": "Still Loading..."
   },
   "accessibility": {
     "skipToContent": "Skip to content",

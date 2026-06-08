@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-const statusReadouts = [
-  'HALO KAMU...',
-  'IYA, KAMU YANG LAGI NUNGGU...',
-  'MAKASIH UDAH MAMPIR...',
-  'AKU LAGI NATA-NATA DULU...',
-  'BIAR KELIHATAN RAPI...',
-  'JANGAN KEMANA-MANA...',
-  'UDAH SIAP NIH!'
-];
-
 export const Preloader = ({ onComplete }: PreloaderProps) => {
+  const { t } = useLanguage();
   const [progress, setProgress] = useState(0);
   const [statusIdx, setStatusIdx] = useState(0);
   const [isDone, setIsDone] = useState(false);
+
+  const statusReadouts = [
+    t('preloader.status1'),
+    t('preloader.status2'),
+    t('preloader.status3'),
+    t('preloader.status4'),
+    t('preloader.status5'),
+    t('preloader.status6'),
+    t('preloader.status7'),
+  ];
 
   useEffect(() => {
     // Fast but organic loading progression
@@ -54,7 +56,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
       }, 700);
       return () => clearTimeout(timeout);
     }
-  }, [progress, onComplete]);
+  }, [progress, onComplete, statusReadouts.length]);
 
   // Framer motion variants for split screen slide
   const upperCurtainVariants = {
@@ -110,10 +112,10 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
             {/* Logo */}
             <div className="mb-8 relative">
               <span className="text-4xl md:text-5xl font-display font-medium text-charcoal tracking-[0.25em] pl-[0.25em] uppercase select-none">
-                SORA
+                {t('preloader.logo')}
               </span>
               <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.5em] text-charcoal-light font-medium select-none uppercase opacity-80">
-                Portfolio 2026
+                {t('preloader.logoSub')}
               </span>
             </div>
 
@@ -123,7 +125,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
                 {progress.toString().padStart(3, '0')}
               </span>
               <span className="absolute -top-1 -right-4 text-xs font-hud text-terracotta uppercase tracking-widest">
-                INIT
+                {t('preloader.init')}
               </span>
             </div>
 
@@ -145,13 +147,13 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
 
           {/* Top/Bottom borders */}
           <div className="absolute top-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-charcoal-light z-[100001] select-none pointer-events-none">
-            <span>Depok, Jawa Barat</span>
-            <span>Profile Saya</span>
+            <span>{t('preloader.topLeft')}</span>
+            <span>{t('preloader.topRight')}</span>
           </div>
 
           <div className="absolute bottom-4 left-4 right-4 flex justify-between text-[9px] tracking-wider text-charcoal-light z-[100001] select-none pointer-events-none">
-            <span>Fakhul Rohman Nurokhim</span>
-            <span>Masih Loading Yakkk...</span>
+            <span>{t('preloader.bottomLeft')}</span>
+            <span>{t('preloader.bottomRight')}</span>
           </div>
         </div>
       )}

@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Terminal, Compass, Mail, ArrowUpRight } from 'lucide-react';
 import { Section, premiumEase, Parallax } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
   const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
+  const { t } = useLanguage();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -17,10 +19,10 @@ export const Contact = () => {
 
   const executeConsoleLogs = async () => {
     const logs = [
-      'Establishing secure connection...',
-      'Encrypting message payload...',
-      'Validating email integrity...',
-      'Routing via jkt relay node...'
+      t('sections.contact.sending.establishing'),
+      t('sections.contact.sending.encrypting'),
+      t('sections.contact.sending.validating'),
+      t('sections.contact.sending.routing'),
     ];
 
     for (let i = 0; i < logs.length; i++) {
@@ -44,14 +46,14 @@ export const Contact = () => {
       });
 
       if (response.ok) {
-        setConsoleLogs((prev) => [...prev, 'Message delivered successfully ✓']);
+        setConsoleLogs((prev) => [...prev, t('sections.contact.sending.success')]);
         await new Promise((resolve) => setTimeout(resolve, 600));
         setStatus('success');
       } else {
         throw new Error('Network error');
       }
-    } catch (error) {
-      setConsoleLogs((prev) => [...prev, 'ERROR: Transmission failed. Retrying...']);
+    } catch {
+      setConsoleLogs((prev) => [...prev, t('sections.contact.sending.error')]);
       setTimeout(() => setStatus('idle'), 3000);
     }
   };
@@ -61,7 +63,7 @@ export const Contact = () => {
     if (!formData.name || !formData.email || !formData.message) return;
 
     setStatus('sending');
-    setConsoleLogs(['Initiating transmission...']);
+    setConsoleLogs([t('sections.contact.sending.initiating')]);
     executeConsoleLogs();
   };
 
@@ -93,7 +95,7 @@ export const Contact = () => {
             transition={{ duration: 1.2, ease: premiumEase }}
             className="text-[10px] font-hud text-terracotta tracking-[0.3em] uppercase block mb-4"
           >
-            Contact
+            {t('sections.contact.sectionLabel')}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 40, scale: 0.98, filter: 'blur(8px)' }}
@@ -102,9 +104,9 @@ export const Contact = () => {
             transition={{ duration: 1.4, delay: 0.1, ease: premiumEase }}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-charcoal tracking-tight"
           >
-            Let's start a
+            {t('sections.contact.heading')}
             <br />
-            <span className="italic font-light text-charcoal-light">conversation</span>
+            <span className="italic font-light text-charcoal-light">{t('sections.contact.headingItalic')}</span>
           </motion.h2>
         </div>
 
@@ -120,7 +122,7 @@ export const Contact = () => {
             className="lg:col-span-5 flex flex-col space-y-8 text-left"
           >
             <p className="text-base text-charcoal-light font-sans leading-relaxed">
-Have a project, opportunity, or collaboration in mind? Feel free to get in touch and let's create something meaningful together.
+{t('sections.contact.description')}
             </p>
 
             {/* Contact details */}
@@ -130,8 +132,8 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                   <Compass className="w-4 h-4 text-terracotta" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">Location</span>
-                  <span className="text-sm text-charcoal font-medium font-sans">Jawa Barat, Indonesia </span>
+                  <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">{t('sections.contact.locationLabel')}</span>
+                  <span className="text-sm text-charcoal font-medium font-sans">{t('sections.contact.locationValue')}</span>
                 </div>
               </div>
 
@@ -140,7 +142,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                   <Mail className="w-4 h-4 text-sage" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">Email</span>
+                  <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">{t('sections.contact.emailLabel')}</span>
                   <a 
                     href="Fakhulrohman2@gmail.com" 
                     className="text-sm text-charcoal font-medium font-sans hover:text-terracotta transition-colors duration-300 cursor-none"
@@ -162,7 +164,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                       <path d="M9 18c-4.51 2-5-2-7-2" />
                     </svg>
                   ), 
-                  label: 'GitHub', 
+                  label: t('sections.contact.github'), 
                   href: 'https://github.com/lumakara' 
                 },
                 { 
@@ -173,7 +175,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                       <circle cx="4" cy="4" r="2" />
                     </svg>
                   ), 
-                  label: 'LinkedIn', 
+                  label: t('sections.contact.linkedin'), 
                   href: 'https://www.linkedin.com/in/fakhul-rohman-nurokhim-b24276411?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' 
                 },
               ].map((soc) => (
@@ -221,7 +223,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                       {/* Name */}
                       <div className="flex flex-col space-y-2">
                         <label htmlFor="name" className="text-[10px] font-hud text-charcoal-light uppercase tracking-widest font-medium">
-                          Your name
+                          {t('sections.contact.form.nameLabel')}
                         </label>
                         <input
                           id="name"
@@ -230,7 +232,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                           value={formData.name}
                           onChange={handleInputChange}
                           required
-                          placeholder="Fakhul Rohman"
+                          placeholder={t('sections.contact.form.namePlaceholder')}
                           className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
                           data-cursor="grow"
                         />
@@ -239,7 +241,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                       {/* Email */}
                       <div className="flex flex-col space-y-2">
                         <label htmlFor="email" className="text-[10px] font-hud text-charcoal-light uppercase tracking-widest font-medium">
-                          Email address
+                          {t('sections.contact.form.emailLabel')}
                         </label>
                         <input
                           id="email"
@@ -248,7 +250,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                           value={formData.email}
                           onChange={handleInputChange}
                           required
-                          placeholder="Fakhulrohman2@gmail.com"
+                          placeholder={t('sections.contact.form.emailPlaceholder')}
                           className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
                           data-cursor="grow"
                         />
@@ -258,7 +260,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                     {/* Message */}
                     <div className="flex flex-col space-y-2">
                       <label htmlFor="message" className="text-[10px] font-hud text-charcoal-light uppercase tracking-widest font-medium">
-                        Your message
+                        {t('sections.contact.form.messageLabel')}
                       </label>
                       <textarea
                         id="message"
@@ -267,7 +269,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                         onChange={handleInputChange}
                         required
                         rows={5}
-                        placeholder="Tell me about your project..."
+                        placeholder={t('sections.contact.form.messagePlaceholder')}
                         className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 resize-none cursor-none shadow-sm"
                         data-cursor="grow"
                       />
@@ -281,7 +283,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                           className="group bg-charcoal text-sand font-hud text-xs tracking-widest px-8 py-4 rounded-full flex items-center space-x-2 transition-all duration-300 shadow-sm hover:shadow-md hover:bg-terracotta cursor-none relative overflow-hidden"
                           data-cursor="grow"
                         >
-                          <span className="relative z-10">SEND MESSAGE</span>
+                          <span className="relative z-10">{t('sections.contact.form.submit')}</span>
                           <Send className="relative z-10 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </button>
                       </Magnetic>
@@ -299,7 +301,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                   >
                     <div className="flex items-center space-x-2 text-terracotta font-hud text-xs font-medium uppercase tracking-wider mb-6">
                       <Terminal className="w-4 h-4 animate-pulse" />
-                      <span>Sending message</span>
+                      <span>{t('sections.contact.sending.title')}</span>
                     </div>
 
                     {/* Console logs */}
@@ -312,7 +314,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                           transition={{ duration: 0.3 }}
                           className="flex items-start"
                         >
-                          <span className="mr-2 text-sage font-bold select-none">→</span>
+                          <span className="mr-2 text-sage font-bold select-none">&rarr;</span>
                           <span>{log}</span>
                         </motion.div>
                       ))}
@@ -320,7 +322,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                       {consoleLogs.length < 6 && (
                         <div className="flex items-center space-x-1.5 text-charcoal-light animate-pulse mt-2">
                           <span className="w-1.5 h-1.5 bg-terracotta rounded-full" />
-                          <span>Processing...</span>
+                          <span>{t('sections.contact.sending.processing')}</span>
                         </div>
                       )}
                     </div>
@@ -341,10 +343,10 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
 
                     <div className="space-y-3">
                       <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">
-                        Message sent!
+                        {t('sections.contact.success.title')}
                       </h3>
                       <p className="text-sm text-charcoal-light max-w-sm font-sans leading-relaxed">
-                        Thank you for reaching out. I'll get back to you within 24 hours.
+                        {t('sections.contact.success.description')}
                       </p>
                     </div>
 
@@ -354,7 +356,7 @@ Have a project, opportunity, or collaboration in mind? Feel free to get in touch
                         className="bg-white border border-charcoal/10 text-charcoal font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:bg-terracotta hover:text-white transition-all duration-300 cursor-none shadow-sm hover:shadow-md"
                         data-cursor="magnetic"
                       >
-                        Send another
+                        {t('sections.contact.success.sendAnother')}
                       </button>
                     </Magnetic>
                   </motion.div>

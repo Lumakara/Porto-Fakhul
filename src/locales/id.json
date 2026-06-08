@@ -75,25 +75,136 @@
     "hero": {
       "title": "Pengembang Kreatif",
       "subtitle": "Arsitek Frontend & Desainer Motion",
-      "cta": "Lihat Proyek"
+      "cta": "Lihat Proyek",
+      "kicker": "[ DESAIN \u2022 TEKNOLOGI \u2022 INOVASI ]",
+      "where": "Dimana",
+      "creativity": "Kreativitas",
+      "meetsTechnology": "Bertemu Teknologi",
+      "description": "Menciptakan solusi dan pengalaman bermakna dengan presisi, inovasi, dan tujuan.",
+      "viewProjects": "LIHAT PROYEK",
+      "getInTouch": "Hubungi saya",
+      "yearsExp": "TAHUN PENGALAMAN",
+      "organizations": "ORGANISASI",
+      "projects": "PROYEK"
     },
     "about": {
       "title": "Cetak Biru",
-      "subtitle": "Tentang Saya"
+      "subtitle": "Tentang Saya",
+      "sectionLabel": "Tentang",
+      "firstName": "Fakhul",
+      "lastName": "Rohman",
+      "role": "Web Dev | Editing | Quality Controll",
+      "bio": "Lulusann SMK Jurusan Aktuntansi dengan pengalaman praktik kerja di bidang <em>Finishing & Teknologi</em>. Memiliki kemampuan dalam Teknologi, Design, dan perawatan dasar mesin. Terbiasa bekerja secara teliti, disiplin dan berorientasi pada hasil untuk memastikan semua sesuai dengan standar perusahaan.",
+      "bioHighlight": "Finishing & Teknologi",
+      "bioText": "Lulusann SMK Jurusan Aktuntansi dengan pengalaman praktik kerja di bidang Finishing & Teknologi. Memiliki kemampuan dalam Teknologi, Design, dan perawatan dasar mesin. Terbiasa bekerja secara teliti, disiplin dan berorientasi pada hasil untuk memastikan semua sesuai dengan standar perusahaan.",
+      "location": "Depok, Jawa Barat",
+      "experience": "2+ Tahun",
+      "trait": "Adaptasi & Fleksibilitas",
+      "tabs": {
+        "story": "Cerita",
+        "experience": "Pengalaman",
+        "approach": "Pendekatan"
+      },
+      "story": {
+        "title": "Dari Akuntansi ke Teknologi",
+        "p1": "Perjalanan saya dimulai dari bangku SMK jurusan Akuntansi, namun selama masa sekolah saya menemukan ketertarikan yang kuat terhadap dunia teknologi dan pengembangan web. Rasa penasaran terhadap cara kerja website dan aplikasi mendorong saya untuk belajar secara mandiri di luar kurikulum.",
+        "p2": "Pengalaman kerja di ION Network sebagai teknisi jaringan dan CCTV mengajarkan saya tentang infrastruktur teknologi dan problem-solving. Sementara di A&W Restaurant, saya belajar tentang disiplin, kerja tim, dan pentingnya quality control dalam setiap pekerjaan. Kedua pengalaman ini membentuk perhatian saya terhadap detail dan standar kualitas.",
+        "p3": "Sekarang saya fokus membangun web experience yang bermakna, menggabungkan kemampuan teknis dengan visi kreatif. Berbasis di Depok, Jawa Barat, saya terus mengembangkan skill di React, TypeScript, dan teknologi frontend modern lainnya."
+      },
+      "experienceTimeline": {
+        "entry1": {
+          "company": "ION Network",
+          "period": "2025 — 2026 ( 7Bln )",
+          "role": "Technical Network & CCTV",
+          "description": "Spesialis jaringan komputer dan CCTV dengan kemampuan instalasi, konfigurasi, troubleshooting, maintenance, serta optimasi sistem untuk memastikan stabilitas dan keamanan jaringan."
+        },
+        "entry2": {
+          "company": "Restaurant A&W",
+          "period": "2025 ( 3bln )",
+          "role": "Staff Kitchen",
+          "description": "Terampil dalam operasional dapur, persiapan bahan, dan pengolahan makanan dengan mengutamakan kualitas, kebersihan, keselamatan kerja, dan kerja sama tim."
+        }
+      },
+      "approach": {
+        "title": "Cara Saya Bekerja",
+        "items": {
+          "01": {
+            "title": "Arsitektur Terlebih Dahulu",
+            "desc": "Setiap proyek dimulai dengan arsitektur komponen yang bersih, interface yang diketik, dan sistem desain yang skalabel sebelum pekerjaan visual dimulai."
+          },
+          "02": {
+            "title": "Gerakan dengan Tujuan",
+            "desc": "Animasi bukan dekorasi — mereka memandu perhatian, mengungkapkan konten secara bertahap, dan menciptakan rasa ruang fisik dalam antarmuka."
+          },
+          "03": {
+            "title": "Polesan Obsesif",
+            "desc": "Perbedaan antara baik dan luar biasa terletak pada detail: mikro-interaksi, kurva easing, spacing responsif, dan presisi piksel."
+          }
+        }
+      }
     },
     "projects": {
       "title": "Arsip",
       "subtitle": "Karya Terpilih",
       "viewProject": "Lihat Proyek",
-      "viewAll": "Lihat Semua Proyek"
+      "viewAll": "Lihat Semua Proyek",
+      "selectedWorks": "KARYA TERPILIH",
+      "projectArchive": "ARSIP PROYEK",
+      "subtitleDesc": "Pilihan kurasi proyek kreatif dan teknis",
+      "modal": {
+        "overview": "01 // GAMBARAN PROYEK",
+        "challenge": "02 // TANTANGAN TEKNIS",
+        "solution": "03 // SOLUSI REKAYASA",
+        "architecture": "04 // ARSITEKTUR INTI TERINTEGRASI",
+        "launchSite": "BUKA_SITUS",
+        "closeLabel": "Tutup detail proyek"
+      }
     },
     "skills": {
       "title": "Matriks",
-      "subtitle": "Tumpukan Teknologi"
+      "subtitle": "Tumpukan Teknologi",
+      "expertise": "Keahlian",
+      "technicalMatrix": "Teknis",
+      "matrixItalic": "Matriks",
+      "alsoProficient": "Juga mahir dalam"
     },
     "contact": {
       "title": "Uplink",
-      "subtitle": "Hubungi Saya"
+      "subtitle": "Hubungi Saya",
+      "sectionLabel": "Kontak",
+      "heading": "Mari mulai",
+      "headingItalic": "percakapan",
+      "description": "Punya proyek, kesempatan, atau ide kolaborasi? Jangan ragu untuk menghubungi dan mari ciptakan sesuatu yang bermakna bersama.",
+      "locationLabel": "Lokasi",
+      "locationValue": "Jawa Barat, Indonesia",
+      "emailLabel": "Email",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "form": {
+        "nameLabel": "Nama Anda",
+        "namePlaceholder": "Fakhul Rohman",
+        "emailLabel": "Alamat email",
+        "emailPlaceholder": "Fakhulrohman2@gmail.com",
+        "messageLabel": "Pesan Anda",
+        "messagePlaceholder": "Ceritakan tentang proyek Anda...",
+        "submit": "KIRIM PESAN"
+      },
+      "sending": {
+        "title": "Mengirim pesan",
+        "initiating": "Memulai transmisi...",
+        "establishing": "Membuat koneksi aman...",
+        "encrypting": "Mengenkripsi muatan pesan...",
+        "validating": "Memvalidasi integritas email...",
+        "routing": "Merutekan via node relay jkt...",
+        "success": "Pesan berhasil terkirim \u2713",
+        "error": "ERROR: Transmisi gagal. Mencoba ulang...",
+        "processing": "Memproses..."
+      },
+      "success": {
+        "title": "Pesan terkirim!",
+        "description": "Terima kasih telah menghubungi. Saya akan membalas dalam 24 jam.",
+        "sendAnother": "Kirim lagi"
+      }
     }
   },
   "common": {
@@ -115,11 +226,38 @@
     "readyToCollaborate": "Siap berkolaborasi?",
     "letsCreate": "Mari ciptakan",
     "somethingExtraordinary": "sesuatu yang luar biasa.",
-    "copyright": "© 2025 — Dirancang dengan presisi",
+    "copyright": "\u00a9 2025 \u2014 Dirancang dengan presisi",
     "location": "DEPOK, JAWA BARAT",
     "role": "PENGEMBANG_WEB // 2026",
     "techStack": "React + Vite + Lenis",
+    "live": "Aktif",
+    "backToTop": "Kembali ke atas"
+  },
+  "footer": {
+    "readyToCollaborate": "Siap berkolaborasi?",
+    "letsCreate": "Mari ciptakan",
+    "somethingExtraordinary": "sesuatu yang luar biasa.",
+    "startProject": "MULAI PROYEK",
+    "copyright": "\u00a9 2025 \u2014 Dirancang dengan presisi",
+    "backToTop": "Kembali ke atas",
+    "techStack": "React + Vite + Lenis",
     "live": "Aktif"
+  },
+  "preloader": {
+    "logo": "SORA",
+    "logoSub": "Portofolio 2026",
+    "init": "INIT",
+    "status1": "HALO KAMU...",
+    "status2": "IYA, KAMU YANG LAGI NUNGGU...",
+    "status3": "MAKASIH UDAH MAMPIR...",
+    "status4": "AKU LAGI NATA-NATA DULU...",
+    "status5": "BIAR KELIHATAN RAPI...",
+    "status6": "JANGAN KEMANA-MANA...",
+    "status7": "UDAH SIAP NIH!",
+    "topLeft": "Depok, Jawa Barat",
+    "topRight": "Profile Saya",
+    "bottomLeft": "Fakhul Rohman Nurokhim",
+    "bottomRight": "Masih Loading Yakkk..."
   },
   "accessibility": {
     "skipToContent": "Lewati ke konten",
