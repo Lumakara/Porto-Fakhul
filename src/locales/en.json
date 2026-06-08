@@ -102,7 +102,7 @@
       "tabs": {
         "story": "Story",
         "experience": "Experience",
-        "approach": "Approach"
+        "skills": "Soft & Hard Skills"
       },
       "story": {
         "title": "From Accounting to Technology",
@@ -140,6 +140,12 @@
             "desc": "The difference between good and extraordinary lives in the details: micro-interactions, easing curves, responsive spacing, and pixel precision."
           }
         }
+      },
+      "skills": {
+        "softTitle": "Soft Skills",
+        "hardTitle": "Hard Skills",
+        "soft": ["Communication", "Teamwork", "Adaptability", "Problem Solving", "Time Management", "Leadership"],
+        "hard": ["React/Next.js", "TypeScript", "Tailwind CSS", "Git/GitHub", "Figma", "Node.js"]
       }
     },
     "projects": {

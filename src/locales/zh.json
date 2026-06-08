@@ -102,7 +102,7 @@
       "tabs": {
         "story": "\u6545\u4e8b",
         "experience": "\u7ecf\u9a8c",
-        "approach": "\u65b9\u6cd5"
+        "skills": "\u8f6f\u6280\u80fd\u4e0e\u786c\u6280\u80fd"
       },
       "story": {
         "title": "\u4ece\u4f1a\u8ba1\u5230\u6280\u672f",
@@ -140,6 +140,12 @@
             "desc": "\u4f18\u79c0\u4e0e\u5353\u8d8a\u7684\u5dee\u522b\u5728\u4e8e\u7ec6\u8282\uff1a\u5fae\u4ea4\u4e92\u3001\u7f13\u52a8\u66f2\u7ebf\u3001\u54cd\u5e94\u5f0f\u95f4\u8ddd\u548c\u50cf\u7d20\u7ea7\u7cbe\u786e\u5ea6\u3002"
           }
         }
+      },
+      "skills": {
+        "softTitle": "\u8f6f\u6280\u80fd",
+        "hardTitle": "\u786c\u6280\u80fd",
+        "soft": ["\u6c9f\u901a", "\u56e2\u961f\u5408\u4f5c", "\u9002\u5e94\u80fd\u529b", "\u89e3\u51b3\u95ee\u9898", "\u65f6\u95f4\u7ba1\u7406", "\u9886\u5bfc\u529b"],
+        "hard": ["React/Next.js", "TypeScript", "Tailwind CSS", "Git/GitHub", "Figma", "Node.js"]
       }
     },
     "projects": {

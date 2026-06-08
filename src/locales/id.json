@@ -102,7 +102,7 @@
       "tabs": {
         "story": "Cerita",
         "experience": "Pengalaman",
-        "approach": "Pendekatan"
+        "skills": "Soft & Hard Skills"
       },
       "story": {
         "title": "Dari Akuntansi ke Teknologi",
@@ -140,6 +140,12 @@
             "desc": "Perbedaan antara baik dan luar biasa terletak pada detail: mikro-interaksi, kurva easing, spacing responsif, dan presisi piksel."
           }
         }
+      },
+      "skills": {
+        "softTitle": "Soft Skills",
+        "hardTitle": "Hard Skills",
+        "soft": ["Komunikasi", "Kerja Tim", "Adaptabilitas", "Pemecahan Masalah", "Manajemen Waktu", "Kepemimpinan"],
+        "hard": ["React/Next.js", "TypeScript", "Tailwind CSS", "Git/GitHub", "Figma", "Node.js"]
       }
     },
     "projects": {
