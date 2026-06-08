@@ -1,5 +1,4 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import Lenis from 'lenis';
 import { motion } from 'framer-motion';
 import { Preloader } from './components/Preloader';
 import { Navbar } from './components/Navbar';
@@ -50,10 +49,14 @@ function AppContent() {
   const shouldSkipPreloader = (): boolean => {
     try {
       if (sessionStorage.getItem('porto_visited') === 'true') return true;
-    } catch {}
+    } catch (e) {
+      console.warn('[Preloader] sessionStorage access failed:', e);
+    }
     try {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
-    } catch {}
+    } catch (e) {
+      console.warn('[Preloader] matchMedia check failed:', e);
+    }
     return false;
   };
 
@@ -71,25 +74,32 @@ function AppContent() {
       preferences.performanceMode === 'reduced';
     if (skipSmooth) return;
 
-    // Initialize Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      wheelMultiplier: 1.1,
-      touchMultiplier: 1.5,
-      infinite: false,
+    let lenis: InstanceType<typeof import('lenis').default> | undefined;
+    let rafId: number;
+    let cancelled = false;
+
+    // Dynamic import to keep Lenis out of the main chunk
+    import('lenis').then(({ default: Lenis }) => {
+      if (cancelled) return;
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        wheelMultiplier: 1.1,
+        touchMultiplier: 1.5,
+        infinite: false,
+      });
+
+      const raf = (time: number) => {
+        lenis!.raf(time);
+        rafId = requestAnimationFrame(raf);
+      };
+      rafId = requestAnimationFrame(raf);
     });
 
-    let rafId: number;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    };
-    rafId = requestAnimationFrame(raf);
-
     return () => {
+      cancelled = true;
       cancelAnimationFrame(rafId);
-      lenis.destroy();
+      lenis?.destroy();
     };
   }, [isLoading, reducedMotion, preferences.performanceMode]);
 

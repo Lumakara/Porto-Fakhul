@@ -18,6 +18,9 @@ export default defineConfig({
           if (id.includes('node_modules/three') || id.includes('node_modules/@react-three')) {
             return 'vendor-three';
           }
+          if (id.includes('node_modules')) {
+            return 'vendor-misc';
+          }
         },
       },
     },

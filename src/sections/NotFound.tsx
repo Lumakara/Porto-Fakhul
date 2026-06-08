@@ -3,13 +3,19 @@ import { motion } from 'framer-motion';
 import { Compass, ArrowLeft } from 'lucide-react';
 import { premiumEase } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
+import { usePreferences } from '../contexts/PreferencesContext';
 
 const LazyCustomCursor = lazy(() => import('../components/CustomCursor').then(m => ({ default: m.CustomCursor })));
 
 export const NotFound = () => {
+  const { preferences } = usePreferences();
+  const showCursor = preferences.visualEffects.cursorEffects &&
+    preferences.performanceMode !== 'battery-saver' &&
+    preferences.performanceMode !== 'reduced';
+
   return (
     <div className="relative min-h-screen bg-sand text-charcoal flex flex-col items-center justify-center overflow-hidden selection:bg-terracotta/20 selection:text-charcoal px-4">
-      <Suspense fallback={null}><LazyCustomCursor /></Suspense>
+      {showCursor && <Suspense fallback={null}><LazyCustomCursor /></Suspense>}
       
       {/* Noise overlay */}
       <div className="noise-overlay z-0" />
