@@ -149,7 +149,7 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.15 }}
-      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-charcoal/5 hover:border-charcoal/20 hover:shadow-lg transition-all duration-500 cursor-none bg-white/70 ${wrapperClasses[layout]}`}
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-charcoal/5 hover:border-charcoal/20 hover:shadow-lg transition-all duration-500 cursor-none bg-surface/70 ${wrapperClasses[layout]}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
@@ -196,14 +196,14 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
 
           {/* Category pill – top-left */}
           <div className="absolute top-4 left-4 z-10">
-            <span className="px-2.5 py-1 rounded-full bg-white/80 border border-charcoal/10 text-[9px] font-hud text-charcoal font-medium uppercase tracking-widest backdrop-blur-sm shadow-sm">
+            <span className="px-2.5 py-1 rounded-full bg-surface/80 border border-charcoal/10 text-[9px] font-hud text-charcoal font-medium uppercase tracking-widest backdrop-blur-sm shadow-sm">
               {project.categoryLabel}
             </span>
           </div>
 
           {/* Arrow icon – top-right, appears on hover */}
           <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0">
-            <div className="w-9 h-9 rounded-full bg-white border border-charcoal/10 flex items-center justify-center backdrop-blur-sm shadow-sm">
+            <div className="w-9 h-9 rounded-full bg-surface border border-charcoal/10 flex items-center justify-center backdrop-blur-sm shadow-sm">
               <ArrowUpRight className="w-4 h-4 text-charcoal" />
             </div>
           </div>
@@ -241,7 +241,7 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
             {project.tech.map((techItem) => (
               <span
                 key={techItem}
-                className="px-2 py-0.5 rounded bg-white border border-charcoal/10 text-[9px] font-hud text-charcoal-light uppercase tracking-wider"
+                className="px-2 py-0.5 rounded bg-surface border border-charcoal/10 text-[9px] font-hud text-charcoal-light uppercase tracking-wider"
               >
                 {techItem}
               </span>
@@ -348,7 +348,7 @@ export const Projects = () => {
               exit={{ opacity: 0, scale: 0.95, y: -20, rotateX: -10, filter: 'blur(10px)' }}
               transition={{ duration: 0.8, ease: premiumEase }}
               style={{ perspective: 1000 }}
-              className="w-full max-w-2xl bg-white/95 border border-charcoal/10 rounded-2xl p-6 md:p-8 text-left z-10 glassmorphism-cyber relative overflow-hidden font-sans max-h-[90vh] overflow-y-auto transform-style-3d shadow-xl"
+              className="w-full max-w-2xl bg-surface/95 border border-charcoal/10 rounded-2xl p-6 md:p-8 text-left z-10 glassmorphism-cyber relative overflow-hidden font-sans max-h-[90vh] overflow-y-auto transform-style-3d shadow-xl"
             >
               {/* Glow accent */}
               <div className="absolute top-0 right-0 w-[150px] h-[150px] bg-sage/10 rounded-full blur-[80px] pointer-events-none" />
@@ -419,7 +419,7 @@ export const Projects = () => {
                     {selectedProject.tech.map((techItem) => (
                       <span
                         key={techItem}
-                        className="px-3 py-1 rounded-md bg-white border border-charcoal/10 text-[10px] font-hud text-charcoal uppercase tracking-wider shadow-sm"
+                        className="px-3 py-1 rounded-md bg-surface border border-charcoal/10 text-[10px] font-hud text-charcoal uppercase tracking-wider shadow-sm"
                       >
                         {techItem}
                       </span>

@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "fix",
   "description": "Fix dark theme color inconsistencies. Currently the dark theme in index.css only overrides --color-sand, --color-sand-alt, --color-charcoal, --color-charcoal-light, and --color-surface. Many components use hardcoded 'bg-white', 'bg-white/50', 'border-charcoal/5', 'text-charcoal' that do not respond correctly because --color-surface and white backgrounds are not properly themed. Fix the [data-theme='dark'] CSS variables and update components to use theme-aware classes.",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "In src/index.css, expand the [data-theme='dark'] block to also override: --color-stone (currently #E5E2DA, should be darker like #3a3a3a), --color-sage (keep or slightly adjust for dark bg visibility), --color-terracotta (keep, works on dark), add a new override so glassmorphism and glassmorphism-cyber classes use dark-appropriate rgba values.",
     "Add [data-theme='dark'] overrides for: .glassmorphism { background: rgba(40,40,40,0.7); border-color: rgba(255,255,255,0.08); }, .glassmorphism-cyber { background: rgba(35,35,35,0.8); border-color: rgba(255,255,255,0.05); }",

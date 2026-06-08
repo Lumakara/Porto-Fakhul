@@ -80,15 +80,15 @@ export const About = () => {
               transition={{ delay: 0.4, duration: 1.2, ease: springEase }}
               className="flex flex-wrap gap-3 mt-6"
             >
-              <div className="flex items-center space-x-2 bg-white border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
+              <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
                 <MapPin className="w-3.5 h-3.5 text-terracotta" />
                 <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.location')}</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
+              <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
                 <Briefcase className="w-3.5 h-3.5 text-sage" />
                 <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.experience')}</span>
               </div>
-              <div className="flex items-center space-x-2 bg-white border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
+              <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
                 <Cpu className="w-3.5 h-3.5 text-charcoal-light" />
                 <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.trait')}</span>
               </div>
@@ -109,8 +109,8 @@ export const About = () => {
                   onClick={() => setActiveTab(tab.id as TabType)}
                   className={`flex items-center space-x-3 px-5 py-3.5 rounded-xl text-left cursor-none transition-all duration-300 font-hud text-sm border w-full ${
                     isActive 
-                      ? 'bg-white border-charcoal/10 text-charcoal shadow-sm' 
-                      : 'bg-transparent border-transparent text-charcoal-light hover:text-charcoal hover:bg-white/50'
+                      ? 'bg-surface border-charcoal/10 text-charcoal shadow-sm' 
+                      : 'bg-transparent border-transparent text-charcoal-light hover:text-charcoal hover:bg-surface/50'
                   }`}
                   data-cursor="magnetic"
                 >
@@ -123,7 +123,7 @@ export const About = () => {
 
           {/* Tab content */}
           <div className="lg:col-span-9">
-            <div className="bg-white/50 border border-charcoal/5 rounded-2xl p-6 md:p-10 min-h-[320px] relative overflow-hidden shadow-sm">
+            <div className="bg-surface/50 border border-charcoal/5 rounded-2xl p-6 md:p-10 min-h-[320px] relative overflow-hidden shadow-sm">
               {/* Subtle glow */}
               <div className="absolute -top-20 -right-20 w-[200px] h-[200px] bg-sage/10 rounded-full blur-[80px] pointer-events-none" />
 

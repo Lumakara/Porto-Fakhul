@@ -235,7 +235,57 @@ body {
   --color-charcoal: #F5F2EB;
   --color-charcoal-light: #BFBFBF;
   --color-surface: #2A2A2A;
+  --color-stone: #3a3a3a;
   color-scheme: dark;
+}
+
+/* Dark theme: scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar {
+  background: var(--color-sand);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--color-sand);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Dark theme: glassmorphism */
+[data-theme="dark"] .glassmorphism {
+  background: rgba(40, 40, 40, 0.7);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .glassmorphism-cyber {
+  background: rgba(35, 35, 35, 0.8);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark theme: noise overlay */
+[data-theme="dark"] .noise-overlay {
+  opacity: 0.02;
+  mix-blend-mode: screen;
+}
+
+/* Dark theme: aurora backgrounds with brighter opacity */
+[data-theme="dark"] .bg-aurora-sakura {
+  background: radial-gradient(circle at 50% 0%, rgba(198, 138, 124, 0.12) 0%, rgba(26, 26, 26, 0) 60%);
+}
+
+[data-theme="dark"] .bg-aurora-cyber {
+  background: radial-gradient(circle at 100% 100%, rgba(163, 177, 155, 0.14) 0%, rgba(26, 26, 26, 0) 50%);
+}
+
+[data-theme="dark"] .bg-aurora-purple {
+  background: radial-gradient(circle at 0% 100%, rgba(100, 100, 120, 0.3) 0%, rgba(26, 26, 26, 0) 50%);
 }
 
 /* Smooth transition for theme switching */

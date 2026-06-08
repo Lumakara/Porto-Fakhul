@@ -128,7 +128,7 @@ export const Contact = () => {
             {/* Contact details */}
             <div className="flex flex-col space-y-4">
               <div className="flex items-center space-x-4">
-                <div className="p-2.5 rounded-xl bg-white border border-charcoal/5 shadow-sm">
+                <div className="p-2.5 rounded-xl bg-surface border border-charcoal/5 shadow-sm">
                   <Compass className="w-4 h-4 text-terracotta" />
                 </div>
                 <div className="flex flex-col">
@@ -138,7 +138,7 @@ export const Contact = () => {
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="p-2.5 rounded-xl bg-white border border-charcoal/5 shadow-sm">
+                <div className="p-2.5 rounded-xl bg-surface border border-charcoal/5 shadow-sm">
                   <Mail className="w-4 h-4 text-sage" />
                 </div>
                 <div className="flex flex-col">
@@ -184,7 +184,7 @@ export const Contact = () => {
                     href={soc.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center space-x-2 bg-white border border-charcoal/5 hover:border-charcoal/15 hover:shadow-sm px-4 py-2.5 rounded-xl cursor-none text-sm font-sans text-charcoal-light hover:text-charcoal transition-all duration-300"
+                    className="group flex items-center space-x-2 bg-surface border border-charcoal/5 hover:border-charcoal/15 hover:shadow-sm px-4 py-2.5 rounded-xl cursor-none text-sm font-sans text-charcoal-light hover:text-charcoal transition-all duration-300"
                     data-cursor="magnetic"
                   >
                     {soc.icon}
@@ -204,7 +204,7 @@ export const Contact = () => {
             transition={{ duration: 1.4, delay: 0.3, ease: premiumEase }}
             className="lg:col-span-7"
           >
-            <div className="bg-white/50 border border-charcoal/5 rounded-2xl p-6 md:p-8 relative overflow-hidden min-h-[400px] flex flex-col justify-between shadow-sm">
+            <div className="bg-surface/50 border border-charcoal/5 rounded-2xl p-6 md:p-8 relative overflow-hidden min-h-[400px] flex flex-col justify-between shadow-sm">
               
               {/* Subtle glow */}
               <div className="absolute -top-20 -right-20 w-[200px] h-[200px] bg-sage/10 rounded-full blur-[80px] pointer-events-none" />
@@ -233,7 +233,7 @@ export const Contact = () => {
                           onChange={handleInputChange}
                           required
                           placeholder={t('sections.contact.form.namePlaceholder')}
-                          className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
+                          className="w-full bg-surface border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
                           data-cursor="grow"
                         />
                       </div>
@@ -251,7 +251,7 @@ export const Contact = () => {
                           onChange={handleInputChange}
                           required
                           placeholder={t('sections.contact.form.emailPlaceholder')}
-                          className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
+                          className="w-full bg-surface border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 cursor-none shadow-sm"
                           data-cursor="grow"
                         />
                       </div>
@@ -270,7 +270,7 @@ export const Contact = () => {
                         required
                         rows={5}
                         placeholder={t('sections.contact.form.messagePlaceholder')}
-                        className="w-full bg-white border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 resize-none cursor-none shadow-sm"
+                        className="w-full bg-surface border border-charcoal/10 focus:border-terracotta/30 rounded-xl px-4 py-3.5 text-charcoal text-sm font-sans placeholder-charcoal-light/50 outline-none transition-all duration-300 hover:border-charcoal/20 resize-none cursor-none shadow-sm"
                         data-cursor="grow"
                       />
                     </div>
@@ -305,7 +305,7 @@ export const Contact = () => {
                     </div>
 
                     {/* Console logs */}
-                    <div className="flex-1 w-full bg-white rounded-xl border border-charcoal/10 shadow-inner p-5 font-mono text-xs text-charcoal space-y-2.5 overflow-y-auto select-none">
+                    <div className="flex-1 w-full bg-surface rounded-xl border border-charcoal/10 shadow-inner p-5 font-mono text-xs text-charcoal space-y-2.5 overflow-y-auto select-none">
                       {consoleLogs.map((log, idx) => (
                         <motion.div 
                           key={idx}
@@ -353,7 +353,7 @@ export const Contact = () => {
                     <Magnetic range={0.35}>
                       <button
                         onClick={handleReset}
-                        className="bg-white border border-charcoal/10 text-charcoal font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:bg-terracotta hover:text-white transition-all duration-300 cursor-none shadow-sm hover:shadow-md"
+                        className="bg-surface border border-charcoal/10 text-charcoal font-hud text-xs font-medium tracking-widest px-6 py-3 rounded-full hover:bg-terracotta hover:text-white transition-all duration-300 cursor-none shadow-sm hover:shadow-md"
                         data-cursor="magnetic"
                       >
                         {t('sections.contact.success.sendAnother')}

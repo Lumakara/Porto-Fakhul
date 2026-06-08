@@ -142,7 +142,7 @@ export const Skills = () => {
                 style={{ perspective: 1000 }}
                 onMouseEnter={() => setHoveredSkill(skill.id)}
                 onMouseLeave={() => setHoveredSkill(null)}
-                className={`group relative bg-white border rounded-2xl p-7 md:p-8 text-left overflow-hidden transition-all duration-400 cursor-none min-h-[260px] flex flex-col justify-between shadow-sm hover:shadow-md ${
+                className={`group relative bg-surface border rounded-2xl p-7 md:p-8 text-left overflow-hidden transition-all duration-400 cursor-none min-h-[260px] flex flex-col justify-between shadow-sm hover:shadow-md ${
                   isHovered 
                     ? `border-${accentColor}/30` 
                     : 'border-charcoal/5 hover:border-charcoal/10'
@@ -220,7 +220,7 @@ export const Skills = () => {
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, delay: 0.3, ease: premiumEase }}
-          className="bg-white/50 border border-charcoal/5 rounded-2xl p-6 md:p-8 shadow-sm"
+          className="bg-surface/50 border border-charcoal/5 rounded-2xl p-6 md:p-8 shadow-sm"
         >
           <span className="text-[10px] font-hud text-charcoal-light tracking-widest uppercase block mb-5">
             {t('sections.skills.alsoProficient')}
@@ -231,7 +231,7 @@ export const Skills = () => {
               return (
                 <div
                   key={skill.id}
-                  className="group flex items-center space-x-3 px-4 py-3 rounded-xl border border-charcoal/5 hover:border-charcoal/10 hover:bg-white transition-all duration-300 cursor-none shadow-sm"
+                  className="group flex items-center space-x-3 px-4 py-3 rounded-xl border border-charcoal/5 hover:border-charcoal/10 hover:bg-surface transition-all duration-300 cursor-none shadow-sm"
                   data-cursor="magnetic"
                 >
                   <Icon className={`w-4 h-4 text-charcoal-light group-hover:${
