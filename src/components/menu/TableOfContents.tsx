@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Home, User, FolderOpen, Cpu, Mail } from 'lucide-react';
+import { Home, User, FolderOpen, Mail } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useReducedMotion } from '../../lib/motion';
 import { RippleEffect } from './RippleEffect';
@@ -14,7 +14,6 @@ const sections = [
   { id: 'home', icon: Home, labelKey: 'nav.home' },
   { id: 'about', icon: User, labelKey: 'nav.about' },
   { id: 'projects', icon: FolderOpen, labelKey: 'nav.projects' },
-  { id: 'skills', icon: Cpu, labelKey: 'nav.skills' },
   { id: 'contact', icon: Mail, labelKey: 'nav.contact' },
 ];
 

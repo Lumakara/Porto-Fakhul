@@ -3,7 +3,6 @@
     "home": "Beranda",
     "about": "Tentang",
     "projects": "Proyek",
-    "skills": "Keahlian",
     "contact": "Kontak",
     "logo": "FR",
     "logoSub": "PORTOFOLIO"
@@ -173,14 +172,6 @@
         "launchSite": "BUKA_SITUS",
         "closeLabel": "Tutup detail proyek"
       }
-    },
-    "skills": {
-      "title": "Matriks",
-      "subtitle": "Tumpukan Teknologi",
-      "expertise": "Keahlian",
-      "technicalMatrix": "Teknis",
-      "matrixItalic": "Matriks",
-      "alsoProficient": "Juga mahir dalam"
     },
     "contact": {
       "title": "Uplink",

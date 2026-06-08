@@ -3,7 +3,6 @@
     "home": "\u9996\u9875",
     "about": "\u5173\u4e8e",
     "projects": "\u9879\u76ee",
-    "skills": "\u6280\u80fd",
     "contact": "\u8054\u7cfb",
     "logo": "FR",
     "logoSub": "\u4f5c\u54c1\u96c6"
@@ -173,14 +172,6 @@
         "launchSite": "\u8bbf\u95ee\u7ad9\u70b9",
         "closeLabel": "\u5173\u95ed\u9879\u76ee\u8be6\u60c5"
       }
-    },
-    "skills": {
-      "title": "\u77e9\u9635",
-      "subtitle": "\u6280\u672f\u6808",
-      "expertise": "\u4e13\u4e1a\u6280\u80fd",
-      "technicalMatrix": "\u6280\u672f",
-      "matrixItalic": "\u77e9\u9635",
-      "alsoProficient": "\u4e5f\u7cbe\u901a\u4e8e"
     },
     "contact": {
       "title": "\u94fe\u63a5",

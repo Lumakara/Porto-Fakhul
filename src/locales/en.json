@@ -3,7 +3,6 @@
     "home": "Home",
     "about": "About",
     "projects": "Projects",
-    "skills": "Skills",
     "contact": "Contact",
     "logo": "FR",
     "logoSub": "PORTFOLIO"
@@ -173,14 +172,6 @@
         "launchSite": "LAUNCH_SITE",
         "closeLabel": "Close project details"
       }
-    },
-    "skills": {
-      "title": "Matrix",
-      "subtitle": "Tech Stack",
-      "expertise": "Expertise",
-      "technicalMatrix": "Technical",
-      "matrixItalic": "Matrix",
-      "alsoProficient": "Also proficient in"
     },
     "contact": {
       "title": "Uplink",

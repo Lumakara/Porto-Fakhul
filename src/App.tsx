@@ -17,7 +17,6 @@ import { NotFound } from './sections/NotFound';
 
 // Lazy loaded components for performance
 const Projects = lazy(() => import('./sections/Projects'));
-const Skills = lazy(() => import('./sections/Skills'));
 const Contact = lazy(() => import('./sections/Contact'));
 const ProjectDetail = lazy(() => import('./sections/ProjectDetail'));
 
@@ -130,20 +129,6 @@ function AppContent() {
 
             <Suspense fallback={<div className="h-[40vh] w-full flex items-center justify-center text-charcoal-light font-hud text-[10px] tracking-widest uppercase animate-pulse">{t('common.loading')}</div>}>
               <Projects onSelectProject={(id) => setSelectedProjectId(id)} />
-
-              {/* Marquee divider: Projects → Skills */}
-              <div className="py-6 md:py-8">
-                <Marquee 
-                  items={['REACT', 'TYPESCRIPT', 'NEXT.JS', 'FRAMER MOTION', 'GSAP', 'TAILWIND CSS', 'THREE.JS', 'NODE.JS', 'FIGMA']}
-                  speed={25}
-                  direction="right"
-                />
-              </div>
-
-              <Skills />
-
-              {/* Gradient divider */}
-              <div className="section-divider mx-auto w-full max-w-5xl" />
 
               <Contact />
             </Suspense>

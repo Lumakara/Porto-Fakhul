@@ -21,7 +21,6 @@ export const Navbar = () => {
     { id: 'home', labelKey: 'nav.home' },
     { id: 'about', labelKey: 'nav.about' },
     { id: 'projects', labelKey: 'nav.projects' },
-    { id: 'skills', labelKey: 'nav.skills' },
     { id: 'contact', labelKey: 'nav.contact' },
   ];
 
@@ -33,7 +32,7 @@ export const Navbar = () => {
       rafId = requestAnimationFrame(() => {
         setIsScrolled(window.scrollY > 50);
 
-        const sections = ['home', 'about', 'projects', 'skills', 'contact'];
+        const sections = ['home', 'about', 'projects', 'contact'];
         const scrollPosition = window.scrollY + window.innerHeight / 3;
 
         for (const section of sections) {
