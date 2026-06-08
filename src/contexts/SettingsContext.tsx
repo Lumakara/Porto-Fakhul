@@ -141,6 +141,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   }, [preferences.theme]);
 
   const setTheme = useCallback((theme: ThemeMode) => {
+    // Add transition class briefly so theme switch animates smoothly
+    document.documentElement.classList.add('theme-transitioning');
+    setTimeout(() => {
+      document.documentElement.classList.remove('theme-transitioning');
+    }, 400);
     setPreferences((prev) => ({ ...prev, theme }));
   }, []);
 

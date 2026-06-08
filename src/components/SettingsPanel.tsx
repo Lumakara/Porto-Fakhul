@@ -48,6 +48,38 @@ export const SettingsPanel = ({ isOpen, onClose }: SettingsPanelProps) => {
     }
   }, [isOpen, handleKeyDown]);
 
+  // Focus trap: keep Tab/Shift+Tab within the panel
+  useEffect(() => {
+    if (!isOpen || !panelRef.current) return;
+
+    const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+    const handleTabKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !panelRef.current) return;
+
+      const focusableElements = panelRef.current.querySelectorAll(focusableSelector);
+      const firstFocusable = focusableElements[0] as HTMLElement | undefined;
+      const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement | undefined;
+
+      if (!firstFocusable || !lastFocusable) return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstFocusable) {
+          e.preventDefault();
+          lastFocusable.focus();
+        }
+      } else {
+        if (document.activeElement === lastFocusable) {
+          e.preventDefault();
+          firstFocusable.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleTabKey);
+    return () => document.removeEventListener('keydown', handleTabKey);
+  }, [isOpen]);
+
   const updateEffect = (key: keyof VisualEffects, value: boolean) => {
     setEffects({ ...effects, [key]: value });
   };

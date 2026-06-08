@@ -11,6 +11,7 @@ const id: Locale = {
     mobileLocation: 'DEPOK, JAWA BARAT',
     mobileRole: 'WEB_DEVELOPER // 2026',
     portfolio: 'PORTFOLIO',
+    tableOfContents: 'Daftar Isi',
   },
   hero: {
     kicker: '[ DESAIN \u2022 TEKNOLOGI \u2022 INOVASI ]',

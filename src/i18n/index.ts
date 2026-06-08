@@ -57,14 +57,14 @@ export function useTranslation() {
       const locale = locales[language] ?? locales.en;
       const value = getNestedValue(locale, key);
 
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && value.length > 0) {
         return value as string[];
       }
 
-      // Fallback to English
+      // Fallback to English if array is missing or empty
       if (language !== 'en') {
         const fallbackValue = getNestedValue(locales.en, key);
-        if (Array.isArray(fallbackValue)) {
+        if (Array.isArray(fallbackValue) && fallbackValue.length > 0) {
           if (import.meta.env.DEV) {
             console.warn(`[i18n] Missing translation array for key "${key}" in locale "${language}"`);
           }

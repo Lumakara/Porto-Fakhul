@@ -11,6 +11,7 @@ const zh: Locale = {
     mobileLocation: '\u5FB7\u6CE2\u514B\uFF0C\u897F\u722A\u54C7',
     mobileRole: '\u7F51\u9875\u5F00\u53D1\u8005 // 2026',
     portfolio: '\u4F5C\u54C1\u96C6',
+    tableOfContents: '\u76EE\u5F55',
   },
   hero: {
     kicker: '[ \u8BBE\u8BA1 \u2022 \u6280\u672F \u2022 \u521B\u65B0 ]',

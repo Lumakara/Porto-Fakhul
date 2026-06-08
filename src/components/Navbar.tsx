@@ -271,7 +271,6 @@ export const Navbar = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="fixed inset-0 z-40 bg-charcoal/20 backdrop-blur-sm lg:hidden"
-              onClick={closeMobileMenu}
               aria-hidden="true"
             />
 
@@ -285,7 +284,7 @@ export const Navbar = () => {
               role="dialog"
               aria-modal="true"
               aria-label={t('accessibility.openMenu')}
-              className="fixed inset-0 z-40 bg-sand/98 backdrop-blur-xl flex flex-col px-6 pt-24 pb-8 lg:hidden overflow-y-auto"
+              className="fixed inset-0 z-[41] bg-sand/98 backdrop-blur-xl flex flex-col px-6 pt-24 pb-8 lg:hidden overflow-y-auto"
             >
               {/* Background decoration */}
               <div className="absolute inset-0 pointer-events-none">

@@ -52,7 +52,7 @@ export const TableOfContents = ({ activeSection, onNavigate }: TableOfContentsPr
         aria-expanded={isExpanded}
         className="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-stone/30 transition-colors text-sm font-hud text-charcoal tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50"
       >
-        <span className="font-semibold">{t('nav.home').replace('// ', '') === 'HOME' ? 'Table of Contents' : t('settings.title')}</span>
+        <span className="font-semibold">{t('nav.tableOfContents')}</span>
         <motion.div
           animate={{ rotate: isExpanded ? 180 : 0 }}
           transition={{ duration: 0.2 }}

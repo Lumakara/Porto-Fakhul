@@ -9,6 +9,7 @@ export interface LocaleMessages {
     mobileLocation: string;
     mobileRole: string;
     portfolio: string;
+    tableOfContents: string;
   };
   hero: {
     kicker: string;
@@ -225,6 +226,7 @@ const en: LocaleMessages = {
     mobileLocation: 'DEPOK, JAWA BARAT',
     mobileRole: 'WEB_DEVELOPER // 2026',
     portfolio: 'PORTFOLIO',
+    tableOfContents: 'Table of Contents',
   },
   hero: {
     kicker: '[ DESIGN \u2022 TECHNOLOGY \u2022 INNOVATION ]',

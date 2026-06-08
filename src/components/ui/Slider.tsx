@@ -45,7 +45,7 @@ export const Slider = ({ value, onChange, min = 0, max = 1, label }: SliderProps
             [&::-moz-range-thumb]:cursor-pointer
             focus:outline-none focus-visible:ring-2 focus-visible:ring-terracotta/50"
           style={{
-            background: `linear-gradient(to right, #C68A7C ${percentage}%, #E5E2DA ${percentage}%)`,
+            background: `linear-gradient(to right, var(--color-terracotta) ${percentage}%, var(--color-stone) ${percentage}%)`,
           }}
         />
       </div>
