@@ -150,6 +150,15 @@
       "selectedWorks": "KARYA TERPILIH",
       "projectArchive": "ARSIP PROYEK",
       "subtitleDesc": "Pilihan kurasi proyek kreatif dan teknis",
+      "detail": {
+        "back": "Kembali",
+        "overview": "Gambaran",
+        "challenge": "Tantangan",
+        "solution": "Solusi",
+        "tech": "Teknologi",
+        "category": "Kategori",
+        "id": "ID Proyek"
+      },
       "modal": {
         "overview": "01 // GAMBARAN PROYEK",
         "challenge": "02 // TANTANGAN TEKNIS",

@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
@@ -11,6 +11,7 @@ import { About } from './sections/About';
 import { TextReveal, premiumEase } from './components/Section';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { PreferencesProvider, usePreferences } from './contexts/PreferencesContext';
+import { projectsData } from './data/projects';
 
 import { NotFound } from './sections/NotFound';
 
@@ -18,6 +19,7 @@ import { NotFound } from './sections/NotFound';
 const Projects = lazy(() => import('./sections/Projects'));
 const Skills = lazy(() => import('./sections/Skills'));
 const Contact = lazy(() => import('./sections/Contact'));
+const ProjectDetail = lazy(() => import('./sections/ProjectDetail'));
 
 function ThemeApplicator() {
   const { preferences } = usePreferences();
@@ -47,7 +49,12 @@ function ThemeApplicator() {
 
 function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const { t } = useLanguage();
+
+  const selectedProject = selectedProjectId
+    ? projectsData.find((p) => p.id === selectedProjectId) || null
+    : null;
 
   useEffect(() => {
     if (isLoading) return;
@@ -83,6 +90,18 @@ function AppContent() {
       {/* Cinematic Boot preloader */}
       <Preloader onComplete={() => setIsLoading(false)} />
 
+      {/* Project Detail Full-Page View */}
+      <AnimatePresence mode="wait">
+        {selectedProject && (
+          <Suspense fallback={<div className="fixed inset-0 z-50 bg-sand flex items-center justify-center text-charcoal-light font-hud text-[10px] tracking-widest uppercase animate-pulse">{t('common.loading')}</div>}>
+            <ProjectDetail
+              project={selectedProject}
+              onBack={() => setSelectedProjectId(null)}
+            />
+          </Suspense>
+        )}
+      </AnimatePresence>
+
       {/* Mount application only after preloader finishes */}
       {!isLoading && (
         <div className="relative text-charcoal min-h-screen bg-sand selection:bg-terracotta/20 selection:text-charcoal">
@@ -110,7 +129,7 @@ function AppContent() {
             <div className="section-divider mx-auto w-full max-w-5xl" />
 
             <Suspense fallback={<div className="h-[40vh] w-full flex items-center justify-center text-charcoal-light font-hud text-[10px] tracking-widest uppercase animate-pulse">{t('common.loading')}</div>}>
-              <Projects />
+              <Projects onSelectProject={(id) => setSelectedProjectId(id)} />
 
               {/* Marquee divider: Projects → Skills */}
               <div className="py-6 md:py-8">

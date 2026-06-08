@@ -2,7 +2,7 @@
   "id": "FEAT-003",
   "type": "feat",
   "description": "Redesign the Projects section: on mobile, display projects in a 2-column grid. When a project is clicked, navigate to a dedicated project detail page (not a static modal panel). The detail page should be ultra-functional and ultra-interactive with animated sections, interactive tech stack visualization, challenge/solution expandable panels, and smooth page transitions.",
-  "status": "pending",
+  "status": "in_progress",
   "steps": [
     "In src/sections/Projects.tsx: Change the grid layout to show 2 columns on mobile (grid-cols-2) instead of the current grid-cols-1 on mobile. Remove the 'featured' and 'horizontal' layout variants for mobile - on mobile all cards should be equal-sized compact cards in a 2-col grid. On desktop keep the current bento layout.",
     "Replace the modal/overlay approach with page-based navigation. Add a simple state-based 'router' in App.tsx: when a project is selected, show a ProjectDetail page component instead of the main content (or use a full-screen animated page transition). Add state management for selected project ID in App.tsx.",

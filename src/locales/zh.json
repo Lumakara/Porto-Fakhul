@@ -150,6 +150,15 @@
       "selectedWorks": "\u7cbe\u9009\u4f5c\u54c1",
       "projectArchive": "\u9879\u76ee\u6863\u6848",
       "subtitleDesc": "\u7cbe\u5fc3\u6311\u9009\u7684\u521b\u610f\u4e0e\u6280\u672f\u9879\u76ee",
+      "detail": {
+        "back": "\u8fd4\u56de",
+        "overview": "\u6982\u8ff0",
+        "challenge": "\u6311\u6218",
+        "solution": "\u89e3\u51b3\u65b9\u6848",
+        "tech": "\u6280\u672f\u6808",
+        "category": "\u7c7b\u522b",
+        "id": "\u9879\u76eeID"
+      },
       "modal": {
         "overview": "01 // \u9879\u76ee\u6982\u8ff0",
         "challenge": "02 // \u6280\u672f\u6311\u6218",

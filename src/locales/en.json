@@ -150,6 +150,15 @@
       "selectedWorks": "SELECTED WORKS",
       "projectArchive": "PROJECT ARCHIVE",
       "subtitleDesc": "Curated selection of creative and technical projects",
+      "detail": {
+        "back": "Back",
+        "overview": "Overview",
+        "challenge": "Challenge",
+        "solution": "Solution",
+        "tech": "Tech Stack",
+        "category": "Category",
+        "id": "Project ID"
+      },
       "modal": {
         "overview": "01 // PROJECT OVERVIEW",
         "challenge": "02 // TECHNICAL CHALLENGE",
