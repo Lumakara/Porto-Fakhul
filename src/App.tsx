@@ -10,6 +10,7 @@ import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { TextReveal, premiumEase } from './components/Section';
 import { useSettings } from './contexts/SettingsContext';
+import { useTranslation } from './i18n/index';
 
 import { NotFound } from './sections/NotFound';
 
@@ -22,6 +23,12 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false);
   const { effects } = useSettings();
+  const { t, tArray, language } = useTranslation();
+
+  // Set document language attribute
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   useEffect(() => {
     // Basic client-side routing check
@@ -36,7 +43,7 @@ function App() {
     // Initialize Lenis smooth scroll (respect reduced motion)
     const lenis = new Lenis({
       duration: effects.motionReduction ? 0 : 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       wheelMultiplier: 1.1,
       touchMultiplier: 1.5,
       infinite: false,
@@ -62,6 +69,9 @@ function App() {
     return <NotFound />;
   }
 
+  const marqueeRoles = tArray('marquee.roles');
+  const marqueeSkills = tArray('marquee.skills');
+
   return (
     <>
       {/* Cinematic Boot preloader */}
@@ -70,20 +80,28 @@ function App() {
       {/* Mount application only after preloader finishes */}
       {!isLoading && (
         <div className="relative text-charcoal min-h-screen bg-sand selection:bg-terracotta/20 selection:text-charcoal">
-          {/* Custom spring cursors */}
-          <CustomCursor />
+          {/* Custom spring cursors - conditional */}
+          {effects.cursorEffects && <CustomCursor />}
+
+          {/* Skip to content link */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[99999] focus:px-4 focus:py-2 focus:bg-charcoal focus:text-sand focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-terracotta"
+          >
+            {t('accessibility.skipToContent')}
+          </a>
 
           {/* Floating navigation pill */}
           <Navbar />
 
           {/* Main sections container */}
-          <main className="relative z-10 w-full overflow-hidden">
+          <main id="main-content" className="relative z-10 w-full overflow-hidden">
             <Hero />
             
             {/* Marquee divider: Hero → About */}
             <div className="py-6 md:py-8">
               <Marquee 
-                items={['CREATIVE DEVELOPER', 'MOTION DESIGNER', 'FRONTEND ARCHITECT', 'UI ENGINEER', 'DEPOK BASED', 'AVAILABLE 2026']}
+                items={marqueeRoles}
                 speed={35}
               />
             </div>
@@ -93,13 +111,13 @@ function App() {
             {/* Gradient divider */}
             <div className="section-divider mx-auto w-full max-w-5xl" />
 
-            <Suspense fallback={<div className="h-[40vh] w-full flex items-center justify-center text-charcoal-light font-hud text-[10px] tracking-widest uppercase animate-pulse">Initializing...</div>}>
+            <Suspense fallback={<div className="h-[40vh] w-full flex items-center justify-center text-charcoal-light font-hud text-[10px] tracking-widest uppercase animate-pulse">{t('accessibility.initializing')}</div>}>
               <Projects />
 
               {/* Marquee divider: Projects → Skills */}
               <div className="py-6 md:py-8">
                 <Marquee 
-                  items={['REACT', 'TYPESCRIPT', 'NEXT.JS', 'FRAMER MOTION', 'GSAP', 'TAILWIND CSS', 'THREE.JS', 'NODE.JS', 'FIGMA']}
+                  items={marqueeSkills}
                   speed={25}
                   direction="right"
                 />
@@ -114,17 +132,13 @@ function App() {
             </Suspense>
           </main>
 
-          {/* Premium Footer — Large CTA + Credits */}
+          {/* Premium Footer */}
           <footer className="relative z-10 bg-sand-alt overflow-hidden">
-            {/* Noise overlay */}
             <div className="noise-overlay" />
-            
-            {/* Top gradient line */}
             <div className="section-divider w-full" />
             
             {/* Large closing CTA area */}
             <div className="relative max-w-7xl mx-auto px-6 md:px-12 pt-24 md:pt-32 pb-16 md:pb-20 text-center">
-              {/* Soft glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-terracotta/5 rounded-full blur-[100px] pointer-events-none" />
               
               <motion.div 
@@ -135,13 +149,13 @@ function App() {
                 className="relative z-10 flex flex-col items-center"
               >
                 <span className="text-xs font-hud text-terracotta tracking-[0.3em] uppercase mb-6">
-                  Ready to collaborate?
+                  {t('footer.readyLabel')}
                 </span>
                 
                 <h2 className="text-3xl md:text-5xl lg:text-7xl font-display font-medium text-charcoal tracking-tight leading-tight mb-8">
-                  <TextReveal text="Let's create" className="block" />
+                  <TextReveal text={t('footer.title')} className="block" />
                   <span className="italic text-charcoal-light">
-                    <TextReveal text="something extraordinary." delay={0.2} />
+                    <TextReveal text={t('footer.titleSuffix')} delay={0.2} />
                   </span>
                 </h2>
 
@@ -151,7 +165,7 @@ function App() {
                     className="group bg-charcoal text-sand font-hud text-xs tracking-widest px-12 py-5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:bg-terracotta cursor-none relative overflow-hidden"
                     data-cursor="grow"
                   >
-                    <span className="relative z-10">START A PROJECT</span>
+                    <span className="relative z-10">{t('footer.cta')}</span>
                   </button>
                 </Magnetic>
               </motion.div>
@@ -164,7 +178,7 @@ function App() {
                 <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-1">
                   <span className="text-charcoal font-medium tracking-wider text-sm font-display">Fakhul Rohman</span>
                   <span className="text-charcoal-light text-[10px] tracking-widest uppercase font-hud">
-                    © 2025 — Designed with precision
+                    {t('footer.copyright')}
                   </span>
                 </div>
 
@@ -175,7 +189,7 @@ function App() {
                     className="text-[10px] font-hud text-charcoal-light hover:text-terracotta tracking-widest uppercase transition-colors duration-300 cursor-none flex items-center space-x-2"
                     data-cursor="magnetic"
                   >
-                    <span>Back to top</span>
+                    <span>{t('footer.backToTop')}</span>
                     <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 15l-6-6-6 6"/>
                     </svg>
@@ -184,13 +198,13 @@ function App() {
 
                 {/* System Specs */}
                 <div className="flex items-center space-x-4 text-[10px] text-charcoal-light uppercase tracking-widest font-hud">
-                  <span>React + Vite + Lenis</span>
+                  <span>{t('footer.techStack')}</span>
                   <div className="flex items-center space-x-1.5">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75" />
                       <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-sage" />
                     </span>
-                    <span className="text-sage font-medium">Live</span>
+                    <span className="text-sage font-medium">{t('footer.live')}</span>
                   </div>
                 </div>
               </div>

@@ -2,92 +2,33 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Code, Cpu, Layers, Award, Eye, Accessibility, Database, GitBranch } from 'lucide-react';
 import { Section, premiumEase, springEase, Parallax } from '../components/Section';
+import { useTranslation } from '../i18n/index';
 
-interface Skill {
+interface SkillMeta {
   id: string;
-  name: string;
   level: number;
-  description: string;
   icon: React.ComponentType<{ className?: string }>;
   color: 'terracotta' | 'sage';
   primary?: boolean;
 }
 
-const skillsData: Skill[] = [
-  {
-    id: 'react',
-    name: 'React / Next.js',
-    level: 95,
-    description: 'High-fidelity component architecture, hooks, state management, SSR & bundle optimization.',
-    icon: Code,
-    color: 'terracotta',
-    primary: true,
-  },
-  {
-    id: 'motion',
-    name: 'Motion Design',
-    level: 92,
-    description: 'Framer Motion, GSAP timelines, scroll-triggered choreography & spring physics.',
-    icon: Award,
-    color: 'sage',
-    primary: true,
-  },
-  {
-    id: 'css',
-    name: 'CSS / Tailwind',
-    level: 95,
-    description: 'Advanced layouts, fluid typography, design systems, responsive architecture.',
-    icon: Layers,
-    color: 'terracotta',
-    primary: true,
-  },
-  {
-    id: 'ts',
-    name: 'TypeScript',
-    level: 90,
-    description: 'Strict typing, generics, utility types, modular architectures.',
-    icon: Cpu,
-    color: 'sage',
-  },
-  {
-    id: 'webgl',
-    name: 'Three.js / WebGL',
-    level: 80,
-    description: 'Interactive 3D, shaders, canvas rendering.',
-    icon: Eye,
-    color: 'terracotta',
-  },
-  {
-    id: 'a11y',
-    name: 'Accessibility',
-    level: 88,
-    description: 'WCAG 2.1, ARIA, keyboard nav, screen readers.',
-    icon: Accessibility,
-    color: 'sage',
-  },
-  {
-    id: 'backend',
-    name: 'Node.js / APIs',
-    level: 85,
-    description: 'REST APIs, WebSockets, Docker, serverless.',
-    icon: Database,
-    color: 'terracotta',
-  },
-  {
-    id: 'git',
-    name: 'Git / CI-CD',
-    level: 90,
-    description: 'GitHub Actions, PR workflows, automated testing.',
-    icon: GitBranch,
-    color: 'sage',
-  },
+const skillsMeta: SkillMeta[] = [
+  { id: 'react', level: 95, icon: Code, color: 'terracotta', primary: true },
+  { id: 'motion', level: 92, icon: Award, color: 'sage', primary: true },
+  { id: 'css', level: 95, icon: Layers, color: 'terracotta', primary: true },
+  { id: 'ts', level: 90, icon: Cpu, color: 'sage' },
+  { id: 'webgl', level: 80, icon: Eye, color: 'terracotta' },
+  { id: 'a11y', level: 88, icon: Accessibility, color: 'sage' },
+  { id: 'backend', level: 85, icon: Database, color: 'terracotta' },
+  { id: 'git', level: 90, icon: GitBranch, color: 'sage' },
 ];
 
-const primarySkills = skillsData.filter(s => s.primary);
-const secondarySkills = skillsData.filter(s => !s.primary);
+const primarySkillsMeta = skillsMeta.filter(s => s.primary);
+const secondarySkillsMeta = skillsMeta.filter(s => !s.primary);
 
 export const Skills = () => {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   return (
     <Section id="skills" className="relative px-4 md:px-12 bg-sand-alt">
@@ -99,7 +40,7 @@ export const Skills = () => {
 
       <div className="w-full max-w-7xl mx-auto z-10 relative">
         
-        {/* Section Header — minimal left-aligned */}
+        {/* Section Header */}
         <div className="text-left mb-16 md:mb-20">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -108,7 +49,7 @@ export const Skills = () => {
             transition={{ duration: 1.2, ease: premiumEase }}
             className="text-[10px] font-hud text-sage tracking-[0.3em] uppercase block mb-4"
           >
-            Expertise
+            {t('skills.sectionLabel')}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 40, scale: 0.98, filter: 'blur(8px)' }}
@@ -117,18 +58,20 @@ export const Skills = () => {
             transition={{ duration: 1.4, delay: 0.1, ease: premiumEase }}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-charcoal tracking-tight"
           >
-            Technical
+            {t('skills.title')}
             <br />
-            <span className="italic font-light text-charcoal-light">Matrix</span>
+            <span className="italic font-light text-charcoal-light">{t('skills.titleSuffix')}</span>
           </motion.h2>
         </div>
 
-        {/* Primary Skills — Large cards, 3-column */}
+        {/* Primary Skills */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {primarySkills.map((skill, idx) => {
+          {primarySkillsMeta.map((skill, idx) => {
             const Icon = skill.icon;
             const isHovered = hoveredSkill === skill.id;
-            const accentColor = skill.color === 'terracotta' ? 'terracotta' : 'sage';
+            const globalIdx = skillsMeta.indexOf(skill);
+            const name = t(`skills.items.${globalIdx}.name`);
+            const description = t(`skills.items.${globalIdx}.description`);
 
             return (
               <motion.div
@@ -142,7 +85,7 @@ export const Skills = () => {
                 onMouseLeave={() => setHoveredSkill(null)}
                 className={`group relative bg-white border rounded-2xl p-7 md:p-8 text-left overflow-hidden transition-all duration-400 cursor-none min-h-[260px] flex flex-col justify-between shadow-sm hover:shadow-md ${
                   isHovered 
-                    ? `border-${accentColor}/30` 
+                    ? skill.color === 'terracotta' ? 'border-terracotta/30' : 'border-sage/30'
                     : 'border-charcoal/5 hover:border-charcoal/10'
                 }`}
                 data-cursor="magnetic"
@@ -153,7 +96,6 @@ export const Skills = () => {
                 } to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
                 <div>
-                  {/* Icon + level */}
                   <div className="flex justify-between items-start mb-6">
                     <div className={`p-3 rounded-xl border transition-all duration-300 ${
                       isHovered
@@ -175,14 +117,11 @@ export const Skills = () => {
                     </span>
                   </div>
 
-                  {/* Name */}
                   <h3 className="text-lg md:text-xl font-display font-semibold text-charcoal tracking-wide mb-2">
-                    {skill.name}
+                    {name}
                   </h3>
-
-                  {/* Description */}
                   <p className="text-sm text-charcoal-light font-sans leading-relaxed">
-                    {skill.description}
+                    {description}
                   </p>
                 </div>
 
@@ -194,7 +133,7 @@ export const Skills = () => {
                     aria-valuenow={skill.level}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    aria-label={`${skill.name} proficiency level`}
+                    aria-label={`${name} proficiency level`}
                   >
                     <motion.div
                       initial={{ width: 0 }}
@@ -212,7 +151,7 @@ export const Skills = () => {
           })}
         </div>
 
-        {/* Secondary Skills — Compact horizontal strip */}
+        {/* Secondary Skills */}
         <motion.div
           initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -221,11 +160,13 @@ export const Skills = () => {
           className="bg-white/50 border border-charcoal/5 rounded-2xl p-6 md:p-8 shadow-sm"
         >
           <span className="text-[10px] font-hud text-charcoal-light tracking-widest uppercase block mb-5">
-            Also proficient in
+            {t('skills.alsoProficient')}
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {secondarySkills.map((skill) => {
+            {secondarySkillsMeta.map((skill) => {
               const Icon = skill.icon;
+              const globalIdx = skillsMeta.indexOf(skill);
+              const name = t(`skills.items.${globalIdx}.name`);
               return (
                 <div
                   key={skill.id}
@@ -236,7 +177,7 @@ export const Skills = () => {
                     skill.color === 'terracotta' ? 'text-terracotta' : 'text-sage'
                   } transition-colors duration-300`} />
                   <div className="flex flex-col">
-                    <span className="text-sm font-display font-medium text-charcoal">{skill.name}</span>
+                    <span className="text-sm font-display font-medium text-charcoal">{name}</span>
                     <span className="text-[10px] text-charcoal-light font-hud">{skill.level}%</span>
                   </div>
                 </div>
