@@ -2,7 +2,7 @@
   "id": "FEAT-004",
   "type": "feat",
   "description": "Redesign the About section tabs: make them horizontal (not vertical on desktop) with horizontal swipe capability (left/right). Change the 'Approach' tab to become 'Soft Skill & Hard Skill' with appropriate content replacing the current approach cards.",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "In src/sections/About.tsx: Change the tab layout from the current lg:col-span-3 vertical sidebar to a horizontal tab bar that spans the full width above the content. Make tabs swipeable on mobile using framer-motion drag gestures (dragX) or touch swipe detection to switch between tabs.",
     "Change the tab type from 'story' | 'experience' | 'approach' to 'story' | 'experience' | 'skills'. Rename the third tab from 'Approach' (Pendekatan) to 'Soft Skill & Hard Skill'.",
@@ -21,5 +21,5 @@
   ],
   "verification": ["npm run build"],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "Replaced Zap with Target icon. Used framer-motion drag='x' with PanInfo for swipe detection. Skills data stored as JSON arrays in locale files, cast via 'as unknown as string[]' for type safety. Build passes cleanly."
 }
