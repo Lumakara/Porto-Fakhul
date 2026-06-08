@@ -9,6 +9,8 @@ import { Magnetic } from './components/Magnetic';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { TextReveal, premiumEase } from './components/Section';
+import { LanguageProvider } from './contexts/LanguageContext';
+import { PreferencesProvider } from './contexts/PreferencesContext';
 
 import { NotFound } from './sections/NotFound';
 
@@ -61,7 +63,8 @@ function App() {
   }
 
   return (
-    <>
+    <LanguageProvider>
+    <PreferencesProvider>
       {/* Cinematic Boot preloader */}
       <Preloader onComplete={() => setIsLoading(false)} />
 
@@ -196,7 +199,8 @@ function App() {
           </footer>
         </div>
       )}
-    </>
+    </PreferencesProvider>
+    </LanguageProvider>
   );
 }
 

@@ -1,1 +1,162 @@
-{}
+{
+  "nav": {
+    "home": "// HOME",
+    "about": "// BLUEPRINT",
+    "projects": "// ARCHIVE",
+    "skills": "// MATRIX",
+    "contact": "// UPLINK",
+    "logo": "FR",
+    "logoSub": "PORTFOLIO",
+    "status": "UPLINK_ON"
+  },
+  "menu": {
+    "tableOfContents": "Table of Contents",
+    "settings": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "music": "Music",
+    "visualEffects": "Visual Effects",
+    "interface": "Interface",
+    "performance": "Performance",
+    "close": "Close Menu",
+    "open": "Open Menu",
+    "backToTop": "Back to top"
+  },
+  "settings": {
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": {
+      "title": "Language",
+      "en": "English",
+      "id": "Indonesian",
+      "zh": "Chinese"
+    },
+    "music": {
+      "title": "Music",
+      "enabled": "Enable Music",
+      "volume": "Volume",
+      "playlist": "Playlist",
+      "playlistOptions": {
+        "ambient": "Ambient",
+        "lofi": "Lo-Fi",
+        "electronic": "Electronic",
+        "none": "None"
+      }
+    },
+    "visualEffects": {
+      "title": "Visual Effects",
+      "particles": "Particles",
+      "animations": "Animations",
+      "blur": "Blur Effects",
+      "motionReduction": "Reduce Motion",
+      "cursorEffects": "Cursor Effects"
+    },
+    "interface": {
+      "title": "Interface",
+      "compact": "Compact",
+      "comfortable": "Comfortable",
+      "largeText": "Large Text"
+    },
+    "performance": {
+      "title": "Performance",
+      "full": "Full Quality",
+      "batterySaver": "Battery Saver",
+      "lowGpu": "Low GPU",
+      "reduced": "Reduced"
+    },
+    "reset": "Reset to Defaults",
+    "saved": "Settings saved"
+  },
+  "sections": {
+    "hero": {
+      "title": "Creative Developer",
+      "subtitle": "Frontend Architect & Motion Designer",
+      "cta": "View Projects"
+    },
+    "about": {
+      "title": "Blueprint",
+      "subtitle": "About Me"
+    },
+    "projects": {
+      "title": "Archive",
+      "subtitle": "Selected Works",
+      "viewProject": "View Project",
+      "viewAll": "View All Projects"
+    },
+    "skills": {
+      "title": "Matrix",
+      "subtitle": "Tech Stack"
+    },
+    "contact": {
+      "title": "Uplink",
+      "subtitle": "Get in Touch"
+    }
+  },
+  "common": {
+    "loading": "Initializing...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "close": "Close",
+    "open": "Open",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "readMore": "Read More",
+    "showLess": "Show Less",
+    "scrollDown": "Scroll Down",
+    "startProject": "START A PROJECT",
+    "readyToCollaborate": "Ready to collaborate?",
+    "letsCreate": "Let's create",
+    "somethingExtraordinary": "something extraordinary.",
+    "copyright": "© 2025 — Designed with precision",
+    "location": "DEPOK, JAWA BARAT",
+    "role": "WEB_DEVELOPER // 2026",
+    "techStack": "React + Vite + Lenis",
+    "live": "Live"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "menuToggle": "Toggle navigation menu",
+    "settingsPanel": "Settings panel",
+    "languageSelector": "Language selector",
+    "themeSelector": "Theme selector",
+    "volumeSlider": "Volume slider",
+    "closePanel": "Close panel",
+    "openPanel": "Open panel",
+    "currentSection": "Current section",
+    "scrollProgress": "Scroll progress",
+    "musicToggle": "Toggle music",
+    "reduceMotion": "Reduce motion"
+  },
+  "forms": {
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "sent": "Message sent!",
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email",
+      "minLength": "Must be at least {min} characters",
+      "maxLength": "Must be no more than {max} characters"
+    },
+    "errors": {
+      "network": "Network error. Please try again.",
+      "server": "Server error. Please try again later.",
+      "unknown": "An unexpected error occurred."
+    },
+    "empty": {
+      "noProjects": "No projects to display",
+      "noSkills": "No skills to display"
+    }
+  }
+}

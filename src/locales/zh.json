@@ -1,1 +1,162 @@
-{}
+{
+  "nav": {
+    "home": "// 首页",
+    "about": "// 蓝图",
+    "projects": "// 档案",
+    "skills": "// 矩阵",
+    "contact": "// 链接",
+    "logo": "FR",
+    "logoSub": "作品集",
+    "status": "UPLINK_ON"
+  },
+  "menu": {
+    "tableOfContents": "目录",
+    "settings": "设置",
+    "language": "语言",
+    "theme": "主题",
+    "music": "音乐",
+    "visualEffects": "视觉效果",
+    "interface": "界面",
+    "performance": "性能",
+    "close": "关闭菜单",
+    "open": "打开菜单",
+    "backToTop": "回到顶部"
+  },
+  "settings": {
+    "theme": {
+      "title": "主题",
+      "light": "浅色",
+      "dark": "深色",
+      "system": "跟随系统"
+    },
+    "language": {
+      "title": "语言",
+      "en": "英文",
+      "id": "印尼文",
+      "zh": "中文"
+    },
+    "music": {
+      "title": "音乐",
+      "enabled": "启用音乐",
+      "volume": "音量",
+      "playlist": "播放列表",
+      "playlistOptions": {
+        "ambient": "氛围音乐",
+        "lofi": "Lo-Fi",
+        "electronic": "电子音乐",
+        "none": "无"
+      }
+    },
+    "visualEffects": {
+      "title": "视觉效果",
+      "particles": "粒子效果",
+      "animations": "动画",
+      "blur": "模糊效果",
+      "motionReduction": "减少动效",
+      "cursorEffects": "光标效果"
+    },
+    "interface": {
+      "title": "界面",
+      "compact": "紧凑",
+      "comfortable": "舒适",
+      "largeText": "大字体"
+    },
+    "performance": {
+      "title": "性能",
+      "full": "完整质量",
+      "batterySaver": "省电模式",
+      "lowGpu": "低GPU",
+      "reduced": "精简模式"
+    },
+    "reset": "恢复默认设置",
+    "saved": "设置已保存"
+  },
+  "sections": {
+    "hero": {
+      "title": "创意开发者",
+      "subtitle": "前端架构师 & 动效设计师",
+      "cta": "查看项目"
+    },
+    "about": {
+      "title": "蓝图",
+      "subtitle": "关于我"
+    },
+    "projects": {
+      "title": "档案",
+      "subtitle": "精选作品",
+      "viewProject": "查看项目",
+      "viewAll": "查看所有项目"
+    },
+    "skills": {
+      "title": "矩阵",
+      "subtitle": "技术栈"
+    },
+    "contact": {
+      "title": "链接",
+      "subtitle": "联系我"
+    }
+  },
+  "common": {
+    "loading": "初始化中...",
+    "error": "出了点问题",
+    "retry": "重试",
+    "cancel": "取消",
+    "confirm": "确认",
+    "save": "保存",
+    "close": "关闭",
+    "open": "打开",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "readMore": "阅读更多",
+    "showLess": "收起",
+    "scrollDown": "向下滚动",
+    "startProject": "开始项目",
+    "readyToCollaborate": "准备好合作了吗？",
+    "letsCreate": "让我们创造",
+    "somethingExtraordinary": "非凡的作品。",
+    "copyright": "© 2025 — 精心设计",
+    "location": "印尼 德波 西爪哇",
+    "role": "网页开发者 // 2026",
+    "techStack": "React + Vite + Lenis",
+    "live": "在线"
+  },
+  "accessibility": {
+    "skipToContent": "跳转到内容",
+    "mainNavigation": "主导航",
+    "menuToggle": "切换导航菜单",
+    "settingsPanel": "设置面板",
+    "languageSelector": "语言选择器",
+    "themeSelector": "主题选择器",
+    "volumeSlider": "音量滑块",
+    "closePanel": "关闭面板",
+    "openPanel": "打开面板",
+    "currentSection": "当前部分",
+    "scrollProgress": "滚动进度",
+    "musicToggle": "切换音乐",
+    "reduceMotion": "减少动效"
+  },
+  "forms": {
+    "name": "姓名",
+    "email": "电子邮件",
+    "message": "留言",
+    "submit": "发送消息",
+    "sending": "发送中...",
+    "sent": "消息已发送！",
+    "validation": {
+      "required": "此字段为必填项",
+      "email": "请输入有效的电子邮件",
+      "minLength": "至少需要{min}个字符",
+      "maxLength": "不能超过{max}个字符"
+    },
+    "errors": {
+      "network": "网络错误，请重试。",
+      "server": "服务器错误，请稍后重试。",
+      "unknown": "发生了意外错误。"
+    },
+    "empty": {
+      "noProjects": "暂无项目展示",
+      "noSkills": "暂无技能展示"
+    }
+  }
+}

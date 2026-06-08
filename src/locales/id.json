@@ -1,1 +1,162 @@
-{}
+{
+  "nav": {
+    "home": "// BERANDA",
+    "about": "// CETAK BIRU",
+    "projects": "// ARSIP",
+    "skills": "// MATRIKS",
+    "contact": "// UPLINK",
+    "logo": "FR",
+    "logoSub": "PORTOFOLIO",
+    "status": "UPLINK_ON"
+  },
+  "menu": {
+    "tableOfContents": "Daftar Isi",
+    "settings": "Pengaturan",
+    "language": "Bahasa",
+    "theme": "Tema",
+    "music": "Musik",
+    "visualEffects": "Efek Visual",
+    "interface": "Antarmuka",
+    "performance": "Performa",
+    "close": "Tutup Menu",
+    "open": "Buka Menu",
+    "backToTop": "Kembali ke atas"
+  },
+  "settings": {
+    "theme": {
+      "title": "Tema",
+      "light": "Terang",
+      "dark": "Gelap",
+      "system": "Sistem"
+    },
+    "language": {
+      "title": "Bahasa",
+      "en": "Inggris",
+      "id": "Indonesia",
+      "zh": "Mandarin"
+    },
+    "music": {
+      "title": "Musik",
+      "enabled": "Aktifkan Musik",
+      "volume": "Volume",
+      "playlist": "Daftar Putar",
+      "playlistOptions": {
+        "ambient": "Ambient",
+        "lofi": "Lo-Fi",
+        "electronic": "Elektronik",
+        "none": "Tidak Ada"
+      }
+    },
+    "visualEffects": {
+      "title": "Efek Visual",
+      "particles": "Partikel",
+      "animations": "Animasi",
+      "blur": "Efek Blur",
+      "motionReduction": "Kurangi Gerakan",
+      "cursorEffects": "Efek Kursor"
+    },
+    "interface": {
+      "title": "Antarmuka",
+      "compact": "Kompak",
+      "comfortable": "Nyaman",
+      "largeText": "Teks Besar"
+    },
+    "performance": {
+      "title": "Performa",
+      "full": "Kualitas Penuh",
+      "batterySaver": "Hemat Baterai",
+      "lowGpu": "GPU Rendah",
+      "reduced": "Dikurangi"
+    },
+    "reset": "Kembalikan ke Default",
+    "saved": "Pengaturan tersimpan"
+  },
+  "sections": {
+    "hero": {
+      "title": "Pengembang Kreatif",
+      "subtitle": "Arsitek Frontend & Desainer Motion",
+      "cta": "Lihat Proyek"
+    },
+    "about": {
+      "title": "Cetak Biru",
+      "subtitle": "Tentang Saya"
+    },
+    "projects": {
+      "title": "Arsip",
+      "subtitle": "Karya Terpilih",
+      "viewProject": "Lihat Proyek",
+      "viewAll": "Lihat Semua Proyek"
+    },
+    "skills": {
+      "title": "Matriks",
+      "subtitle": "Tumpukan Teknologi"
+    },
+    "contact": {
+      "title": "Uplink",
+      "subtitle": "Hubungi Saya"
+    }
+  },
+  "common": {
+    "loading": "Menginisialisasi...",
+    "error": "Terjadi kesalahan",
+    "retry": "Coba Lagi",
+    "cancel": "Batal",
+    "confirm": "Konfirmasi",
+    "save": "Simpan",
+    "close": "Tutup",
+    "open": "Buka",
+    "back": "Kembali",
+    "next": "Selanjutnya",
+    "previous": "Sebelumnya",
+    "readMore": "Baca Selengkapnya",
+    "showLess": "Tampilkan Lebih Sedikit",
+    "scrollDown": "Gulir ke Bawah",
+    "startProject": "MULAI PROYEK",
+    "readyToCollaborate": "Siap berkolaborasi?",
+    "letsCreate": "Mari ciptakan",
+    "somethingExtraordinary": "sesuatu yang luar biasa.",
+    "copyright": "© 2025 — Dirancang dengan presisi",
+    "location": "DEPOK, JAWA BARAT",
+    "role": "PENGEMBANG_WEB // 2026",
+    "techStack": "React + Vite + Lenis",
+    "live": "Aktif"
+  },
+  "accessibility": {
+    "skipToContent": "Lewati ke konten",
+    "mainNavigation": "Navigasi utama",
+    "menuToggle": "Buka/tutup menu navigasi",
+    "settingsPanel": "Panel pengaturan",
+    "languageSelector": "Pemilih bahasa",
+    "themeSelector": "Pemilih tema",
+    "volumeSlider": "Pengatur volume",
+    "closePanel": "Tutup panel",
+    "openPanel": "Buka panel",
+    "currentSection": "Bagian saat ini",
+    "scrollProgress": "Progres gulir",
+    "musicToggle": "Aktifkan/matikan musik",
+    "reduceMotion": "Kurangi gerakan"
+  },
+  "forms": {
+    "name": "Nama",
+    "email": "Email",
+    "message": "Pesan",
+    "submit": "Kirim Pesan",
+    "sending": "Mengirim...",
+    "sent": "Pesan terkirim!",
+    "validation": {
+      "required": "Kolom ini wajib diisi",
+      "email": "Masukkan email yang valid",
+      "minLength": "Minimal {min} karakter",
+      "maxLength": "Maksimal {max} karakter"
+    },
+    "errors": {
+      "network": "Kesalahan jaringan. Silakan coba lagi.",
+      "server": "Kesalahan server. Silakan coba lagi nanti.",
+      "unknown": "Terjadi kesalahan yang tidak terduga."
+    },
+    "empty": {
+      "noProjects": "Tidak ada proyek untuk ditampilkan",
+      "noSkills": "Tidak ada keahlian untuk ditampilkan"
+    }
+  }
+}
