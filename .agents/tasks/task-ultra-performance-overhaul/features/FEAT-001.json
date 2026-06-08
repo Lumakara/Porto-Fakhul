@@ -1,0 +1,34 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Ultra Performance Optimization - Remove Three.js/R3F entirely, eliminate GSAP, slim down bundle for low-end devices. Replace WebGL background with ultra-lightweight CSS-only effects. Optimize preloader, reduce animation overhead, and ensure the site loads instantly on low-end phones.",
+  "status": "in_progress",
+  "steps": [
+    "1. Remove three.js, @react-three/fiber, @react-three/drei, @types/three, and gsap from package.json dependencies. Run npm install to update lockfile.",
+    "2. Delete src/components/WebGLBackground.tsx entirely.",
+    "3. Rewrite src/components/LazyWebGL.tsx to be a pure CSS animated gradient background (no Three.js import). Use subtle CSS keyframe animations with transform: translate3d for GPU-accelerated gentle movement. Name it something like AnimatedBackground. Keep the device capability check - on 'low' devices, render nothing; on 'medium', render a static gradient; on 'high', render the animated CSS gradient.",
+    "4. Remove the manualChunks config for 'vendor-three' from vite.config.ts since Three.js is gone.",
+    "5. In src/components/Preloader.tsx, make the preloader much faster for all devices: reduce the interval to 40ms with increment 10-20, so it completes in under 1 second. Remove the artificial delay after completion (reduce doneDelay to 200ms and completeDelay to 300ms).",
+    "6. In src/components/CustomCursor.tsx, keep the existing optimization (already skips on low/mobile). Add will-change: transform to cursor elements for smoother GPU rendering.",
+    "7. In src/App.tsx, remove the import of gsap if present. Keep Lenis but reduce its initialization overhead by adding a check: if device capability is 'low', skip Lenis entirely and use native scroll.",
+    "8. In src/components/Section.tsx, review animation variants. For whileInView animations, add a device capability hook - if 'low', use simpler transitions (no blur filter, shorter duration). If 'medium', use reduced transitions.",
+    "9. Add CSS content-visibility: auto to major sections in src/index.css for rendering performance on scroll.",
+    "10. Ensure all lazy imports (Projects, Contact, ProjectDetail) use React.lazy with proper Suspense boundaries - they already do, just verify no regressions.",
+    "11. In src/sections/Hero.tsx, remove the import of LazyWebGL entirely OR keep using the new lightweight CSS version. Remove any reference to Three.js or WebGL."
+  ],
+  "acceptance_criteria": [
+    "npm run build succeeds with NO vendor-three chunk in output",
+    "Total JS bundle (excluding CSS) is under 500KB gzipped",
+    "npx tsc --noEmit passes with no errors",
+    "No imports of 'three', '@react-three/fiber', '@react-three/drei', or 'gsap' exist anywhere in src/",
+    "The site still has a subtle animated background on high-end devices via CSS",
+    "Low-end devices get zero background animation, medium gets static gradient"
+  ],
+  "verification": [
+    "Run: cd /projects/sandbox/Porto-Fakhul && npm run build 2>&1 | grep -E '(vendor-three|chunk|gzip)'",
+    "Run: cd /projects/sandbox/Porto-Fakhul && npx tsc --noEmit",
+    "Run: grep -r 'three\\|@react-three\\|gsap' /projects/sandbox/Porto-Fakhul/src/ --include='*.ts' --include='*.tsx' | grep -v '.agents'"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

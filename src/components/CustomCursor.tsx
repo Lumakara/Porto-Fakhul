@@ -138,6 +138,7 @@ const CustomCursorInner = () => {
         style={{
           left: springX,
           top: springY,
+          willChange: 'transform',
         }}
         animate={hoveredType}
         variants={ringVariants}
@@ -161,6 +162,7 @@ const CustomCursorInner = () => {
         style={{
           left: cursorX,
           top: cursorY,
+          willChange: 'transform',
         }}
         animate={hoveredType}
         variants={dotVariants}

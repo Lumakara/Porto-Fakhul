@@ -27,10 +27,10 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
   ], [language]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // Faster progression on low-end devices
-    const intervalMs = isLow ? 60 : 120;
-    const minIncrement = isLow ? 8 : 4;
-    const maxIncrement = isLow ? 16 : 8;
+    // Fast progression for all devices - complete in under 1 second
+    const intervalMs = 40;
+    const minIncrement = 10;
+    const maxIncrement = 20;
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -45,7 +45,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
     }, intervalMs);
 
     return () => clearInterval(interval);
-  }, [isLow]);
+  }, []);
 
   useEffect(() => {
     // Sync status readouts with progress thresholds
@@ -56,15 +56,15 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
     setStatusIdx(index);
 
     if (progress === 100) {
-      const doneDelay = isLow ? 300 : 700;
-      const completeDelay = isLow ? 400 : 800;
+      const doneDelay = 200;
+      const completeDelay = 300;
       const timeout = setTimeout(() => {
         setIsDone(true);
         setTimeout(onComplete, completeDelay);
       }, doneDelay);
       return () => clearTimeout(timeout);
     }
-  }, [progress, onComplete, statusReadouts.length, isLow]);
+  }, [progress, onComplete, statusReadouts.length]);
 
   // Framer motion variants for split screen slide
   const upperCurtainVariants = {

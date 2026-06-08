@@ -29,6 +29,16 @@ export const Section = ({ children, className = '', id = '', delay = 0 }: Sectio
           transition: { duration: 0.6, ease: premiumEase, delay },
         },
       }
+    : capability === 'medium'
+    ? {
+        hidden: { opacity: 0, y: 40, scale: 0.99 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: { duration: 0.8, ease: premiumEase, delay },
+        },
+      }
     : {
         hidden: { opacity: 0, y: 60, scale: 0.98, filter: 'blur(12px)' },
         visible: {

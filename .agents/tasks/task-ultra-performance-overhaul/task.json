@@ -1,0 +1,7 @@
+{
+  "task_id": "task-ultra-performance-overhaul",
+  "task_description": "Complete portfolio website overhaul: ultra-high performance optimization (remove Three.js/GSAP, CSS-only effects), enhanced projects section with rich content and photos, compact mobile menu, floating action button with AI chatbot (OpenAI integration), enhanced contact section, and decorative icons throughout.",
+  "status": "in_progress",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003", "FEAT-004"],
+  "blocked_reason": null
+}

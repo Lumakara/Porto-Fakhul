@@ -12,6 +12,7 @@ import { TextReveal, premiumEase } from './components/Section';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { PreferencesProvider, usePreferences } from './contexts/PreferencesContext';
 import { projectsData } from './data/projects';
+import { useDeviceCapability } from './lib/deviceCapability';
 
 import { NotFound } from './sections/NotFound';
 
@@ -50,6 +51,7 @@ function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const { t } = useLanguage();
+  const capability = useDeviceCapability();
 
   const selectedProject = selectedProjectId
     ? projectsData.find((p) => p.id === selectedProjectId) || null
@@ -70,6 +72,9 @@ function AppContent() {
   useEffect(() => {
     if (isLoading) return;
 
+    // Skip Lenis smooth scroll on low-end devices - use native scroll instead
+    if (capability === 'low') return;
+
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
@@ -89,7 +94,7 @@ function AppContent() {
     return () => {
       lenis.destroy();
     };
-  }, [isLoading]);
+  }, [isLoading, capability]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

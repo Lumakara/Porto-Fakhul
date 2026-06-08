@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Ultra-functional Projects Section overhaul with rich example content, interactive cards, detailed project pages with screenshots/mockups, features list, results/metrics, and comprehensive project information. Also includes profile photos integration (placeholder images from picsum.photos showing human/professional imagery).",
+  "status": "pending",
+  "steps": [
+    "1. Rewrite src/data/projects.ts with much richer content for all 4 projects. Each project should have: id, title, category, categoryLabel, tagline, description (2-3 paragraphs), tech array, challenge (detailed), solution (detailed), features (string array of 4-6 key features), results (metrics/outcomes like '60fps on mobile', '95% lighthouse score', etc.), role (what the developer did), duration (timeline), links object {live?: string, github?: string}, screenshots (array of placeholder image URLs using picsum.photos with seed for consistency, e.g. 'https://picsum.photos/seed/neo-tokyo-1/800/500'), gradient, cyberId, color. Add a 5th and 6th project for more content richness.",
+    "2. Update src/types/index.ts or create a new type file if needed to reflect the expanded Project interface (add features, results, role, duration, links, screenshots fields).",
+    "3. Rewrite src/sections/Projects.tsx to be ultra-interactive: Replace current bento grid with a more engaging layout. Each card should show a thumbnail/screenshot preview (using the picsum.photos URLs from data), category badge, title, brief tagline, and tech stack preview. Add hover effects using CSS transforms (not heavy framer-motion). Add a filter/category tabs at the top (ALL, CREATIVE, SYSTEMS, LAB). Make mobile layout a clean single-column list with card previews. Keep interactions smooth - use CSS transitions over framer-motion where possible for performance.",
+    "4. Rewrite src/sections/ProjectDetail.tsx to be comprehensive and ultra-functional: Add an image gallery/carousel at the top using the screenshots array (simple CSS scroll-snap carousel, no heavy library). Show full project description, features list with icons, challenge & solution in separate well-styled cards, tech stack with skill-level indicators, results/metrics displayed as stat cards, role and duration info, and links to live/github. Add navigation between projects (prev/next). Make the layout responsive and information-dense but clean.",
+    "5. Add profile/personal branding photos throughout the site. In src/sections/Hero.tsx, add a professional headshot placeholder image (use https://i.pravatar.cc/300?img=68 or similar avatar service showing a male professional). In src/sections/About.tsx, add a larger profile photo and additional contextual photos (working, coding, team). Use picsum.photos with appropriate seeds for lifestyle/work imagery. These should be lazy-loaded with loading='lazy' attribute.",
+    "6. Update src/locales/en.json with new translation keys for the enhanced projects section (filter labels, new detail fields like 'features', 'results', 'role', 'duration', 'liveDemo', 'sourceCode', 'nextProject', 'prevProject', 'allProjects', 'filterAll', 'filterCreative', 'filterSystems', 'filterLab'). Also add keys for the profile photo alt texts.",
+    "7. Update src/locales/id.json and src/locales/zh.json with corresponding translations for all new keys added in step 6."
+  ],
+  "acceptance_criteria": [
+    "Projects section shows 6 projects with rich data including screenshots, features, results",
+    "Category filter tabs work (ALL, CREATIVE, SYSTEMS, LAB)",
+    "Project detail page shows image carousel, features list, results metrics, full description",
+    "Navigation between projects works (prev/next)",
+    "Profile photos appear in Hero and About sections using placeholder services",
+    "All images use loading='lazy' for performance",
+    "Mobile layout is clean single-column with visible project info",
+    "npx tsc --noEmit passes",
+    "npm run build succeeds"
+  ],
+  "verification": [
+    "Run: cd /projects/sandbox/Porto-Fakhul && npx tsc --noEmit",
+    "Run: cd /projects/sandbox/Porto-Fakhul && npm run build"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
