@@ -184,7 +184,9 @@
       "locationValue": "Jawa Barat, Indonesia",
       "emailLabel": "Email",
       "github": "GitHub",
+      "githubHover": "View my repositories",
       "linkedin": "LinkedIn",
+      "linkedinHover": "Let's connect",
       "form": {
         "nameLabel": "Your name",
         "namePlaceholder": "Fakhul Rohman",
@@ -209,7 +211,14 @@
         "title": "Message sent!",
         "description": "Thank you for reaching out. I'll get back to you within 24 hours.",
         "sendAnother": "Send another"
-      }
+      },
+      "error": {
+        "title": "Transmission failed",
+        "description": "Something went wrong while sending your message. Please try again.",
+        "retry": "Try Again",
+        "backToForm": "Back to form"
+      },
+      "charCount": "{count}/{max}"
     }
   },
   "common": {
