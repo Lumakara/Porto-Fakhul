@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import type { Variants } from 'framer-motion';
+import { useLowPerf, useReducedMotion } from '../lib/motion';
 
 // Premium Easing Curves
 export const premiumEase = [0.16, 1, 0.3, 1] as const;
@@ -17,26 +18,48 @@ export const Section = ({ children, className = '', id = '', delay = 0 }: Sectio
   const ref = useRef<HTMLDivElement>(null);
   // Trigger when 15% of the element is visible
   const isInView = useInView(ref, { once: true, amount: 0.15 });
+  const lowPerf = useLowPerf();
+  const reducedMotion = useReducedMotion();
 
-  const variants: Variants = {
-    hidden: { 
-      opacity: 0, 
-      y: 60,
-      scale: 0.98,
-      filter: 'blur(12px)'
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      filter: 'blur(0px)',
-      transition: { 
-        duration: 1.2, 
-        ease: premiumEase,
-        delay: delay 
-      }
-    }
-  };
+  // High-tier: full cinematic reveal (blur + scale + translate).
+  // Low-perf: cheap opacity + small translate (no blur/scale/rotate).
+  // Reduced motion: appear instantly.
+  let variants: Variants;
+  if (reducedMotion) {
+    variants = {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0 } },
+    };
+  } else if (lowPerf) {
+    variants = {
+      hidden: { opacity: 0, y: 24 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5, ease: premiumEase, delay },
+      },
+    };
+  } else {
+    variants = {
+      hidden: {
+        opacity: 0,
+        y: 60,
+        scale: 0.98,
+        filter: 'blur(12px)',
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: 'blur(0px)',
+        transition: {
+          duration: 1.2,
+          ease: premiumEase,
+          delay,
+        },
+      },
+    };
+  }
 
   return (
     <motion.section
@@ -69,6 +92,35 @@ export const TextReveal = ({
 }: TextRevealProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.5 });
+  const lowPerf = useLowPerf();
+  const reducedMotion = useReducedMotion();
+
+  const glowClass = glow
+    ? (glowColor === 'sakura' ? 'text-glow-sakura text-sakura' : 'text-glow-cyber text-cyber')
+    : 'text-white';
+
+  // Low-perf / reduced-motion: render the whole string as one element with a
+  // cheap fade-up (or instant), instead of animating each character with a
+  // per-char 3D rotate + blur (very expensive layout/paint work).
+  if (lowPerf || reducedMotion) {
+    return (
+      <motion.div
+        ref={containerRef}
+        initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
+        animate={
+          isInView
+            ? { opacity: 1, y: 0 }
+            : reducedMotion
+              ? { opacity: 0 }
+              : { opacity: 0, y: 12 }
+        }
+        transition={{ duration: reducedMotion ? 0 : 0.5, ease: premiumEase, delay }}
+        className={`inline-block py-1 ${glowClass} ${className}`}
+      >
+        {text}
+      </motion.div>
+    );
+  }
 
   // Split text into characters, keeping spaces as &nbsp;
   const chars = text.split('');
@@ -102,10 +154,6 @@ export const TextReveal = ({
       }
     },
   };
-
-  const glowClass = glow 
-    ? (glowColor === 'sakura' ? 'text-glow-sakura text-sakura' : 'text-glow-cyber text-cyber') 
-    : 'text-white';
 
   return (
     <motion.div
