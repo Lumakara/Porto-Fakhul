@@ -32,10 +32,10 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
         }
         
         // Random increments for a realistic cyber load feel
-        const increment = Math.floor(Math.random() * 8) + 4;
+        const increment = Math.floor(Math.random() * 15) + 10;
         return Math.min(prev + increment, 100);
       });
-    }, 120);
+    }, 60);
 
     return () => clearInterval(interval);
   }, []);
@@ -52,8 +52,8 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
       const timeout = setTimeout(() => {
         setIsDone(true);
         // Wait for screen split transition before mounting parent
-        setTimeout(onComplete, 800);
-      }, 700);
+        setTimeout(onComplete, 400);
+      }, 300);
       return () => clearTimeout(timeout);
     }
   }, [progress, onComplete, statusReadouts.length]);
@@ -62,14 +62,14 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
   const upperCurtainVariants = {
     exit: {
       y: '-100%',
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any }
+      transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] as any }
     }
   };
 
   const lowerCurtainVariants = {
     exit: {
       y: '100%',
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any }
+      transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] as any }
     }
   };
 

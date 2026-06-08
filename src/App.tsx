@@ -2,7 +2,6 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { motion } from 'framer-motion';
 import { Preloader } from './components/Preloader';
-import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
 import { Marquee } from './components/Marquee';
 import { Magnetic } from './components/Magnetic';
@@ -11,6 +10,7 @@ import { About } from './sections/About';
 import { TextReveal, premiumEase } from './components/Section';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { PreferencesProvider, usePreferences } from './contexts/PreferencesContext';
+import { useReducedMotion } from './lib/motion';
 
 import { NotFound } from './sections/NotFound';
 
@@ -18,6 +18,7 @@ import { NotFound } from './sections/NotFound';
 const Projects = lazy(() => import('./sections/Projects'));
 const Skills = lazy(() => import('./sections/Skills'));
 const Contact = lazy(() => import('./sections/Contact'));
+const LazyCustomCursor = lazy(() => import('./components/CustomCursor').then(m => ({ default: m.CustomCursor })));
 
 function ThemeApplicator() {
   const { preferences } = usePreferences();
@@ -46,11 +47,29 @@ function ThemeApplicator() {
 }
 
 function AppContent() {
-  const [isLoading, setIsLoading] = useState(true);
+  const shouldSkipPreloader = (): boolean => {
+    try {
+      if (sessionStorage.getItem('porto_visited') === 'true') return true;
+    } catch {}
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+    } catch {}
+    return false;
+  };
+
+  const [isLoading, setIsLoading] = useState(() => !shouldSkipPreloader());
+  const { preferences } = usePreferences();
   const { t } = useLanguage();
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (isLoading) return;
+
+    // Skip smooth scroll for reduced motion or battery-saver/reduced modes
+    const skipSmooth = reducedMotion ||
+      preferences.performanceMode === 'battery-saver' ||
+      preferences.performanceMode === 'reduced';
+    if (skipSmooth) return;
 
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
@@ -61,17 +80,18 @@ function AppContent() {
       infinite: false,
     });
 
+    let rafId: number;
     const raf = (time: number) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     };
-
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
-  }, [isLoading]);
+  }, [isLoading, reducedMotion, preferences.performanceMode]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -81,13 +101,20 @@ function AppContent() {
     <>
       <ThemeApplicator />
       {/* Cinematic Boot preloader */}
-      <Preloader onComplete={() => setIsLoading(false)} />
+      {isLoading && (
+        <Preloader onComplete={() => {
+          setIsLoading(false);
+          try { sessionStorage.setItem('porto_visited', 'true'); } catch {}
+        }} />
+      )}
 
       {/* Mount application only after preloader finishes */}
       {!isLoading && (
         <div className="relative text-charcoal min-h-screen bg-sand selection:bg-terracotta/20 selection:text-charcoal">
           {/* Custom spring cursors */}
-          <CustomCursor />
+          {preferences.visualEffects.cursorEffects && preferences.performanceMode !== 'battery-saver' && preferences.performanceMode !== 'reduced' && (
+            <Suspense fallback={null}><LazyCustomCursor /></Suspense>
+          )}
 
           {/* Floating navigation pill */}
           <Navbar />

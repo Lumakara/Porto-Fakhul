@@ -1,13 +1,15 @@
+import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Compass, ArrowLeft } from 'lucide-react';
 import { premiumEase } from '../components/Section';
-import { CustomCursor } from '../components/CustomCursor';
 import { Magnetic } from '../components/Magnetic';
+
+const LazyCustomCursor = lazy(() => import('../components/CustomCursor').then(m => ({ default: m.CustomCursor })));
 
 export const NotFound = () => {
   return (
     <div className="relative min-h-screen bg-sand text-charcoal flex flex-col items-center justify-center overflow-hidden selection:bg-terracotta/20 selection:text-charcoal px-4">
-      <CustomCursor />
+      <Suspense fallback={null}><LazyCustomCursor /></Suspense>
       
       {/* Noise overlay */}
       <div className="noise-overlay z-0" />
