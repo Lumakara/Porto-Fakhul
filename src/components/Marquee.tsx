@@ -14,7 +14,7 @@ export const Marquee = ({
   className = '',
 }: MarqueeProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const animationDirection = direction === 'left' ? 'normal' : 'reverse';
   const duration = `${speed}s`;
 

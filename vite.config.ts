@@ -12,12 +12,6 @@ export default defineConfig({
           if (id.includes('node_modules/three') || id.includes('@react-three')) {
             return 'vendor-three';
           }
-          if (id.includes('node_modules/framer-motion')) {
-            return 'vendor-motion';
-          }
-          if (id.includes('node_modules/gsap')) {
-            return 'vendor-gsap';
-          }
         },
       },
     },

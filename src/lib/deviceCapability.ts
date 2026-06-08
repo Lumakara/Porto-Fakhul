@@ -7,11 +7,13 @@ let cachedCapability: DeviceCapability | null = null;
 export function getDeviceCapability(): DeviceCapability {
   if (cachedCapability) return cachedCapability;
 
-  const cores = navigator.hardwareConcurrency || 4;
-  const memory = (navigator as any).deviceMemory as number | undefined;
-  const connection = (navigator as any).connection as
-    | { saveData?: boolean; effectiveType?: string }
-    | undefined;
+  const cores = navigator.hardwareConcurrency || 2;
+  const nav = navigator as Navigator & {
+    deviceMemory?: number;
+    connection?: { saveData?: boolean; effectiveType?: string };
+  };
+  const memory = nav.deviceMemory;
+  const connection = nav.connection;
 
   const saveData = connection?.saveData === true;
   const slowConnection =
@@ -35,6 +37,7 @@ export function getDeviceCapability(): DeviceCapability {
 }
 
 // Simple external store for React hook usage
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function subscribe(_onStoreChange: () => void) {
   // Capability is static after first detection; no subscription needed
   return () => {};
