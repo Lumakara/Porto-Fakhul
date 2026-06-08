@@ -271,3 +271,55 @@ body.scroll-locked {
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ------------------------------------------------------------------ */
+/* Lite performance mode overrides                                     */
+/* Applied via <html data-perf="lite"> by PerfApplicator when the      */
+/* effective performance mode is battery-saver/reduced/low-gpu or when */
+/* reduced motion is active. Goal: kill GPU-expensive compositing      */
+/* (backdrop-filter, large blurs, heavy shadows, noise) on weaker      */
+/* devices while keeping layout identical.                             */
+/* ------------------------------------------------------------------ */
+[data-perf="lite"] .glassmorphism {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+[data-perf="lite"] .glassmorphism-cyber {
+  background: rgba(245, 242, 235, 0.94);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+}
+
+/* Dark-theme equivalents: use opaque-ish surface so removing the blur
+   doesn't reveal content bleeding through. */
+[data-theme="dark"][data-perf="lite"] .glassmorphism,
+[data-perf="lite"] [data-theme="dark"] .glassmorphism {
+  background: rgba(34, 34, 34, 0.94);
+}
+
+[data-theme="dark"][data-perf="lite"] .glassmorphism-cyber,
+[data-perf="lite"] [data-theme="dark"] .glassmorphism-cyber {
+  background: rgba(26, 26, 26, 0.94);
+}
+
+/* Drop decorative glows/shadows that force extra paint layers. */
+[data-perf="lite"] .bg-glow-sakura,
+[data-perf="lite"] .bg-glow-cyber {
+  box-shadow: none;
+}
+
+[data-perf="lite"] .text-glow-sakura,
+[data-perf="lite"] .text-glow-cyber {
+  text-shadow: none;
+}
+
+/* The noise overlay uses an SVG turbulence filter + mix-blend-mode,
+   which is costly to composite on low-end GPUs. */
+[data-perf="lite"] .noise-overlay {
+  display: none;
+}
+

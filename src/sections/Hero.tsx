@@ -1,14 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Magnetic } from '../components/Magnetic';
 import { premiumEase } from '../components/Section';
-import { WebGLBackground } from '../components/WebGLBackground';
 import { useLanguage } from '../contexts/LanguageContext';
+import { usePreferences } from '../contexts/PreferencesContext';
+import { useLowPerf } from '../lib/motion';
 
-// Animated counter hook
-const useCounter = (target: number, duration: number = 2000, delay: number = 0) => {
+const LazyWebGLBackground = lazy(() => import('../components/WebGLBackground'));
+
+// Animated counter hook. When `instant` is true (reduced motion / low-perf),
+// it shows the final value immediately without running a RAF animation.
+const useCounter = (
+  target: number,
+  duration: number = 2000,
+  delay: number = 0,
+  instant: boolean = false,
+) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
+    if (instant) return;
     const timeout = setTimeout(() => {
       const startTime = Date.now();
       const animate = () => {
@@ -22,15 +32,19 @@ const useCounter = (target: number, duration: number = 2000, delay: number = 0) 
       requestAnimationFrame(animate);
     }, delay);
     return () => clearTimeout(timeout);
-  }, [target, duration, delay]);
-  return count;
+  }, [target, duration, delay, instant]);
+  // When instant (reduced motion / low-perf), show the final value with no RAF.
+  return instant ? target : count;
 };
 
 export const Hero = () => {
   const { t } = useLanguage();
-  const years = useCounter(2, 1800, 2200);
-  const organization = useCounter(15, 2000, 2400);
-  const projects = useCounter(7, 2300, 2600);
+  const { preferences } = usePreferences();
+  const lowPerf = useLowPerf();
+  const showWebGL = preferences.performanceMode === 'full' && preferences.visualEffects.animations;
+  const years = useCounter(2, 1800, 2200, lowPerf);
+  const organization = useCounter(15, 2000, 2400, lowPerf);
+  const projects = useCounter(7, 2300, 2600, lowPerf);
   const counters = [years, organization, projects];
 
   const stats = [
@@ -49,7 +63,11 @@ export const Hero = () => {
       className="relative min-h-[100dvh] w-full flex flex-col justify-center items-center overflow-hidden"
     >
       {/* Background layers */}
-      <WebGLBackground />
+      {showWebGL && (
+        <Suspense fallback={null}>
+          <LazyWebGLBackground />
+        </Suspense>
+      )}
       <div className="noise-overlay z-0" />
       {/* Center radial spotlight */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sage/5 rounded-full blur-[150px] pointer-events-none z-0" />
@@ -70,25 +88,25 @@ export const Hero = () => {
         {/* Giant Headline */}
         <h1 className="flex flex-col items-center" style={{ perspective: 1000 }}>
           <motion.span
-            initial={{ opacity: 0, y: 60, rotateX: -20, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 1.4, delay: 1.0, ease: premiumEase }}
+            initial={lowPerf ? { opacity: 0, y: 20 } : { opacity: 0, y: 60, rotateX: -20, filter: 'blur(10px)' }}
+            animate={lowPerf ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+            transition={{ duration: lowPerf ? 0.6 : 1.4, delay: lowPerf ? 0.1 : 1.0, ease: premiumEase }}
             className="text-fluid-hero-sm font-display italic text-charcoal-light tracking-tight block transform-style-3d"
           >
             {t('sections.hero.where')}
           </motion.span>
           <motion.span
-            initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
-            animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 1.6, delay: 1.15, ease: premiumEase }}
+            initial={lowPerf ? { opacity: 0, y: 24 } : { opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
+            animate={lowPerf ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+            transition={{ duration: lowPerf ? 0.6 : 1.6, delay: lowPerf ? 0.18 : 1.15, ease: premiumEase }}
             className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
             {t('sections.hero.creativity')}
           </motion.span>
           <motion.span
-            initial={{ opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
-            animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 1.6, delay: 1.3, ease: premiumEase }}
+            initial={lowPerf ? { opacity: 0, y: 24 } : { opacity: 0, y: 80, rotateX: -25, filter: 'blur(15px)' }}
+            animate={lowPerf ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+            transition={{ duration: lowPerf ? 0.6 : 1.6, delay: lowPerf ? 0.26 : 1.3, ease: premiumEase }}
             className="text-fluid-hero font-display font-medium text-charcoal tracking-tighter block leading-none transform-style-3d"
           >
             {t('sections.hero.meetsTechnology')}

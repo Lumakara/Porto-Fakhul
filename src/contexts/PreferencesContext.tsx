@@ -9,6 +9,7 @@ import type {
   MusicSettings,
 } from '../types';
 import { getPreferences, savePreferences } from '../lib/storage';
+import { detectDeviceTier } from '../lib/device';
 
 function getDefaultPreferences(): UserPreferences {
   let prefersReducedMotion = false;
@@ -21,17 +22,51 @@ function getDefaultPreferences(): UserPreferences {
     // matchMedia unavailable
   }
 
+  // Adaptive defaults: drive heavy-effect defaults from detected device tier so
+  // mid-/low-end devices don't pay for full effects on first visit. This only
+  // runs when there are no stored preferences (see getInitialPreferences), so an
+  // explicit user choice is never overridden.
+  const tier = detectDeviceTier();
+
+  let performanceMode: PerformanceMode = 'full';
+  let particles = true;
+  let animations = true;
+  let blur = true;
+  let cursorEffects = true;
+
+  if (tier === 'low') {
+    performanceMode = 'battery-saver';
+    particles = false;
+    animations = false;
+    blur = false;
+    cursorEffects = false;
+  } else if (tier === 'mid') {
+    performanceMode = 'reduced';
+    particles = false;
+    blur = false;
+    // keep animations on, but no cursor effects on mid-tier
+    cursorEffects = false;
+  }
+  // tier === 'high' keeps the full experience (all effects on).
+
+  // prefers-reduced-motion always wins: force motion reduction regardless of tier.
+  if (prefersReducedMotion) {
+    animations = false;
+    particles = false;
+    cursorEffects = false;
+  }
+
   return {
     theme: prefersDark ? 'dark' : 'light',
     language: 'en',
     interfaceMode: 'comfortable',
-    performanceMode: 'full',
+    performanceMode,
     visualEffects: {
-      particles: !prefersReducedMotion,
-      animations: !prefersReducedMotion,
-      blur: true,
+      particles,
+      animations,
+      blur,
       motionReduction: prefersReducedMotion,
-      cursorEffects: !prefersReducedMotion,
+      cursorEffects,
     },
     music: {
       enabled: false,

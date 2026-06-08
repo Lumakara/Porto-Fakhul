@@ -35,3 +35,18 @@ export function useReducedMotion(): boolean {
 
   return browserPrefersReduced || userPrefersReduced;
 }
+
+/**
+ * Returns true when heavy reveal/parallax effects should be skipped: either the
+ * effective performance mode is one of the lighter tiers (battery-saver /
+ * reduced / low-gpu) OR reduced motion is active. Components use this to drop
+ * expensive blur/3D transforms on mid-/low-end devices.
+ */
+export function useLowPerf(): boolean {
+  const reducedMotion = useReducedMotion();
+  const { preferences } = usePreferences();
+  const mode = preferences.performanceMode;
+  const lowPerfMode =
+    mode === 'battery-saver' || mode === 'reduced' || mode === 'low-gpu';
+  return reducedMotion || lowPerfMode;
+}
