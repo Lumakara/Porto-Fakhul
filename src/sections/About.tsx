@@ -60,7 +60,8 @@ export const About = () => {
                 src="https://i.pravatar.cc/300?img=68"
                 alt="Fakhul Rohman - About profile"
                 loading="lazy"
-                className="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover border border-charcoal/10 shadow-md"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover border border-charcoal/10 shadow-md bg-sage/20"
               />
             </motion.div>
 
@@ -119,19 +120,22 @@ export const About = () => {
                 src="https://picsum.photos/seed/work-coding/120/80"
                 alt="Working on code"
                 loading="lazy"
-                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm bg-stone"
               />
               <img
                 src="https://picsum.photos/seed/work-desk/120/80"
                 alt="Workspace setup"
                 loading="lazy"
-                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm bg-stone"
               />
               <img
                 src="https://picsum.photos/seed/work-team/120/80"
                 alt="Team collaboration"
                 loading="lazy"
-                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm bg-stone"
               />
             </motion.div>
 

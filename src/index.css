@@ -333,7 +333,7 @@ body.scroll-locked {
 /* Content visibility for rendering performance */
 section {
   content-visibility: auto;
-  contain-intrinsic-size: auto 500px;
+  contain-intrinsic-size: auto 800px;
 }
 
 /* Animated gradient background for high-end devices */

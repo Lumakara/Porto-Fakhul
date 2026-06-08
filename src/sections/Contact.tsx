@@ -219,16 +219,16 @@ export const Contact = () => {
           transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
           className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12"
         >
-          {/* WhatsApp Card */}
+          {/* WhatsApp Card - TODO: Replace href with https://wa.me/YOUR_NUMBER before deploying */}
           <Magnetic range={0.3}>
             <a
-              href="https://wa.me/6281234567890"
+              href="#"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-3 bg-surface/70 border border-charcoal/5 hover:border-green-400/30 px-5 py-4 rounded-xl transition-all duration-300 hover:shadow-md cursor-none"
               data-cursor="magnetic"
             >
-              <div className="p-2.5 rounded-lg bg-green-50 group-hover:bg-green-100 transition-colors duration-300">
+              <div className="p-2.5 rounded-lg bg-sage/10 group-hover:bg-sage/20 transition-colors duration-300">
                 <Phone className="w-4 h-4 text-green-600" />
               </div>
               <div className="flex flex-col">

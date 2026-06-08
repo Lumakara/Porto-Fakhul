@@ -115,7 +115,8 @@ export const ProjectDetail = ({ project, onBack, onNavigate }: ProjectDetailProp
                 src={src}
                 alt={`${project.title} screenshot ${i + 1}`}
                 loading="lazy"
-                className="w-full aspect-[16/10] object-cover rounded-2xl"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                className="w-full aspect-[16/10] object-cover rounded-2xl bg-stone"
               />
             </div>
           ))}

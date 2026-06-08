@@ -11,6 +11,14 @@ import {
 } from '../lib/chatStorage';
 import type { ChatMessage } from '../lib/chatStorage';
 
+/*
+ * SECURITY NOTE: This chatbot stores the OpenAI API key in localStorage and sends
+ * it directly from the browser. Any XSS vector or malicious browser extension on
+ * this domain can read the key. Since this is a personal portfolio site, the risk
+ * is limited to the site owner. Users should configure a scoped, low-limit API key
+ * (e.g., with a $5/month hard cap) to minimize potential abuse if the key is exposed.
+ */
+
 interface AIChatbotProps {
   onClose: () => void;
 }
@@ -26,6 +34,7 @@ export function AIChatbot({ onClose }: AIChatbotProps) {
   const [systemPrompt, setSystemPromptState] = useState(getSystemPrompt);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -33,6 +42,13 @@ export function AIChatbot({ onClose }: AIChatbotProps) {
 
   useEffect(() => {
     inputRef.current?.focus();
+  }, []);
+
+  // Abort any in-flight request on unmount
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
   }, []);
 
   const handleSaveSettings = useCallback(() => {
@@ -58,6 +74,11 @@ export function AIChatbot({ onClose }: AIChatbotProps) {
     setError('');
     setIsLoading(true);
 
+    // Abort any previous in-flight request and create a new controller
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     try {
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -73,6 +94,7 @@ export function AIChatbot({ onClose }: AIChatbotProps) {
           ],
           max_tokens: 500,
         }),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -90,6 +112,8 @@ export function AIChatbot({ onClose }: AIChatbotProps) {
       setMessages(finalMessages);
       saveChatHistory(finalMessages);
     } catch (err) {
+      // Don't set error state if the request was intentionally aborted
+      if (err instanceof DOMException && err.name === 'AbortError') return;
       setError(err instanceof Error ? err.message : t('chat.error'));
     } finally {
       setIsLoading(false);

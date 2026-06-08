@@ -79,7 +79,8 @@ export const Hero = () => {
             src="https://i.pravatar.cc/300?img=68"
             alt="Fakhul Rohman - Professional headshot"
             loading="lazy"
-            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 border-surface shadow-lg"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 border-surface shadow-lg bg-sage/20"
           />
         </motion.div>
 

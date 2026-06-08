@@ -2,6 +2,9 @@ const API_KEY_STORAGE = 'porto-chat-api-key';
 const SYSTEM_PROMPT_STORAGE = 'porto-chat-system-prompt';
 const CHAT_HISTORY_STORAGE = 'porto-chat-history';
 
+/** Maximum number of messages to retain in localStorage to prevent hitting the ~5MB quota. */
+const MAX_CHAT_HISTORY = 50;
+
 const DEFAULT_SYSTEM_PROMPT =
   'You are a helpful assistant for this portfolio website. Answer questions about the developer, their projects, skills, and availability.';
 
@@ -47,17 +50,23 @@ export function getChatHistory(): ChatMessage[] {
     const raw = localStorage.getItem(CHAT_HISTORY_STORAGE);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) return parsed as ChatMessage[];
+    if (Array.isArray(parsed)) {
+      // Apply rolling window on read to keep history bounded
+      return (parsed as ChatMessage[]).slice(-MAX_CHAT_HISTORY);
+    }
     return [];
   } catch {
+    // localStorage may be unavailable or data may be corrupted
     return [];
   }
 }
 
 export function saveChatHistory(messages: ChatMessage[]): void {
   try {
-    localStorage.setItem(CHAT_HISTORY_STORAGE, JSON.stringify(messages));
+    // Keep only the last MAX_CHAT_HISTORY messages to avoid hitting localStorage quota
+    const trimmed = messages.slice(-MAX_CHAT_HISTORY);
+    localStorage.setItem(CHAT_HISTORY_STORAGE, JSON.stringify(trimmed));
   } catch {
-    // Storage unavailable
+    // Storage unavailable or quota exceeded - silently drop
   }
 }
