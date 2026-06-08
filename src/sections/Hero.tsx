@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Magnetic } from '../components/Magnetic';
 import { premiumEase } from '../components/Section';
-import { WebGLBackground } from '../components/WebGLBackground';
 import { useLanguage } from '../contexts/LanguageContext';
+import { usePreferences } from '../contexts/PreferencesContext';
+
+const LazyWebGLBackground = lazy(() => import('../components/WebGLBackground'));
 
 // Animated counter hook
 const useCounter = (target: number, duration: number = 2000, delay: number = 0) => {
@@ -28,6 +30,8 @@ const useCounter = (target: number, duration: number = 2000, delay: number = 0) 
 
 export const Hero = () => {
   const { t } = useLanguage();
+  const { preferences } = usePreferences();
+  const showWebGL = preferences.performanceMode === 'full' && preferences.visualEffects.animations;
   const years = useCounter(2, 1800, 2200);
   const organization = useCounter(15, 2000, 2400);
   const projects = useCounter(7, 2300, 2600);
@@ -49,7 +53,11 @@ export const Hero = () => {
       className="relative min-h-[100dvh] w-full flex flex-col justify-center items-center overflow-hidden"
     >
       {/* Background layers */}
-      <WebGLBackground />
+      {showWebGL && (
+        <Suspense fallback={null}>
+          <LazyWebGLBackground />
+        </Suspense>
+      )}
       <div className="noise-overlay z-0" />
       {/* Center radial spotlight */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-sage/5 rounded-full blur-[150px] pointer-events-none z-0" />
