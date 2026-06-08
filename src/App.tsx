@@ -9,6 +9,7 @@ import { Magnetic } from './components/Magnetic';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { TextReveal, premiumEase } from './components/Section';
+import { useSettings } from './contexts/SettingsContext';
 
 import { NotFound } from './sections/NotFound';
 
@@ -20,6 +21,7 @@ const Contact = lazy(() => import('./sections/Contact'));
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isNotFound, setIsNotFound] = useState(false);
+  const { effects } = useSettings();
 
   useEffect(() => {
     // Basic client-side routing check
@@ -31,9 +33,9 @@ function App() {
 
     if (isLoading) return;
 
-    // Initialize Lenis smooth scroll
+    // Initialize Lenis smooth scroll (respect reduced motion)
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: effects.motionReduction ? 0 : 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       wheelMultiplier: 1.1,
       touchMultiplier: 1.5,
@@ -50,7 +52,7 @@ function App() {
     return () => {
       lenis.destroy();
     };
-  }, [isLoading]);
+  }, [isLoading, effects.motionReduction]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
