@@ -315,5 +315,24 @@
       "noProjects": "No projects to display",
       "noSkills": "No skills to display"
     }
+  },
+  "fab": {
+    "theme": "Toggle theme",
+    "language": "Switch language",
+    "performance": "Performance mode",
+    "chat": "AI Chat"
+  },
+  "chat": {
+    "title": "AI Assistant",
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "apiKeyMissing": "API key required. Configure your OpenAI API key to start chatting.",
+    "apiKeySetup": "Configure API Key",
+    "apiKeyLabel": "OpenAI API Key",
+    "systemPromptLabel": "System Prompt",
+    "save": "Save Settings",
+    "typing": "Thinking...",
+    "error": "Something went wrong. Please try again.",
+    "welcome": "Hi! Ask me anything about this portfolio, the developer, their projects, or skills."
   }
 }

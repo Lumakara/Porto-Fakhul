@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
 import { Navbar } from './components/Navbar';
+import { FloatingActionButton } from './components/FloatingActionButton';
 import { Marquee } from './components/Marquee';
 import { Magnetic } from './components/Magnetic';
 import { Hero } from './sections/Hero';
@@ -127,6 +128,9 @@ function AppContent() {
 
           {/* Floating navigation pill */}
           <Navbar />
+
+          {/* Floating Action Button */}
+          <FloatingActionButton />
 
           {/* Main sections container */}
           <main className="relative z-10 w-full overflow-hidden">

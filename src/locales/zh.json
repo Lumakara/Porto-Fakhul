@@ -315,5 +315,24 @@
       "noProjects": "\u6682\u65e0\u9879\u76ee\u5c55\u793a",
       "noSkills": "\u6682\u65e0\u6280\u80fd\u5c55\u793a"
     }
+  },
+  "fab": {
+    "theme": "\u5207\u6362\u4e3b\u9898",
+    "language": "\u5207\u6362\u8bed\u8a00",
+    "performance": "\u6027\u80fd\u6a21\u5f0f",
+    "chat": "AI\u804a\u5929"
+  },
+  "chat": {
+    "title": "AI\u52a9\u624b",
+    "placeholder": "\u8f93\u5165\u6d88\u606f...",
+    "send": "\u53d1\u9001",
+    "apiKeyMissing": "\u9700\u8981API\u5bc6\u94a5\u3002\u914d\u7f6e\u60a8\u7684OpenAI API\u5bc6\u94a5\u4ee5\u5f00\u59cb\u804a\u5929\u3002",
+    "apiKeySetup": "\u914d\u7f6eAPI\u5bc6\u94a5",
+    "apiKeyLabel": "OpenAI API\u5bc6\u94a5",
+    "systemPromptLabel": "\u7cfb\u7edf\u63d0\u793a\u8bcd",
+    "save": "\u4fdd\u5b58\u8bbe\u7f6e",
+    "typing": "\u601d\u8003\u4e2d...",
+    "error": "\u51fa\u4e86\u70b9\u95ee\u9898\u3002\u8bf7\u91cd\u8bd5\u3002",
+    "welcome": "\u4f60\u597d\uff01\u95ee\u6211\u4efb\u4f55\u5173\u4e8e\u8fd9\u4e2a\u4f5c\u54c1\u96c6\u3001\u5f00\u53d1\u8005\u3001\u9879\u76ee\u6216\u6280\u80fd\u7684\u95ee\u9898\u3002"
   }
 }

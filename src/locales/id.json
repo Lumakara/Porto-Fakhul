@@ -315,5 +315,24 @@
       "noProjects": "Tidak ada proyek untuk ditampilkan",
       "noSkills": "Tidak ada keahlian untuk ditampilkan"
     }
+  },
+  "fab": {
+    "theme": "Ganti tema",
+    "language": "Ganti bahasa",
+    "performance": "Mode performa",
+    "chat": "AI Chat"
+  },
+  "chat": {
+    "title": "Asisten AI",
+    "placeholder": "Ketik pesan...",
+    "send": "Kirim",
+    "apiKeyMissing": "Kunci API diperlukan. Konfigurasikan kunci API OpenAI Anda untuk mulai mengobrol.",
+    "apiKeySetup": "Konfigurasi Kunci API",
+    "apiKeyLabel": "Kunci API OpenAI",
+    "systemPromptLabel": "Prompt Sistem",
+    "save": "Simpan Pengaturan",
+    "typing": "Berpikir...",
+    "error": "Terjadi kesalahan. Silakan coba lagi.",
+    "welcome": "Hai! Tanyakan apa saja tentang portofolio ini, pengembang, proyek, atau keahlian mereka."
   }
 }
