@@ -2,7 +2,7 @@
   "id": "FEAT-005",
   "type": "chore",
   "description": "Remove the 'Also Proficient In' section and the 'Technical Matrix' heading/section from the Skills page. The user wants to remove the secondary skills strip and the matrix header entirely. Since the About section now has a Soft Skill & Hard Skill tab, the Skills section becomes redundant or needs to be significantly reduced/removed.",
-  "status": "pending",
+  "status": "completed",
   "steps": [
     "In src/sections/Skills.tsx: Remove the 'Also Proficient In' (alsoProficient) secondary skills grid section entirely - this is the motion.div at the bottom with bg-white/50 that contains secondarySkills.",
     "Remove the section header that says 'Technical Matrix' (the h2 with t('sections.skills.technicalMatrix') and t('sections.skills.matrixItalic')). Replace with a simpler heading or remove the entire Skills section if it becomes redundant.",
@@ -19,5 +19,5 @@
   ],
   "verification": ["npm run build"],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "Skills section fully removed. Build passes clean. The Marquee component is still imported in App.tsx and used for the Hero-to-About divider, so that import remains valid."
 }
