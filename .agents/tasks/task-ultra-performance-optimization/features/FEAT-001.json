@@ -1,0 +1,27 @@
+{
+  "id": "FEAT-001",
+  "type": "fix",
+  "description": "Fix all identified bugs and code issues in the codebase",
+  "status": "in_progress",
+  "steps": [
+    "1. Fix Contact.tsx email link bug: The href is 'Fakhulrohman2@gmail.com' but should be 'mailto:fakhulrohman2@gmail.com' (line ~170 in Contact.tsx)",
+    "2. Fix SakuraBackground.tsx variable hoisting bug: The 'isPaused' variable and 'handleVisibilityChange' are declared AFTER the return statement inside useEffect. The cleanup function references handleVisibilityChange before it is defined. Move 'let isPaused = false' and the visibility change handler BEFORE the 'animate' function definition, and move the cleanup for visibilitychange into the main return cleanup function.",
+    "3. Fix CustomCursor.tsx: Add proper cleanup for the touchstart event listener (currently uses {once: true} but if removeEventListener is called before the event fires, it should still clean up). Also add a CSS media query approach as recommended in BUG_REPORT.md - add '@media (pointer: coarse)' rule in index.css to hide cursor elements.",
+    "4. Fix Hero.tsx: The WebGLBackground is imported directly (not lazy loaded) which forces Three.js into the main bundle. This will be addressed in FEAT-002 but note the import pattern.",
+    "5. Fix Navbar.tsx scroll event: Add { passive: true } to the scroll event listener for better scroll performance.",
+    "6. Fix Lenis requestAnimationFrame loop in App.tsx: The RAF loop never properly syncs with Lenis's internal clock. Use lenis.raf(time) correctly by passing the DOMHighResTimeStamp parameter."
+  ],
+  "acceptance_criteria": [
+    "Contact email link has correct 'mailto:' prefix",
+    "SakuraBackground.tsx has no variable hoisting issues - isPaused declared before animate function",
+    "Navbar scroll listener uses { passive: true }",
+    "Build passes with zero TypeScript errors",
+    "No runtime errors in the code flow"
+  ],
+  "verification": [
+    "Run 'npx tsc -b --noEmit' and confirm zero errors",
+    "Run 'npx vite build' and confirm successful build"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

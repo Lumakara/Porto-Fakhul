@@ -144,7 +144,7 @@ export const Contact = () => {
                 <div className="flex flex-col">
                   <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">{t('sections.contact.emailLabel')}</span>
                   <a 
-                    href="Fakhulrohman2@gmail.com" 
+                    href="mailto:fakhulrohman2@gmail.com" 
                     className="text-sm text-charcoal font-medium font-sans hover:text-terracotta transition-colors duration-300 cursor-none"
                     data-cursor="grow"
                   >
