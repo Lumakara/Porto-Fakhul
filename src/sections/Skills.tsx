@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Code, Cpu, Layers, Award, Eye, Accessibility, Database, GitBranch } from 'lucide-react';
 import { Section, premiumEase, springEase, Parallax } from '../components/Section';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Skill {
   id: string;
@@ -88,6 +89,7 @@ const secondarySkills = skillsData.filter(s => !s.primary);
 
 export const Skills = () => {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   return (
     <Section id="skills" className="relative px-4 md:px-12 bg-sand-alt">
@@ -108,7 +110,7 @@ export const Skills = () => {
             transition={{ duration: 1.2, ease: premiumEase }}
             className="text-[10px] font-hud text-sage tracking-[0.3em] uppercase block mb-4"
           >
-            Expertise
+            {t('sections.skills.expertise')}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 40, scale: 0.98, filter: 'blur(8px)' }}
@@ -117,9 +119,9 @@ export const Skills = () => {
             transition={{ duration: 1.4, delay: 0.1, ease: premiumEase }}
             className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-charcoal tracking-tight"
           >
-            Technical
+            {t('sections.skills.technicalMatrix')}
             <br />
-            <span className="italic font-light text-charcoal-light">Matrix</span>
+            <span className="italic font-light text-charcoal-light">{t('sections.skills.matrixItalic')}</span>
           </motion.h2>
         </div>
 
@@ -221,7 +223,7 @@ export const Skills = () => {
           className="bg-white/50 border border-charcoal/5 rounded-2xl p-6 md:p-8 shadow-sm"
         >
           <span className="text-[10px] font-hud text-charcoal-light tracking-widest uppercase block mb-5">
-            Also proficient in
+            {t('sections.skills.alsoProficient')}
           </span>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {secondarySkills.map((skill) => {

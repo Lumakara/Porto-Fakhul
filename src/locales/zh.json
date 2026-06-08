@@ -1,0 +1,300 @@
+{
+  "nav": {
+    "home": "// \u9996\u9875",
+    "about": "// \u84dd\u56fe",
+    "projects": "// \u6863\u6848",
+    "skills": "// \u77e9\u9635",
+    "contact": "// \u94fe\u63a5",
+    "logo": "FR",
+    "logoSub": "\u4f5c\u54c1\u96c6",
+    "status": "UPLINK_ON"
+  },
+  "menu": {
+    "tableOfContents": "\u76ee\u5f55",
+    "settings": "\u8bbe\u7f6e",
+    "language": "\u8bed\u8a00",
+    "theme": "\u4e3b\u9898",
+    "music": "\u97f3\u4e50",
+    "visualEffects": "\u89c6\u89c9\u6548\u679c",
+    "interface": "\u754c\u9762",
+    "performance": "\u6027\u80fd",
+    "close": "\u5173\u95ed\u83dc\u5355",
+    "open": "\u6253\u5f00\u83dc\u5355",
+    "backToTop": "\u56de\u5230\u9876\u90e8"
+  },
+  "settings": {
+    "theme": {
+      "title": "\u4e3b\u9898",
+      "light": "\u6d45\u8272",
+      "dark": "\u6df1\u8272",
+      "system": "\u8ddf\u968f\u7cfb\u7edf"
+    },
+    "language": {
+      "title": "\u8bed\u8a00",
+      "en": "\u82f1\u6587",
+      "id": "\u5370\u5c3c\u6587",
+      "zh": "\u4e2d\u6587"
+    },
+    "music": {
+      "title": "\u97f3\u4e50",
+      "enabled": "\u542f\u7528\u97f3\u4e50",
+      "volume": "\u97f3\u91cf",
+      "playlist": "\u64ad\u653e\u5217\u8868",
+      "playlistOptions": {
+        "ambient": "\u6c1b\u56f4\u97f3\u4e50",
+        "lofi": "Lo-Fi",
+        "electronic": "\u7535\u5b50\u97f3\u4e50",
+        "none": "\u65e0"
+      }
+    },
+    "visualEffects": {
+      "title": "\u89c6\u89c9\u6548\u679c",
+      "particles": "\u7c92\u5b50\u6548\u679c",
+      "animations": "\u52a8\u753b",
+      "blur": "\u6a21\u7cca\u6548\u679c",
+      "motionReduction": "\u51cf\u5c11\u52a8\u6548",
+      "cursorEffects": "\u5149\u6807\u6548\u679c"
+    },
+    "interface": {
+      "title": "\u754c\u9762",
+      "compact": "\u7d27\u51d1",
+      "comfortable": "\u8212\u9002",
+      "largeText": "\u5927\u5b57\u4f53"
+    },
+    "performance": {
+      "title": "\u6027\u80fd",
+      "full": "\u5b8c\u6574\u8d28\u91cf",
+      "batterySaver": "\u7701\u7535\u6a21\u5f0f",
+      "lowGpu": "\u4f4eGPU",
+      "reduced": "\u7cbe\u7b80\u6a21\u5f0f"
+    },
+    "reset": "\u6062\u590d\u9ed8\u8ba4\u8bbe\u7f6e",
+    "saved": "\u8bbe\u7f6e\u5df2\u4fdd\u5b58"
+  },
+  "sections": {
+    "hero": {
+      "title": "\u521b\u610f\u5f00\u53d1\u8005",
+      "subtitle": "\u524d\u7aef\u67b6\u6784\u5e08 & \u52a8\u6548\u8bbe\u8ba1\u5e08",
+      "cta": "\u67e5\u770b\u9879\u76ee",
+      "kicker": "[ \u8bbe\u8ba1 \u2022 \u6280\u672f \u2022 \u521b\u65b0 ]",
+      "where": "\u5f53",
+      "creativity": "\u521b\u9020\u529b",
+      "meetsTechnology": "\u9047\u89c1\u6280\u672f",
+      "description": "\u4ee5\u7cbe\u786e\u3001\u521b\u65b0\u548c\u76ee\u6807\u521b\u9020\u6709\u610f\u4e49\u7684\u89e3\u51b3\u65b9\u6848\u548c\u4f53\u9a8c\u3002",
+      "viewProjects": "\u67e5\u770b\u9879\u76ee",
+      "getInTouch": "\u8054\u7cfb\u6211",
+      "yearsExp": "\u5e74\u7ecf\u9a8c",
+      "organizations": "\u7ec4\u7ec7",
+      "projects": "\u9879\u76ee"
+    },
+    "about": {
+      "title": "\u84dd\u56fe",
+      "subtitle": "\u5173\u4e8e\u6211",
+      "sectionLabel": "\u5173\u4e8e",
+      "firstName": "Fakhul",
+      "lastName": "Rohman",
+      "role": "\u7f51\u9875\u5f00\u53d1 | \u7f16\u8f91 | \u8d28\u91cf\u63a7\u5236",
+      "bio": "SMK\u4f1a\u8ba1\u4e13\u4e1a\u6bd5\u4e1a\u751f\uff0c\u5728<em>\u6574\u7406\u4e0e\u6280\u672f</em>\u9886\u57df\u6709\u5b9e\u4e60\u7ecf\u9a8c\u3002\u64c5\u957f\u6280\u672f\u3001\u8bbe\u8ba1\u548c\u57fa\u7840\u673a\u5668\u7ef4\u62a4\u3002\u4e60\u60ef\u4e8e\u7ec6\u81f4\u3001\u81ea\u5f8b\u548c\u4ee5\u7ed3\u679c\u4e3a\u5bfc\u5411\u7684\u5de5\u4f5c\u65b9\u5f0f\uff0c\u786e\u4fdd\u4e00\u5207\u7b26\u5408\u516c\u53f8\u6807\u51c6\u3002",
+      "bioHighlight": "\u6574\u7406\u4e0e\u6280\u672f",
+      "bioText": "SMK\u4f1a\u8ba1\u4e13\u4e1a\u6bd5\u4e1a\u751f\uff0c\u5728\u6574\u7406\u4e0e\u6280\u672f\u9886\u57df\u6709\u5b9e\u4e60\u7ecf\u9a8c\u3002\u64c5\u957f\u6280\u672f\u3001\u8bbe\u8ba1\u548c\u57fa\u7840\u673a\u5668\u7ef4\u62a4\u3002\u4e60\u60ef\u4e8e\u7ec6\u81f4\u3001\u81ea\u5f8b\u548c\u4ee5\u7ed3\u679c\u4e3a\u5bfc\u5411\u7684\u5de5\u4f5c\u65b9\u5f0f\uff0c\u786e\u4fdd\u4e00\u5207\u7b26\u5408\u516c\u53f8\u6807\u51c6\u3002",
+      "location": "\u5fb7\u6ce2\uff0c\u897f\u722a\u54c7",
+      "experience": "2+\u5e74",
+      "trait": "\u9002\u5e94\u6027\u4e0e\u7075\u6d3b\u6027",
+      "tabs": {
+        "story": "\u6545\u4e8b",
+        "experience": "\u7ecf\u9a8c",
+        "approach": "\u65b9\u6cd5"
+      },
+      "story": {
+        "title": "\u4ece\u4f1a\u8ba1\u5230\u6280\u672f",
+        "p1": "\u6211\u7684\u65c5\u7a0b\u4ece\u4e2d\u4e13\u4f1a\u8ba1\u4e13\u4e1a\u5f00\u59cb\uff0c\u4f46\u5728\u6821\u671f\u95f4\u6211\u53d1\u73b0\u4e86\u5bf9\u6280\u672f\u548c\u7f51\u9875\u5f00\u53d1\u4e16\u754c\u7684\u6d53\u539a\u5174\u8da3\u3002\u5bf9\u7f51\u7ad9\u548c\u5e94\u7528\u7a0b\u5e8f\u5de5\u4f5c\u539f\u7406\u7684\u597d\u5947\u5fc3\u63a8\u52a8\u6211\u5728\u8bfe\u7a0b\u4e4b\u5916\u81ea\u4e3b\u5b66\u4e60\u3002",
+        "p2": "\u5728ION Network\u62c5\u4efb\u7f51\u7edc\u548cCCTV\u6280\u672f\u5458\u7684\u5de5\u4f5c\u7ecf\u9a8c\u6559\u4f1a\u4e86\u6211\u6280\u672f\u57fa\u7840\u8bbe\u65bd\u548c\u89e3\u51b3\u95ee\u9898\u7684\u80fd\u529b\u3002\u540c\u65f6\u5728A&W\u9910\u5385\uff0c\u6211\u5b66\u5230\u4e86\u7eaa\u5f8b\u3001\u56e2\u961f\u5408\u4f5c\u4ee5\u53ca\u8d28\u91cf\u63a7\u5236\u5728\u6bcf\u9879\u5de5\u4f5c\u4e2d\u7684\u91cd\u8981\u6027\u3002\u8fd9\u4e24\u6bb5\u7ecf\u5386\u5851\u9020\u4e86\u6211\u5bf9\u7ec6\u8282\u548c\u8d28\u91cf\u6807\u51c6\u7684\u5173\u6ce8\u3002",
+        "p3": "\u73b0\u5728\u6211\u4e13\u6ce8\u4e8e\u6784\u5efa\u6709\u610f\u4e49\u7684\u7f51\u9875\u4f53\u9a8c\uff0c\u5c06\u6280\u672f\u80fd\u529b\u4e0e\u521b\u610f\u89c6\u89c9\u76f8\u7ed3\u5408\u3002\u4f4d\u4e8e\u5370\u5c3c\u897f\u722a\u54c7\u5fb7\u6ce2\uff0c\u6211\u7ee7\u7eed\u53d1\u5c55React\u3001TypeScript\u548c\u5176\u4ed6\u73b0\u4ee3\u524d\u7aef\u6280\u672f\u7684\u6280\u80fd\u3002"
+      },
+      "experienceTimeline": {
+        "entry1": {
+          "company": "ION Network",
+          "period": "2025 \u2014 2026 ( 7\u4e2a\u6708 )",
+          "role": "\u7f51\u7edc\u4e0eCCTV\u6280\u672f\u5458",
+          "description": "\u8ba1\u7b97\u673a\u7f51\u7edc\u548cCCTV\u4e13\u5bb6\uff0c\u5177\u5907\u5b89\u88c5\u3001\u914d\u7f6e\u3001\u6545\u969c\u6392\u9664\u3001\u7ef4\u62a4\u548c\u7cfb\u7edf\u4f18\u5316\u6280\u80fd\uff0c\u4ee5\u786e\u4fdd\u7f51\u7edc\u7a33\u5b9a\u6027\u548c\u5b89\u5168\u6027\u3002"
+        },
+        "entry2": {
+          "company": "A&W\u9910\u5385",
+          "period": "2025 ( 3\u4e2a\u6708 )",
+          "role": "\u53a8\u623f\u5458\u5de5",
+          "description": "\u64c5\u957f\u53a8\u623f\u8fd0\u8425\u3001\u98df\u6750\u51c6\u5907\u548c\u98df\u54c1\u52a0\u5de5\uff0c\u59cb\u7ec8\u628a\u8d28\u91cf\u3001\u536b\u751f\u3001\u5de5\u4f5c\u5b89\u5168\u548c\u56e2\u961f\u5408\u4f5c\u653e\u5728\u9996\u4f4d\u3002"
+        }
+      },
+      "approach": {
+        "title": "\u6211\u7684\u5de5\u4f5c\u65b9\u5f0f",
+        "items": {
+          "01": {
+            "title": "\u67b6\u6784\u4f18\u5148",
+            "desc": "\u6bcf\u4e2a\u9879\u76ee\u90fd\u4ece\u6e05\u6670\u7684\u7ec4\u4ef6\u67b6\u6784\u3001\u7c7b\u578b\u5316\u63a5\u53e3\u548c\u53ef\u6269\u5c55\u7684\u8bbe\u8ba1\u7cfb\u7edf\u5f00\u59cb\uff0c\u7136\u540e\u624d\u8fdb\u884c\u89c6\u89c9\u5de5\u4f5c\u3002"
+          },
+          "02": {
+            "title": "\u6709\u76ee\u7684\u7684\u52a8\u6548",
+            "desc": "\u52a8\u753b\u4e0d\u662f\u88c5\u9970 - \u5b83\u4eec\u5f15\u5bfc\u6ce8\u610f\u529b\uff0c\u9010\u6b65\u5c55\u793a\u5185\u5bb9\uff0c\u5e76\u5728\u754c\u9762\u4e2d\u521b\u9020\u7269\u7406\u7a7a\u95f4\u611f\u3002"
+          },
+          "03": {
+            "title": "\u6781\u81f4\u6253\u78e8",
+            "desc": "\u4f18\u79c0\u4e0e\u5353\u8d8a\u7684\u5dee\u522b\u5728\u4e8e\u7ec6\u8282\uff1a\u5fae\u4ea4\u4e92\u3001\u7f13\u52a8\u66f2\u7ebf\u3001\u54cd\u5e94\u5f0f\u95f4\u8ddd\u548c\u50cf\u7d20\u7ea7\u7cbe\u786e\u5ea6\u3002"
+          }
+        }
+      }
+    },
+    "projects": {
+      "title": "\u6863\u6848",
+      "subtitle": "\u7cbe\u9009\u4f5c\u54c1",
+      "viewProject": "\u67e5\u770b\u9879\u76ee",
+      "viewAll": "\u67e5\u770b\u6240\u6709\u9879\u76ee",
+      "selectedWorks": "\u7cbe\u9009\u4f5c\u54c1",
+      "projectArchive": "\u9879\u76ee\u6863\u6848",
+      "subtitleDesc": "\u7cbe\u5fc3\u6311\u9009\u7684\u521b\u610f\u4e0e\u6280\u672f\u9879\u76ee",
+      "modal": {
+        "overview": "01 // \u9879\u76ee\u6982\u8ff0",
+        "challenge": "02 // \u6280\u672f\u6311\u6218",
+        "solution": "03 // \u5de5\u7a0b\u89e3\u51b3\u65b9\u6848",
+        "architecture": "04 // \u96c6\u6210\u6838\u5fc3\u67b6\u6784",
+        "launchSite": "\u8bbf\u95ee\u7ad9\u70b9",
+        "closeLabel": "\u5173\u95ed\u9879\u76ee\u8be6\u60c5"
+      }
+    },
+    "skills": {
+      "title": "\u77e9\u9635",
+      "subtitle": "\u6280\u672f\u6808",
+      "expertise": "\u4e13\u4e1a\u6280\u80fd",
+      "technicalMatrix": "\u6280\u672f",
+      "matrixItalic": "\u77e9\u9635",
+      "alsoProficient": "\u4e5f\u7cbe\u901a\u4e8e"
+    },
+    "contact": {
+      "title": "\u94fe\u63a5",
+      "subtitle": "\u8054\u7cfb\u6211",
+      "sectionLabel": "\u8054\u7cfb",
+      "heading": "\u8ba9\u6211\u4eec\u5f00\u59cb",
+      "headingItalic": "\u5bf9\u8bdd",
+      "description": "\u6709\u9879\u76ee\u3001\u673a\u4f1a\u6216\u5408\u4f5c\u60f3\u6cd5\uff1f\u968f\u65f6\u8054\u7cfb\u6211\uff0c\u8ba9\u6211\u4eec\u4e00\u8d77\u521b\u9020\u6709\u610f\u4e49\u7684\u4f5c\u54c1\u3002",
+      "locationLabel": "\u4f4d\u7f6e",
+      "locationValue": "\u5370\u5c3c \u897f\u722a\u54c7",
+      "emailLabel": "\u7535\u5b50\u90ae\u4ef6",
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "form": {
+        "nameLabel": "\u60a8\u7684\u59d3\u540d",
+        "namePlaceholder": "Fakhul Rohman",
+        "emailLabel": "\u7535\u5b50\u90ae\u7bb1\u5730\u5740",
+        "emailPlaceholder": "Fakhulrohman2@gmail.com",
+        "messageLabel": "\u60a8\u7684\u7559\u8a00",
+        "messagePlaceholder": "\u544a\u8bc9\u6211\u60a8\u7684\u9879\u76ee...",
+        "submit": "\u53d1\u9001\u6d88\u606f"
+      },
+      "sending": {
+        "title": "\u6b63\u5728\u53d1\u9001\u6d88\u606f",
+        "initiating": "\u542f\u52a8\u4f20\u8f93...",
+        "establishing": "\u5efa\u7acb\u5b89\u5168\u8fde\u63a5...",
+        "encrypting": "\u52a0\u5bc6\u6d88\u606f\u8d1f\u8f7d...",
+        "validating": "\u9a8c\u8bc1\u90ae\u4ef6\u5b8c\u6574\u6027...",
+        "routing": "\u901a\u8fc7jkt\u4e2d\u7ee7\u8282\u70b9\u8def\u7531...",
+        "success": "\u6d88\u606f\u53d1\u9001\u6210\u529f \u2713",
+        "error": "\u9519\u8bef\uff1a\u4f20\u8f93\u5931\u8d25\u3002\u6b63\u5728\u91cd\u8bd5...",
+        "processing": "\u5904\u7406\u4e2d..."
+      },
+      "success": {
+        "title": "\u6d88\u606f\u5df2\u53d1\u9001\uff01",
+        "description": "\u611f\u8c22\u60a8\u7684\u8054\u7cfb\u3002\u6211\u4f1a\u572824\u5c0f\u65f6\u5185\u56de\u590d\u60a8\u3002",
+        "sendAnother": "\u518d\u53d1\u4e00\u6761"
+      }
+    }
+  },
+  "common": {
+    "loading": "\u521d\u59cb\u5316\u4e2d...",
+    "error": "\u51fa\u4e86\u70b9\u95ee\u9898",
+    "retry": "\u91cd\u8bd5",
+    "cancel": "\u53d6\u6d88",
+    "confirm": "\u786e\u8ba4",
+    "save": "\u4fdd\u5b58",
+    "close": "\u5173\u95ed",
+    "open": "\u6253\u5f00",
+    "back": "\u8fd4\u56de",
+    "next": "\u4e0b\u4e00\u6b65",
+    "previous": "\u4e0a\u4e00\u6b65",
+    "readMore": "\u9605\u8bfb\u66f4\u591a",
+    "showLess": "\u6536\u8d77",
+    "scrollDown": "\u5411\u4e0b\u6eda\u52a8",
+    "startProject": "\u5f00\u59cb\u9879\u76ee",
+    "readyToCollaborate": "\u51c6\u5907\u597d\u5408\u4f5c\u4e86\u5417\uff1f",
+    "letsCreate": "\u8ba9\u6211\u4eec\u521b\u9020",
+    "somethingExtraordinary": "\u975e\u51e1\u7684\u4f5c\u54c1\u3002",
+    "copyright": "\u00a9 2025 \u2014 \u7cbe\u5fc3\u8bbe\u8ba1",
+    "location": "\u5370\u5c3c \u5fb7\u6ce2 \u897f\u722a\u54c7",
+    "role": "\u7f51\u9875\u5f00\u53d1\u8005 // 2026",
+    "techStack": "React + Vite + Lenis",
+    "live": "\u5728\u7ebf",
+    "backToTop": "\u56de\u5230\u9876\u90e8"
+  },
+  "footer": {
+    "readyToCollaborate": "\u51c6\u5907\u597d\u5408\u4f5c\u4e86\u5417\uff1f",
+    "letsCreate": "\u8ba9\u6211\u4eec\u521b\u9020",
+    "somethingExtraordinary": "\u975e\u51e1\u7684\u4f5c\u54c1\u3002",
+    "startProject": "\u5f00\u59cb\u9879\u76ee",
+    "copyright": "\u00a9 2025 \u2014 \u7cbe\u5fc3\u8bbe\u8ba1",
+    "backToTop": "\u56de\u5230\u9876\u90e8",
+    "techStack": "React + Vite + Lenis",
+    "live": "\u5728\u7ebf"
+  },
+  "preloader": {
+    "logo": "SORA",
+    "logoSub": "\u4f5c\u54c1\u96c6 2026",
+    "init": "INIT",
+    "status1": "\u563f\u4f60\u597d...",
+    "status2": "\u5bf9\uff0c\u5c31\u662f\u5728\u7b49\u7684\u4f60...",
+    "status3": "\u8c22\u8c22\u4f60\u7684\u5149\u4e34...",
+    "status4": "\u6211\u5728\u6574\u7406\u4e00\u4e0b...",
+    "status5": "\u8ba9\u5b83\u770b\u8d77\u6765\u6574\u6d01...",
+    "status6": "\u522b\u8d70\u5f00...",
+    "status7": "\u51c6\u5907\u597d\u4e86\uff01",
+    "topLeft": "\u5fb7\u6ce2\uff0c\u897f\u722a\u54c7",
+    "topRight": "\u6211\u7684\u4e2a\u4eba\u8d44\u6599",
+    "bottomLeft": "Fakhul Rohman Nurokhim",
+    "bottomRight": "\u8fd8\u5728\u52a0\u8f7d\u4e2d..."
+  },
+  "accessibility": {
+    "skipToContent": "\u8df3\u8f6c\u5230\u5185\u5bb9",
+    "mainNavigation": "\u4e3b\u5bfc\u822a",
+    "menuToggle": "\u5207\u6362\u5bfc\u822a\u83dc\u5355",
+    "settingsPanel": "\u8bbe\u7f6e\u9762\u677f",
+    "languageSelector": "\u8bed\u8a00\u9009\u62e9\u5668",
+    "themeSelector": "\u4e3b\u9898\u9009\u62e9\u5668",
+    "volumeSlider": "\u97f3\u91cf\u6ed1\u5757",
+    "closePanel": "\u5173\u95ed\u9762\u677f",
+    "openPanel": "\u6253\u5f00\u9762\u677f",
+    "currentSection": "\u5f53\u524d\u90e8\u5206",
+    "scrollProgress": "\u6eda\u52a8\u8fdb\u5ea6",
+    "musicToggle": "\u5207\u6362\u97f3\u4e50",
+    "reduceMotion": "\u51cf\u5c11\u52a8\u6548"
+  },
+  "forms": {
+    "name": "\u59d3\u540d",
+    "email": "\u7535\u5b50\u90ae\u4ef6",
+    "message": "\u7559\u8a00",
+    "submit": "\u53d1\u9001\u6d88\u606f",
+    "sending": "\u53d1\u9001\u4e2d...",
+    "sent": "\u6d88\u606f\u5df2\u53d1\u9001\uff01",
+    "validation": {
+      "required": "\u6b64\u5b57\u6bb5\u4e3a\u5fc5\u586b\u9879",
+      "email": "\u8bf7\u8f93\u5165\u6709\u6548\u7684\u7535\u5b50\u90ae\u4ef6",
+      "minLength": "\u81f3\u5c11\u9700\u8981{min}\u4e2a\u5b57\u7b26",
+      "maxLength": "\u4e0d\u80fd\u8d85\u8fc7{max}\u4e2a\u5b57\u7b26"
+    },
+    "errors": {
+      "network": "\u7f51\u7edc\u9519\u8bef\uff0c\u8bf7\u91cd\u8bd5\u3002",
+      "server": "\u670d\u52a1\u5668\u9519\u8bef\uff0c\u8bf7\u7a0d\u540e\u91cd\u8bd5\u3002",
+      "unknown": "\u53d1\u751f\u4e86\u610f\u5916\u9519\u8bef\u3002"
+    },
+    "empty": {
+      "noProjects": "\u6682\u65e0\u9879\u76ee\u5c55\u793a",
+      "noSkills": "\u6682\u65e0\u6280\u80fd\u5c55\u793a"
+    }
+  }
+}

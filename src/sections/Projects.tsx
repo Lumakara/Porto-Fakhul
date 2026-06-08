@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, ArrowUpRight, Laptop, Terminal, X } from 'lucide-react';
 import { Section, TextReveal, premiumEase } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface Project {
   id: string;
@@ -237,12 +238,12 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
 
           {/* Tech pills */}
           <div className="flex flex-wrap gap-1.5 mt-5">
-            {project.tech.map((t) => (
+            {project.tech.map((techItem) => (
               <span
-                key={t}
+                key={techItem}
                 className="px-2 py-0.5 rounded bg-white border border-charcoal/10 text-[9px] font-hud text-charcoal-light uppercase tracking-wider"
               >
-                {t}
+                {techItem}
               </span>
             ))}
           </div>
@@ -258,6 +259,7 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
 /* ─── Main Section ─── */
 export const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { t } = useLanguage();
 
   // Keyboard accessibility: Escape to close modal
   useEffect(() => {
@@ -282,13 +284,13 @@ export const Projects = () => {
         {/* ── Section Header – Centered ── */}
         <div className="flex flex-col items-center text-center space-y-4">
           <span className="font-hud text-terracotta text-xs tracking-[0.3em] uppercase">
-            SELECTED WORKS
+            {t('sections.projects.selectedWorks')}
           </span>
           <h2 className="text-4xl md:text-6xl font-display font-medium text-charcoal">
-            <TextReveal text="PROJECT ARCHIVE" />
+            <TextReveal text={t('sections.projects.projectArchive')} />
           </h2>
           <p className="text-charcoal-light font-sans text-sm max-w-md">
-            Curated selection of creative and technical projects
+            {t('sections.projects.subtitleDesc')}
           </p>
         </div>
 
@@ -354,7 +356,7 @@ export const Projects = () => {
               {/* Close */}
               <button
                 onClick={() => setSelectedProject(null)}
-                aria-label="Close project details"
+                aria-label={t('sections.projects.modal.closeLabel')}
                 className="absolute top-4 right-4 w-8 h-8 rounded-full bg-sand border border-charcoal/10 flex items-center justify-center text-charcoal cursor-none hover:bg-terracotta hover:text-white transition-colors duration-300"
                 data-cursor="magnetic"
               >
@@ -381,7 +383,7 @@ export const Projects = () => {
               <div className="space-y-6 text-sm">
                 <div className="flex flex-col space-y-2">
                   <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
-                    01 // PROJECT OVERVIEW
+                    {t('sections.projects.modal.overview')}
                   </span>
                   <p className="text-charcoal leading-relaxed font-sans">
                     {selectedProject.description}
@@ -391,7 +393,7 @@ export const Projects = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col space-y-2">
                     <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
-                      02 // TECHNICAL CHALLENGE
+                      {t('sections.projects.modal.challenge')}
                     </span>
                     <p className="text-charcoal-light text-xs leading-relaxed font-sans">
                       {selectedProject.challenge}
@@ -400,7 +402,7 @@ export const Projects = () => {
 
                   <div className="flex flex-col space-y-2">
                     <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
-                      03 // ENGINEERING SOLUTION
+                      {t('sections.projects.modal.solution')}
                     </span>
                     <p className="text-charcoal-light text-xs leading-relaxed font-sans">
                       {selectedProject.solution}
@@ -411,15 +413,15 @@ export const Projects = () => {
                 {/* Tech specs */}
                 <div className="flex flex-col space-y-3">
                   <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest border-b border-charcoal/10 pb-1 w-fit">
-                    04 // INTEGRATED CORE ARCHITECTURE
+                    {t('sections.projects.modal.architecture')}
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {selectedProject.tech.map((t) => (
+                    {selectedProject.tech.map((techItem) => (
                       <span
-                        key={t}
+                        key={techItem}
                         className="px-3 py-1 rounded-md bg-white border border-charcoal/10 text-[10px] font-hud text-charcoal uppercase tracking-wider shadow-sm"
                       >
-                        {t}
+                        {techItem}
                       </span>
                     ))}
                   </div>
@@ -439,7 +441,7 @@ export const Projects = () => {
                     className="flex items-center space-x-2 bg-charcoal text-white px-4 py-2 rounded-full font-medium cursor-none hover:bg-terracotta hover:shadow-md transition-all duration-300"
                     data-cursor="magnetic"
                   >
-                    <span>LAUNCH_SITE</span>
+                    <span>{t('sections.projects.modal.launchSite')}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </Magnetic>
