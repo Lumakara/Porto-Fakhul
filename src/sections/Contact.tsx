@@ -614,7 +614,7 @@ export const Contact = () => {
                     transition={{ duration: 0.4 }}
                     className="flex flex-col items-center justify-center text-center my-auto py-12 space-y-6 w-full relative z-10"
                   >
-                    <div className="w-16 h-16 rounded-full bg-red-50 border border-red-200 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-terracotta/5 border border-terracotta/20 flex items-center justify-center">
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}

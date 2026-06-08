@@ -163,14 +163,6 @@
         "tech": "Teknologi",
         "category": "Kategori",
         "id": "ID Proyek"
-      },
-      "modal": {
-        "overview": "01 // GAMBARAN PROYEK",
-        "challenge": "02 // TANTANGAN TEKNIS",
-        "solution": "03 // SOLUSI REKAYASA",
-        "architecture": "04 // ARSITEKTUR INTI TERINTEGRASI",
-        "launchSite": "BUKA_SITUS",
-        "closeLabel": "Tutup detail proyek"
       }
     },
     "contact": {

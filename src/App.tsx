@@ -55,6 +55,18 @@ function AppContent() {
     ? projectsData.find((p) => p.id === selectedProjectId) || null
     : null;
 
+  // Lock body scroll when project detail overlay is open
+  useEffect(() => {
+    if (selectedProjectId) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedProjectId]);
+
   useEffect(() => {
     if (isLoading) return;
 

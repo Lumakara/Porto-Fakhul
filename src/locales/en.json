@@ -163,14 +163,6 @@
         "tech": "Tech Stack",
         "category": "Category",
         "id": "Project ID"
-      },
-      "modal": {
-        "overview": "01 // PROJECT OVERVIEW",
-        "challenge": "02 // TECHNICAL CHALLENGE",
-        "solution": "03 // ENGINEERING SOLUTION",
-        "architecture": "04 // INTEGRATED CORE ARCHITECTURE",
-        "launchSite": "LAUNCH_SITE",
-        "closeLabel": "Close project details"
       }
     },
     "contact": {

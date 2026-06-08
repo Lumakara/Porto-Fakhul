@@ -30,8 +30,10 @@ export const About = () => {
     }
   };
 
-  const softSkills: string[] = t('sections.about.skills.soft') as unknown as string[];
-  const hardSkills: string[] = t('sections.about.skills.hard') as unknown as string[];
+  const rawSoft = t('sections.about.skills.soft') as unknown;
+  const softSkills: string[] = Array.isArray(rawSoft) ? rawSoft : [];
+  const rawHard = t('sections.about.skills.hard') as unknown;
+  const hardSkills: string[] = Array.isArray(rawHard) ? rawHard : [];
 
   return (
     <Section id="about" className="relative px-4 md:px-12">

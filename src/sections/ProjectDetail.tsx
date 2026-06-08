@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Code2, Lightbulb, Target, Layers } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -54,6 +54,17 @@ const contentVariants = {
 export const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const { t } = useLanguage();
+
+  // Dismiss overlay on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onBack();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onBack]);
 
   const renderTabContent = () => {
     switch (activeTab) {
