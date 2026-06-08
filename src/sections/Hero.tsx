@@ -44,7 +44,7 @@ export const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden"
+      className="relative min-h-[100dvh] w-full flex flex-col justify-center items-center overflow-hidden"
     >
       {/* Background layers */}
       <WebGLBackground />

@@ -17,10 +17,10 @@ export const Marquee = ({
   const renderItems = () =>
     items.map((item, i) => (
       <span key={`${item}-${i}`} className="shrink-0 flex items-center">
-        <span className="font-hud uppercase tracking-widest text-white/15 text-sm md:text-base">
+        <span className="font-hud uppercase tracking-widest text-charcoal/15 text-sm md:text-base">
           {item}
         </span>
-        <span className="text-sakura/20 text-xs mx-4 md:mx-6 select-none" aria-hidden="true">
+        <span className="text-terracotta/30 text-xs mx-4 md:mx-6 select-none" aria-hidden="true">
           ✦
         </span>
       </span>
@@ -31,10 +31,10 @@ export const Marquee = ({
       className={`group relative overflow-hidden ${className}`}
     >
       {/* Left fade gradient */}
-      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 md:w-24 bg-gradient-to-r from-space-black to-transparent" />
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 md:w-24 bg-gradient-to-r from-sand to-transparent" />
 
       {/* Right fade gradient */}
-      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 md:w-24 bg-gradient-to-l from-space-black to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 md:w-24 bg-gradient-to-l from-sand to-transparent" />
 
       {/* Scrolling strip */}
       <div

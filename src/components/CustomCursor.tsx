@@ -17,12 +17,20 @@ export const CustomCursor = () => {
   const springY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    // Check if device supports hover (is not mobile)
+    // Check if device supports hover (is not mobile/touch)
     const checkDevice = () => {
-      setIsMobile(window.innerWidth < 1024);
+      const hasNoHover = window.matchMedia('(hover: none)').matches;
+      const isSmallScreen = window.innerWidth < 1024;
+      setIsMobile(hasNoHover || isSmallScreen);
     };
     checkDevice();
     window.addEventListener('resize', checkDevice);
+
+    // Immediately detect touch interaction
+    const handleTouchStart = () => {
+      setIsMobile(true);
+    };
+    window.addEventListener('touchstart', handleTouchStart, { once: true });
 
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX);
@@ -72,6 +80,7 @@ export const CustomCursor = () => {
 
     return () => {
       window.removeEventListener('resize', checkDevice);
+      window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('mousemove', moveCursor);
       document.removeEventListener('mouseleave', handleMouseLeaveWindow);
       document.removeEventListener('mouseenter', handleMouseEnterWindow);
@@ -86,36 +95,36 @@ export const CustomCursor = () => {
     none: {
       width: 40,
       height: 40,
-      borderColor: 'rgba(0, 240, 255, 0.4)',
-      backgroundColor: 'rgba(0, 240, 255, 0)',
+      borderColor: 'rgba(42, 42, 42, 0.3)',
+      backgroundColor: 'rgba(42, 42, 42, 0)',
     },
     grow: {
       width: 60,
       height: 60,
-      borderColor: 'rgba(255, 117, 151, 0.8)',
-      backgroundColor: 'rgba(255, 117, 151, 0.15)',
+      borderColor: 'rgba(198, 138, 124, 0.8)',
+      backgroundColor: 'rgba(198, 138, 124, 0.15)',
     },
     magnetic: {
       width: 50,
       height: 50,
-      borderColor: 'rgba(255, 117, 151, 1)',
-      backgroundColor: 'rgba(255, 117, 151, 0.05)',
-      boxShadow: '0 0 15px rgba(255, 117, 151, 0.4)',
+      borderColor: 'rgba(198, 138, 124, 1)',
+      backgroundColor: 'rgba(198, 138, 124, 0.05)',
+      boxShadow: '0 0 15px rgba(198, 138, 124, 0.3)',
     },
     text: {
       width: 80,
       height: 80,
-      borderColor: 'rgba(0, 240, 255, 0.8)',
-      backgroundColor: 'rgba(12, 10, 18, 0.85)',
-      boxShadow: '0 0 20px rgba(0, 240, 255, 0.2)',
+      borderColor: 'rgba(163, 177, 155, 0.8)',
+      backgroundColor: 'rgba(42, 42, 42, 0.9)',
+      boxShadow: '0 0 20px rgba(163, 177, 155, 0.2)',
     },
   };
 
   const dotVariants = {
-    none: { scale: 1, backgroundColor: '#ff7597' },
-    grow: { scale: 0, backgroundColor: '#ff7597' },
-    magnetic: { scale: 1.5, backgroundColor: '#00f0ff' },
-    text: { scale: 0, backgroundColor: '#00f0ff' },
+    none: { scale: 1, backgroundColor: '#C68A7C' },
+    grow: { scale: 0, backgroundColor: '#C68A7C' },
+    magnetic: { scale: 1.5, backgroundColor: '#A3B19B' },
+    text: { scale: 0, backgroundColor: '#A3B19B' },
   };
 
   return (
@@ -136,7 +145,7 @@ export const CustomCursor = () => {
           <motion.span
             initial={{ opacity: 0, scale: 0.6 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="absolute inset-0 flex items-center justify-center text-[10px] font-bold font-hud uppercase tracking-wider text-cyber select-none"
+            className="absolute inset-0 flex items-center justify-center text-[10px] font-bold font-hud uppercase tracking-wider text-sage select-none"
           >
             {cursorText}
           </motion.span>

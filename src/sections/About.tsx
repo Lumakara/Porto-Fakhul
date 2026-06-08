@@ -136,26 +136,29 @@ export const About = () => {
                     className="text-left space-y-5"
                   >
                     <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">
-                      From architecture to pixels
+                      Dari Akuntansi ke Teknologi
                     </h3>
                     <div className="text-sm md:text-base text-charcoal-light font-sans space-y-4 leading-relaxed">
                       <p>
-                        My journey began with traditional software engineering, 
-                        but I quickly found myself drawn to the intersection of 
-                        code and visual storytelling. The web wasn't just a platform 
-                        to deliver logic — it was a canvas waiting for orchestration.
+                        Perjalanan saya dimulai dari bangku SMK jurusan Akuntansi, 
+                        namun selama masa sekolah saya menemukan ketertarikan yang 
+                        kuat terhadap dunia teknologi dan pengembangan web. Rasa 
+                        penasaran terhadap cara kerja website dan aplikasi mendorong 
+                        saya untuk belajar secara mandiri di luar kurikulum.
                       </p>
                       <p>
-                        Inspired by the organic rhythm of Japanese design and the 
-                        vibrant energy of Tokyo, I developed an 
-                        approach that treats every pixel with intention. Each interaction 
-                        should feel like <em className="text-charcoal not-italic font-medium">breathing</em> — 
-                        natural, responsive, and alive.
+                        Pengalaman kerja di ION Network sebagai teknisi jaringan dan 
+                        CCTV mengajarkan saya tentang infrastruktur teknologi dan 
+                        problem-solving. Sementara di A&W Restaurant, saya belajar 
+                        tentang disiplin, kerja tim, dan pentingnya <em className="text-charcoal not-italic font-medium">quality control</em> dalam 
+                        setiap pekerjaan. Kedua pengalaman ini membentuk perhatian 
+                        saya terhadap detail dan standar kualitas.
                       </p>
                       <p>
-                        Today, I focus on building creative web experiences for 
-                        forward-thinking agencies, startups, and brands that refuse 
-                        to look ordinary.
+                        Sekarang saya fokus membangun web experience yang bermakna, 
+                        menggabungkan kemampuan teknis dengan visi kreatif. Berbasis 
+                        di Depok, Jawa Barat, saya terus mengembangkan skill di 
+                        React, TypeScript, dan teknologi frontend modern lainnya.
                       </p>
                     </div>
                   </motion.div>

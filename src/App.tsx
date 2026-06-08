@@ -81,7 +81,7 @@ function App() {
             {/* Marquee divider: Hero → About */}
             <div className="py-6 md:py-8">
               <Marquee 
-                items={['CREATIVE DEVELOPER', 'MOTION DESIGNER', 'FRONTEND ARCHITECT', 'UI ENGINEER', 'TOKYO BASED', 'AVAILABLE 2026']}
+                items={['CREATIVE DEVELOPER', 'MOTION DESIGNER', 'FRONTEND ARCHITECT', 'UI ENGINEER', 'DEPOK BASED', 'AVAILABLE 2026']}
                 speed={35}
               />
             </div>
@@ -160,9 +160,9 @@ function App() {
               <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
                 {/* Copyright */}
                 <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-1">
-                  <span className="text-charcoal font-medium tracking-wider text-sm font-display">Sora Takahashi</span>
+                  <span className="text-charcoal font-medium tracking-wider text-sm font-display">Fakhul Rohman</span>
                   <span className="text-charcoal-light text-[10px] tracking-widest uppercase font-hud">
-                    © 2026 — Designed with precision
+                    © 2025 — Designed with precision
                   </span>
                 </div>
 
