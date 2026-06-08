@@ -36,11 +36,22 @@ function ThemeApplicator() {
       const mql = window.matchMedia('(prefers-color-scheme: dark)');
       applyTheme(mql.matches);
 
-      const handler = (e: MediaQueryListEvent) => applyTheme(e.matches);
-      mql.addEventListener('change', handler);
-      return () => mql.removeEventListener('change', handler);
-    }
-  }, [preferences.theme]);
+  return null;
+}
+
+function PerfApplicator() {
+  const { preferences } = usePreferences();
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const mode = preferences.performanceMode;
+    const lite =
+      reducedMotion ||
+      mode === 'battery-saver' ||
+      mode === 'reduced' ||
+      mode === 'low-gpu';
+    document.documentElement.setAttribute('data-perf', lite ? 'lite' : 'full');
+  }, [preferences.performanceMode, reducedMotion]);
 
   return null;
 }
@@ -71,7 +82,8 @@ function AppContent() {
     // Skip smooth scroll for reduced motion or battery-saver/reduced modes
     const skipSmooth = reducedMotion ||
       preferences.performanceMode === 'battery-saver' ||
-      preferences.performanceMode === 'reduced';
+      preferences.performanceMode === 'reduced' ||
+      preferences.performanceMode === 'low-gpu';
     if (skipSmooth) return;
 
     let lenis: InstanceType<typeof import('lenis').default> | undefined;
@@ -110,6 +122,7 @@ function AppContent() {
   return (
     <>
       <ThemeApplicator />
+      <PerfApplicator />
       {/* Cinematic Boot preloader */}
       {isLoading && (
         <Preloader onComplete={() => {
