@@ -36,6 +36,12 @@ function ThemeApplicator() {
       const mql = window.matchMedia('(prefers-color-scheme: dark)');
       applyTheme(mql.matches);
 
+      const handler = (e: MediaQueryListEvent) => applyTheme(e.matches);
+      mql.addEventListener('change', handler);
+      return () => mql.removeEventListener('change', handler);
+    }
+  }, [preferences.theme]);
+
   return null;
 }
 
