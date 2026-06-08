@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useDeviceCapability } from '../lib/deviceCapability';
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -8,9 +9,12 @@ interface PreloaderProps {
 
 export const Preloader = ({ onComplete }: PreloaderProps) => {
   const { t, language } = useLanguage();
+  const capability = useDeviceCapability();
   const [progress, setProgress] = useState(0);
   const [statusIdx, setStatusIdx] = useState(0);
   const [isDone, setIsDone] = useState(false);
+
+  const isLow = capability === 'low';
 
   const statusReadouts = useMemo(() => [
     t('preloader.status1'),
@@ -23,7 +27,11 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
   ], [language]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // Fast but organic loading progression
+    // Faster progression on low-end devices
+    const intervalMs = isLow ? 60 : 120;
+    const minIncrement = isLow ? 8 : 4;
+    const maxIncrement = isLow ? 16 : 8;
+
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -31,14 +39,13 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
           return 100;
         }
         
-        // Random increments for a realistic cyber load feel
-        const increment = Math.floor(Math.random() * 8) + 4;
+        const increment = Math.floor(Math.random() * maxIncrement) + minIncrement;
         return Math.min(prev + increment, 100);
       });
-    }, 120);
+    }, intervalMs);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isLow]);
 
   useEffect(() => {
     // Sync status readouts with progress thresholds
@@ -49,35 +56,36 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
     setStatusIdx(index);
 
     if (progress === 100) {
+      const doneDelay = isLow ? 300 : 700;
+      const completeDelay = isLow ? 400 : 800;
       const timeout = setTimeout(() => {
         setIsDone(true);
-        // Wait for screen split transition before mounting parent
-        setTimeout(onComplete, 800);
-      }, 700);
+        setTimeout(onComplete, completeDelay);
+      }, doneDelay);
       return () => clearTimeout(timeout);
     }
-  }, [progress, onComplete, statusReadouts.length]);
+  }, [progress, onComplete, statusReadouts.length, isLow]);
 
   // Framer motion variants for split screen slide
   const upperCurtainVariants = {
     exit: {
       y: '-100%',
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any }
+      transition: isLow ? { duration: 0.3 } : { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any }
     }
   };
 
   const lowerCurtainVariants = {
     exit: {
       y: '100%',
-      transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any }
+      transition: isLow ? { duration: 0.3 } : { duration: 0.8, ease: [0.76, 0, 0.24, 1] as any }
     }
   };
 
   const contentVariants = {
     exit: {
       opacity: 0,
-      scale: 0.95,
-      transition: { duration: 0.4, ease: 'easeInOut' as any }
+      scale: isLow ? 1 : 0.95,
+      transition: isLow ? { duration: 0.2 } : { duration: 0.4, ease: 'easeInOut' as any }
     }
   };
 

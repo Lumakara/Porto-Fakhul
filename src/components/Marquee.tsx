@@ -1,3 +1,5 @@
+import { useRef, useState, useEffect } from 'react';
+
 interface MarqueeProps {
   items: string[];
   speed?: number;
@@ -11,8 +13,25 @@ export const Marquee = ({
   direction = 'left',
   className = '',
 }: MarqueeProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const animationDirection = direction === 'left' ? 'normal' : 'reverse';
   const duration = `${speed}s`;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const renderItems = () =>
     items.map((item, i) => (
@@ -21,13 +40,14 @@ export const Marquee = ({
           {item}
         </span>
         <span className="text-terracotta/30 text-xs mx-4 md:mx-6 select-none" aria-hidden="true">
-          ✦
+          &#10022;
         </span>
       </span>
     ));
 
   return (
     <div
+      ref={containerRef}
       className={`group relative overflow-hidden ${className}`}
     >
       {/* Left fade gradient */}
@@ -38,10 +58,12 @@ export const Marquee = ({
 
       {/* Scrolling strip */}
       <div
-        className="flex items-center whitespace-nowrap will-change-transform"
+        className="flex items-center whitespace-nowrap"
         style={{
           animation: `marquee-scroll ${duration} linear infinite`,
           animationDirection,
+          animationPlayState: isVisible ? 'running' : 'paused',
+          willChange: isVisible ? 'transform' : 'auto',
         }}
       >
         {/* First copy */}
