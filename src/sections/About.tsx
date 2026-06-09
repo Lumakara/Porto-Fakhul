@@ -1,12 +1,43 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
-import { Compass, Cpu, History, MapPin, Briefcase, Target, Zap, Layers } from 'lucide-react';
+import { Compass, Cpu, History, MapPin, Briefcase, Target, Zap, Layers, Mail } from 'lucide-react';
 import { Section, premiumEase, springEase, Parallax } from '../components/Section';
+import { Magnetic } from '../components/Magnetic';
 import { useLanguage } from '../contexts/LanguageContext';
 
 type TabType = 'story' | 'experience' | 'skills';
 
 const tabOrder: TabType[] = ['story', 'experience', 'skills'];
+
+const GithubIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+    <path d="M9 18c-4.51 2-5-2-7-2" />
+  </svg>
+);
+
+const LinkedinIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
+const InstagramIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
+const socialLinks = [
+  { icon: GithubIcon, href: 'https://github.com/fakhulrohman', label: 'GitHub' },
+  { icon: LinkedinIcon, href: 'https://linkedin.com/in/fakhulrohman', label: 'LinkedIn' },
+  { icon: InstagramIcon, href: 'https://instagram.com/fakhulrohman', label: 'Instagram' },
+  { icon: Mail, href: 'mailto:Fakhulrohman2@gmail.com', label: 'Email' },
+];
 
 export const About = () => {
   const [activeTab, setActiveTab] = useState<TabType>('story');
@@ -43,124 +74,140 @@ export const About = () => {
       </Parallax>
       <div className="noise-overlay z-0" />
 
-      <div className="w-full max-w-7xl mx-auto z-10 relative">
-        {/* Two-part header: large statement + detail */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16 md:mb-24">
-          {/* Left: Large name & title */}
-          <div className="lg:col-span-5 text-left">
-            {/* Profile Photo */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.0, ease: premiumEase }}
-              className="mb-6"
-            >
-              <img
-                src="https://i.pravatar.cc/300?img=68"
-                alt="Fakhul Rohman - About profile"
-                loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover border border-charcoal/10 shadow-md bg-sage/20"
-              />
-            </motion.div>
+      <div className="w-full max-w-3xl mx-auto z-10 relative">
+        {/* Social Profile Card Header */}
+        <div className="flex flex-col items-center mb-16 md:mb-24">
+          {/* Cover/Banner Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: premiumEase }}
+            className="w-full relative"
+          >
+            <img
+              src="https://picsum.photos/seed/about-cover/1200/400"
+              alt="Cover banner"
+              loading="lazy"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              className="w-full h-48 md:h-56 object-cover rounded-2xl shadow-md bg-sage/20"
+            />
+          </motion.div>
 
-            <motion.span
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: premiumEase }}
-              className="text-[10px] font-hud text-terracotta tracking-[0.3em] uppercase block mb-4"
-            >
-              {t('sections.about.sectionLabel')}
-            </motion.span>
-            <motion.h2
-              initial={{ opacity: 0, y: 40, scale: 0.98, filter: 'blur(8px)' }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.4, delay: 0.1, ease: premiumEase }}
-              className="text-4xl md:text-5xl lg:text-6xl font-display font-medium text-charcoal tracking-tight leading-[0.95]"
-            >
-              {t('sections.about.firstName')}
-              <br/>
+          {/* Circular Profile Photo - overlapping banner */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: springEase }}
+            className="-mt-12 md:-mt-16 z-10"
+          >
+            <img
+              src="https://i.pravatar.cc/300?img=68"
+              alt="Fakhul Rohman - Profile"
+              loading="lazy"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-sand shadow-lg mx-auto bg-sage/20"
+            />
+          </motion.div>
+
+          {/* Name + Role */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0, delay: 0.3, ease: premiumEase }}
+            className="text-center mt-4"
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-medium text-charcoal tracking-tight">
+              {t('sections.about.firstName')}{' '}
               <span className="italic font-light text-charcoal-light">{t('sections.about.lastName')}</span>
-            </motion.h2>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 1.2, ease: premiumEase }}
-              className="text-sm text-charcoal-light font-hud tracking-wider uppercase mt-4"
-            >
+            </h2>
+            <p className="text-sm text-charcoal-light font-hud tracking-wider uppercase mt-2">
               {t('sections.about.role')}
-            </motion.p>
-          </div>
+            </p>
+          </motion.div>
 
-          {/* Right: Bio paragraph */}
-          <div className="lg:col-span-7 flex flex-col justify-end text-left">
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3, duration: 1.2, ease: premiumEase }}
-              className="text-base md:text-lg text-charcoal-light font-sans leading-relaxed"
-            >
-              {t('sections.about.bioText')}
-            </motion.p>
+          {/* Social Media Icons Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4, ease: premiumEase }}
+            className="flex justify-center gap-4 mt-5"
+          >
+            {socialLinks.map((social, index) => {
+              const Icon = social.icon;
+              return (
+                <Magnetic key={social.label} range={0.3}>
+                  <motion.a
+                    href={social.href}
+                    target={social.href.startsWith('mailto') ? undefined : '_blank'}
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.45 + index * 0.08, ease: premiumEase }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-10 h-10 rounded-full bg-surface border border-charcoal/10 flex items-center justify-center text-charcoal-light shadow-sm transition-colors duration-300 hover:bg-terracotta/10 hover:text-terracotta hover:border-terracotta/20 cursor-none"
+                    data-cursor="magnetic"
+                  >
+                    <Icon className="w-4.5 h-4.5" />
+                  </motion.a>
+                </Magnetic>
+              );
+            })}
+          </motion.div>
 
-            {/* Contextual photos */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.35, duration: 1.0, ease: premiumEase }}
-              className="flex gap-3 mt-5"
-            >
-              <img
-                src="https://picsum.photos/seed/work-coding/120/80"
-                alt="Working on code"
-                loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm bg-stone"
-              />
-              <img
-                src="https://picsum.photos/seed/work-desk/120/80"
-                alt="Workspace setup"
-                loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm bg-stone"
-              />
-              <img
-                src="https://picsum.photos/seed/work-team/120/80"
-                alt="Team collaboration"
-                loading="lazy"
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                className="w-20 h-14 md:w-28 md:h-20 rounded-lg object-cover border border-charcoal/10 shadow-sm bg-stone"
-              />
-            </motion.div>
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.0, delay: 0.5, ease: premiumEase }}
+            className="text-center text-base md:text-lg text-charcoal-light font-sans leading-relaxed max-w-lg mx-auto mt-5"
+          >
+            {t('sections.about.tagline')}
+          </motion.p>
 
-            {/* Quick info pills */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 1.2, ease: springEase }}
-              className="flex flex-wrap gap-3 mt-6"
-            >
-              <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
-                <MapPin className="w-3.5 h-3.5 text-terracotta" />
-                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.location')}</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
-                <Briefcase className="w-3.5 h-3.5 text-sage" />
-                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.experience')}</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
-                <Cpu className="w-3.5 h-3.5 text-charcoal-light" />
-                <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.trait')}</span>
-              </div>
-            </motion.div>
-          </div>
+          {/* Contact CTA Button */}
+          <motion.a
+            href="#contact"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.55, ease: premiumEase }}
+            whileHover={{ scale: 1.03, y: -2 }}
+            whileTap={{ scale: 0.97 }}
+            className="mt-6 px-8 py-3 bg-terracotta text-surface font-hud text-sm tracking-wider uppercase rounded-full shadow-md hover:shadow-lg transition-shadow duration-300 cursor-none"
+            data-cursor="magnetic"
+          >
+            {t('sections.about.contactCta')}
+          </motion.a>
+
+          {/* Quick Info Pills - centered */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 1.0, ease: springEase }}
+            className="flex flex-wrap justify-center gap-3 mt-6"
+          >
+            <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
+              <MapPin className="w-3.5 h-3.5 text-terracotta" />
+              <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.location')}</span>
+            </div>
+            <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
+              <Briefcase className="w-3.5 h-3.5 text-sage" />
+              <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.experience')}</span>
+            </div>
+            <div className="flex items-center space-x-2 bg-surface border border-charcoal/5 px-3.5 py-2 rounded-full shadow-sm">
+              <Cpu className="w-3.5 h-3.5 text-charcoal-light" />
+              <span className="text-[10px] font-hud text-charcoal-light tracking-wider">{t('sections.about.trait')}</span>
+            </div>
+          </motion.div>
         </div>
 
         {/* Tab section - horizontal layout */}
