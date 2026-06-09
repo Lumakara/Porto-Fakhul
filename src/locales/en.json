@@ -50,8 +50,24 @@
       "particles": "Particles",
       "animations": "Animations",
       "blur": "Blur Effects",
+      "tilt": "3D Card Tilt",
       "motionReduction": "Reduce Motion",
       "cursorEffects": "Cursor Effects"
+    },
+    "audio": {
+      "title": "Audio Feedback",
+      "uiSounds": "UI Click Sounds",
+      "volume": "Sound Volume"
+    },
+    "ai": {
+      "title": "AI Assistant",
+      "description": "Chat with an AI assistant about this portfolio. Bring your own OpenAI API key — it is stored only in your browser.",
+      "apiKey": "OpenAI API Key",
+      "apiKeyHint": "Stored locally in your browser. Never sent anywhere except OpenAI.",
+      "model": "Model",
+      "personality": "Personality / System Prompt",
+      "personalityHint": "Customize how the assistant talks about Fakhul and this site.",
+      "temperature": "Creativity"
     },
     "interface": {
       "title": "Interface",
@@ -162,7 +178,18 @@
         "solution": "Solution",
         "tech": "Tech Stack",
         "category": "Category",
-        "id": "Project ID"
+        "id": "Project ID",
+        "features": "Key Features",
+        "highlights": "Highlights",
+        "gallery": "Gallery",
+        "role": "Role",
+        "year": "Year",
+        "status": "Status",
+        "viewLive": "Live Demo",
+        "viewRepo": "Source Code",
+        "viewCase": "Case Study",
+        "viewDemo": "Demo",
+        "nextProject": "Next Project"
       }
     },
     "contact": {

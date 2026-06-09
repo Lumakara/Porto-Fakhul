@@ -1,7 +1,7 @@
 import type { UserPreferences } from '../types';
 
 const STORAGE_KEY = 'porto-user-preferences';
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
 interface StoredPreferences {
   version: number;

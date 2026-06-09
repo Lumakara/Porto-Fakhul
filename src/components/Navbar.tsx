@@ -95,18 +95,20 @@ export const Navbar = () => {
   ];
 
   const panelVariants = {
-    hidden: { x: '100%' },
+    hidden: { y: '110%', opacity: 0.5 },
     visible: {
-      x: 0,
+      y: 0,
+      opacity: 1,
       transition: reducedMotion
         ? { duration: 0 }
-        : { type: 'spring' as const, stiffness: 300, damping: 30 },
+        : { type: 'spring' as const, stiffness: 320, damping: 32 },
     },
     exit: {
-      x: '100%',
+      y: '110%',
+      opacity: 0.5,
       transition: reducedMotion
         ? { duration: 0 }
-        : { duration: 0.3, ease: [0.16, 1, 0.3, 1] as const },
+        : { duration: 0.25, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -237,7 +239,7 @@ export const Navbar = () => {
               aria-hidden="true"
             />
 
-            {/* Panel */}
+            {/* Panel - compact bottom sheet */}
             <motion.div
               key="panel"
               id="mobile-menu"
@@ -248,54 +250,59 @@ export const Navbar = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed right-0 top-0 bottom-0 w-full md:max-w-[360px] bg-sand/98 backdrop-blur-xl z-[70] lg:hidden flex flex-col shadow-2xl"
+              className="fixed left-3 right-3 bottom-3 z-[70] lg:hidden rounded-3xl bg-sand/98 backdrop-blur-xl shadow-2xl border border-charcoal/10 overflow-hidden"
             >
               <FocusTrap active={isMobileMenuOpen} onEscape={closeMenu}>
-                <div className="relative flex flex-col h-full">
+                <div className="relative flex flex-col">
+                  {/* Grab handle */}
+                  <div className="flex justify-center pt-3 pb-1">
+                    <span className="w-10 h-1 rounded-full bg-charcoal/15" />
+                  </div>
+
                   {/* Header */}
-                  <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-stone/30">
-                    <span className="font-hud text-xs font-medium text-charcoal-light tracking-widest uppercase">
+                  <div className="flex items-center justify-between px-5 pt-1 pb-3">
+                    <span className="font-hud text-[10px] font-medium text-charcoal-light tracking-widest uppercase">
                       {t('accessibility.mainNavigation')}
                     </span>
                     <button
                       onClick={closeMenu}
-                      className="w-10 h-10 flex items-center justify-center rounded-full border border-stone text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 hover:bg-stone/30 transition-colors duration-200"
+                      className="w-8 h-8 flex items-center justify-center rounded-full border border-charcoal/10 text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta hover:bg-stone/30 transition-colors duration-200"
                       aria-label={t('menu.close')}
                       data-cursor="magnetic"
+                      data-sound="click"
                     >
-                      <X className="w-5 h-5" />
+                      <X className="w-4 h-4" />
                     </button>
                   </div>
 
-                  {/* Navigation Links */}
-                  <nav className="flex-1 overflow-y-auto px-6 py-6" aria-label={t('accessibility.mainNavigation')}>
-                    <ul className="flex flex-col space-y-1">
+                  {/* Navigation Links - 2-col grid of large touch tiles */}
+                  <nav className="px-4 pb-4" aria-label={t('accessibility.mainNavigation')}>
+                    <ul className="grid grid-cols-2 gap-2.5">
                       {navItems.map((item, i) => {
                         const isActive = activeSection === item.id;
                         return (
                           <motion.li
                             key={item.id}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
                             transition={
                               reducedMotion
                                 ? { duration: 0 }
-                                : { delay: i * 0.05, duration: 0.3, ease: [0.16, 1, 0.3, 1] }
+                                : { delay: i * 0.04, duration: 0.3, ease: [0.16, 1, 0.3, 1] }
                             }
                           >
                             <button
                               onClick={() => handleNavClick(item.id)}
-                              className={`w-full flex items-center px-4 py-3 rounded-lg text-left transition-all duration-200 min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 ${
+                              data-sound="click"
+                              className={`w-full flex items-center justify-center px-4 py-4 rounded-2xl text-center transition-all duration-200 min-h-[56px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta ${
                                 isActive
-                                  ? 'bg-terracotta/10 border-l-2 border-terracotta text-terracotta font-medium'
-                                  : 'text-charcoal-light hover:text-charcoal hover:bg-stone/30 border-l-2 border-transparent'
+                                  ? 'bg-terracotta/10 border border-terracotta/30 text-terracotta font-medium'
+                                  : 'text-charcoal-light hover:text-charcoal bg-stone/20 border border-transparent hover:bg-stone/40'
                               }`}
                               data-cursor="magnetic"
                               aria-current={isActive ? 'true' : undefined}
                             >
-                              <span className="font-hud text-sm tracking-wide">
-                                {t(item.labelKey)}
-                              </span>
+                              <span className="font-hud text-sm tracking-wide">{t(item.labelKey)}</span>
                             </button>
                           </motion.li>
                         );
@@ -303,17 +310,17 @@ export const Navbar = () => {
                     </ul>
                   </nav>
 
-                  {/* Footer: Theme toggle + Language switcher */}
-                  <div className="px-6 py-4 border-t border-stone/30 space-y-4">
-                    {/* Theme toggle */}
-                    <div className="flex items-center justify-center space-x-1">
+                  {/* Footer: Theme + Language in one compact row */}
+                  <div className="px-4 pb-5 flex items-center justify-between gap-3 border-t border-stone/30 pt-4">
+                    <div className="flex items-center gap-1">
                       {themeOptions.map((option) => {
                         const Icon = option.icon;
                         return (
                           <button
                             key={option.value}
                             onClick={() => setTheme(option.value)}
-                            className={`flex items-center justify-center w-10 h-10 rounded-full cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
+                            data-sound="click"
+                            className={`flex items-center justify-center w-9 h-9 rounded-full cursor-none focus-visible:ring-2 focus-visible:ring-terracotta transition-colors duration-200 ${
                               preferences.theme === option.value
                                 ? 'bg-terracotta/10 text-terracotta border border-terracotta/20'
                                 : 'text-charcoal-light hover:text-charcoal hover:bg-stone/30'
@@ -327,13 +334,13 @@ export const Navbar = () => {
                       })}
                     </div>
 
-                    {/* Language switcher */}
-                    <div className="flex items-center justify-center space-x-2">
+                    <div className="flex items-center gap-1.5">
                       {languageOptions.map((pill) => (
                         <button
                           key={pill.value}
                           onClick={() => setLanguage(pill.value)}
-                          className={`px-4 py-2 rounded-full font-hud text-xs tracking-wide min-h-[44px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 ${
+                          data-sound="click"
+                          className={`px-3 py-2 rounded-full font-hud text-xs tracking-wide cursor-none focus-visible:ring-2 focus-visible:ring-terracotta transition-colors duration-200 ${
                             language === pill.value
                               ? 'bg-terracotta text-white font-medium'
                               : 'bg-stone/30 text-charcoal-light hover:text-charcoal hover:bg-stone/50'

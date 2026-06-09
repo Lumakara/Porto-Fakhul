@@ -3,7 +3,9 @@ import Lenis from 'lenis';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
+import { AudioFeedbackManager } from './components/AudioFeedbackManager';
 import { Navbar } from './components/Navbar';
+import { Fab } from './components/Fab';
 import { Marquee } from './components/Marquee';
 import { Magnetic } from './components/Magnetic';
 import { Hero } from './sections/Hero';
@@ -55,6 +57,10 @@ function AppContent() {
     ? projectsData.find((p) => p.id === selectedProjectId) || null
     : null;
 
+  const nextProject = selectedProject
+    ? projectsData[(projectsData.findIndex((p) => p.id === selectedProject.id) + 1) % projectsData.length]
+    : null;
+
   // Lock body scroll when project detail overlay is open
   useEffect(() => {
     if (selectedProjectId) {
@@ -98,6 +104,7 @@ function AppContent() {
   return (
     <>
       <ThemeApplicator />
+      <AudioFeedbackManager />
       {/* Cinematic Boot preloader */}
       <Preloader onComplete={() => setIsLoading(false)} />
 
@@ -108,6 +115,11 @@ function AppContent() {
             <ProjectDetail
               project={selectedProject}
               onBack={() => setSelectedProjectId(null)}
+              nextProject={nextProject}
+              onNavigate={(id) => {
+                window.scrollTo({ top: 0 });
+                setSelectedProjectId(id);
+              }}
             />
           </Suspense>
         )}
@@ -121,6 +133,9 @@ function AppContent() {
 
           {/* Floating navigation pill */}
           <Navbar />
+
+          {/* Floating Action Button: AI assistant + settings */}
+          <Fab />
 
           {/* Main sections container */}
           <main className="relative z-10 w-full overflow-hidden">
