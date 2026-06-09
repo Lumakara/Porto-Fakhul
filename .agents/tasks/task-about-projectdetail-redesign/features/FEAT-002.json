@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Redesign the About section to adopt the 'Hi Social App' profile-centric layout from Image 2. Transform from the current grid layout to a mobile-social-profile-inspired design with: cover/banner photo at top, circular profile photo overlapping the banner, name + handle below photo, social media icons row, short tagline, biography section, and contact CTA. Keep the existing tab system (story/experience/skills) but integrate it below the new profile header.",
+  "status": "pending",
+  "steps": [
+    "In src/sections/About.tsx, replace the current two-column grid header with the social-profile-inspired layout: (1) A full-width cover/banner image at top (use picsum.photos for placeholder, e.g. 'https://picsum.photos/seed/cover-banner/1200/400'). (2) A circular profile photo that overlaps the bottom of the banner (positioned with negative margin or absolute positioning). (3) Name ('Fakhul Rohman') and role/handle below the photo, centered. (4) Social media icons row (GitHub, LinkedIn, Instagram, and email) using lucide-react icons. (5) A short tagline/bio text. (6) A 'Follow' or 'Contact Me' CTA button.",
+    "Structure the new layout: Banner (aspect-[3/1] or h-48 md:h-56) -> Profile photo (w-24 h-24 md:w-32 md:h-32, rounded-full, border-4 border-sand, -mt-12 md:-mt-16 centered) -> Name + role (text-center) -> Social icons row (flex justify-center gap-4) -> Tagline text (text-center, max-w-lg mx-auto) -> Quick info pills (location, experience, trait) -> Tab section below.",
+    "Add social media icon links row using lucide-react icons: Github, Linkedin, Instagram, Mail. Style them as small circular icon buttons (w-10 h-10 rounded-full bg-surface border) with hover effects (hover:bg-terracotta/10 hover:text-terracotta).",
+    "Keep the existing tab system (story/experience/skills) with the horizontal tab bar and swipeable content panels. Position it below the new profile header section.",
+    "Remove the three contextual photos (work-coding, work-desk, work-team) as they are replaced by the banner image.",
+    "Add locale strings for any new text needed (e.g., 'sections.about.tagline', 'sections.about.followCta') to en.json, id.json, and zh.json.",
+    "Ensure the design is responsive: on mobile the profile section stacks vertically centered, on desktop it can be slightly wider but still centered (max-w-2xl or max-w-3xl for the profile area).",
+    "Use existing animation patterns: motion.div with initial/whileInView, premiumEase transitions, staggered reveals for the social icons."
+  ],
+  "acceptance_criteria": [
+    "The About section displays a cover banner image at the top of the section",
+    "A circular profile photo overlaps the bottom of the banner, centered",
+    "Name and role are displayed centered below the profile photo",
+    "A row of social media icons (GitHub, LinkedIn, Instagram, Mail) is visible and clickable",
+    "The existing tab system (story/experience/skills) remains functional below the profile header",
+    "The design is responsive and looks good on mobile (320px+) through desktop",
+    "npx tsc --noEmit passes without errors",
+    "npx vite build completes successfully"
+  ],
+  "verification": [
+    "cd /projects/sandbox/Porto-Fakhul && npx tsc --noEmit",
+    "cd /projects/sandbox/Porto-Fakhul && npx vite build"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

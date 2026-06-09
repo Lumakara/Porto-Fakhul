@@ -1,0 +1,30 @@
+{
+  "id": "FEAT-001",
+  "type": "fix",
+  "description": "Fix ProjectDetail back button bug and redesign layout inspired by e-commerce product detail card (Image 3). The current layout has a sticky back button inside a fixed overflow-y-auto container that fails on mobile. The -mt-4 on carousel causes content overlap. Redesign to use a fixed/absolute back button with solid background that ALWAYS stays accessible and never gets overlapped by content.",
+  "status": "in_progress",
+  "steps": [
+    "In src/sections/ProjectDetail.tsx, replace the outer layout structure. Change from 'sticky top-0 z-20' back button to a FIXED position back button at top-left with solid bg-sand background and sufficient padding/z-index (z-30) so it never gets hidden by scrolling content.",
+    "Remove the '-mt-4' from the carousel section that causes content to push up into the back button area.",
+    "Add proper top padding (pt-16 or pt-18) to the content area below the fixed back button so nothing overlaps.",
+    "Redesign the overall layout to match the e-commerce product detail pattern from Image 3: (1) Fixed back arrow at top-left with clear background, NOT overlapping content. (2) Large product/project image centered with carousel. (3) Color variant dots (carousel dots) below image. (4) Project title prominently displayed. (5) Bullet point features list. (6) Action buttons (Live Demo / Source Code) at bottom like 'Add To Cart'.",
+    "Restructure content to be SIMPLE, CLEAN, CLEARLY STRUCTURED: Back button area (fixed) -> Image carousel with dots -> Title + Category badge -> Description (short) -> Features list (bullet points) -> Tech stack -> Links/CTAs at bottom. Remove the challenge/solution/results grid for a cleaner layout, or collapse them into expandable sections.",
+    "Ensure the fixed back button has: solid bg-sand/95 backdrop-blur-md background, shadow-sm, and enough height (h-14 or similar) so it creates a proper top bar that content scrolls behind.",
+    "Keep all existing functionality: Escape key dismiss, carousel navigation, project navigation (prev/next), external links.",
+    "Ensure mobile-first responsive design - the layout must work perfectly on small screens (320px+) with touch-friendly tap targets."
+  ],
+  "acceptance_criteria": [
+    "The back button is ALWAYS visible and clickable regardless of scroll position on any device",
+    "No content overlaps the back button area",
+    "The carousel images display properly without negative margins causing layout issues",
+    "The layout follows a clean top-to-bottom hierarchy: navigation -> image -> content -> actions",
+    "npx tsc --noEmit passes without errors",
+    "npx vite build completes successfully"
+  ],
+  "verification": [
+    "cd /projects/sandbox/Porto-Fakhul && npx tsc --noEmit",
+    "cd /projects/sandbox/Porto-Fakhul && npx vite build"
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}

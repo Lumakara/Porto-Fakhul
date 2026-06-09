@@ -1,0 +1,27 @@
+{
+  "project_type": "React 19 + TypeScript + Vite 8 portfolio website",
+  "language": "TypeScript/TSX",
+  "build_system": "Vite 8 with @tailwindcss/vite plugin, no separate tailwind config file",
+  "test_framework": "No test framework installed - verification via TypeScript compilation and Vite build",
+  "build_command": "cd /projects/sandbox/Porto-Fakhul && npx tsc --noEmit && npx vite build",
+  "test_command": "cd /projects/sandbox/Porto-Fakhul && npx tsc --noEmit",
+  "verification_instructions": "1. Run npx tsc --noEmit to verify types. 2. Run npx vite build to verify production build.",
+  "snapshot_or_generated_files": null,
+  "setup_instructions": "node_modules already installed in /projects/sandbox/Porto-Fakhul",
+  "environment_constraints": "OPEN_INTERNET mode. No test framework. Validation via TypeScript check + Vite build.",
+  "contribution_requirements": "Follow existing patterns: premiumEase/springEase from Section.tsx, Magnetic component for hover effects, data-cursor attributes, lucide-react icons, theme-aware colors (bg-surface, bg-sand, text-charcoal, text-charcoal-light, text-terracotta, text-sage), font-hud for UI text, font-display for headings.",
+  "key_patterns": "Framer Motion for animations with premiumEase/springEase. Tailwind v4 with @theme colors defined in index.css. i18n via useLanguage() hook returning t() function. Section component wrapper for viewport-triggered animations. Magnetic wrapper for hover effects. Fixed overlay pattern for ProjectDetail (fixed inset-0 z-50). AnimatePresence in App.tsx wraps the overlay.",
+  "relevant_files": [
+    "src/sections/About.tsx",
+    "src/sections/ProjectDetail.tsx",
+    "src/App.tsx",
+    "src/components/Section.tsx",
+    "src/components/Magnetic.tsx",
+    "src/locales/en.json",
+    "src/locales/id.json",
+    "src/locales/zh.json",
+    "src/data/projects.ts",
+    "src/index.css"
+  ],
+  "directory_structure": "src/sections/ - page sections (Hero, About, Projects, ProjectDetail, Contact, NotFound). src/components/ - reusable components. src/contexts/ - LanguageContext, PreferencesContext. src/data/ - projects.ts with project data. src/locales/ - en.json, id.json, zh.json. src/lib/ - utilities. src/assets/ - static assets."
+}

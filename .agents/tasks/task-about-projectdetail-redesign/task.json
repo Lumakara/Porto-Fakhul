@@ -1,0 +1,7 @@
+{
+  "task_id": "task-about-projectdetail-redesign",
+  "task_description": "Fix ProjectDetail back button bug and redesign both the ProjectDetail section (e-commerce product detail style) and About section (social profile card style) based on user-provided design references.",
+  "status": "in_progress",
+  "feature_order": ["FEAT-001", "FEAT-002"],
+  "blocked_reason": null
+}
