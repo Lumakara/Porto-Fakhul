@@ -50,8 +50,14 @@ export const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
   }, [onBack]);
 
   return (
-    <>
-      {/* Back button - fixed, outside all containers, highest z-index */}
+    <motion.div
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="fixed inset-0 z-[100]"
+    >
+      {/* Back button - fixed, highest z-index */}
       <motion.button
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
@@ -65,13 +71,7 @@ export const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
       </motion.button>
 
       {/* Overlay container */}
-      <motion.div
-        variants={pageVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        className="fixed inset-0 z-[100] bg-sand"
-      >
+      <div className="absolute inset-0 bg-sand">
         {/* Scrollable content wrapper */}
         <div className="h-full overflow-y-auto">
           {/* Hero banner */}
@@ -241,8 +241,8 @@ export const ProjectDetail = ({ project, onBack }: ProjectDetailProps) => {
             <div className="h-16" />
           </div>
         </div>
-      </motion.div>
-    </>
+      </div>
+    </motion.div>
   );
 };
 

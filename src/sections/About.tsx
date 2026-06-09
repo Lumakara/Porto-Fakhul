@@ -70,7 +70,8 @@ export const About = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 1.2, ease: premiumEase }}
-          className="bg-charcoal rounded-3xl overflow-hidden shadow-2xl relative"
+          className="rounded-3xl overflow-hidden shadow-2xl relative"
+          style={{ backgroundColor: '#2A2A2A' }}
         >
           {/* Cover Banner */}
           <div className="relative h-40 md:h-52 overflow-hidden">
@@ -109,9 +110,10 @@ export const About = () => {
             >
               <div className="relative">
                 <div
-                  className="w-28 h-28 md:w-36 md:h-36 rounded-full flex items-center justify-center border-4 border-charcoal shadow-xl"
+                  className="w-28 h-28 md:w-36 md:h-36 rounded-full flex items-center justify-center border-4 shadow-xl"
                   style={{
                     background: 'linear-gradient(135deg, #C68A7C, #D4AF37)',
+                    borderColor: '#2A2A2A',
                   }}
                 >
                   <span className="text-3xl md:text-4xl font-display font-bold text-white tracking-wide">
@@ -119,7 +121,7 @@ export const About = () => {
                   </span>
                 </div>
                 {/* Online indicator */}
-                <div className="absolute bottom-2 right-2 w-4 h-4 bg-green-400 rounded-full border-2 border-charcoal" />
+                <div className="absolute bottom-2 right-2 w-4 h-4 bg-green-400 rounded-full border-2" style={{ borderColor: '#2A2A2A' }} />
               </div>
             </motion.div>
 
@@ -154,6 +156,7 @@ export const About = () => {
                   <Magnetic key={social.label} range={0.3}>
                     <motion.a
                       href={social.href}
+                      onClick={(e: React.MouseEvent) => e.preventDefault()}
                       aria-label={social.label}
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
