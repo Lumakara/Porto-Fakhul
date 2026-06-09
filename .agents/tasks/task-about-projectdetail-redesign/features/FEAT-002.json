@@ -2,7 +2,7 @@
   "id": "FEAT-002",
   "type": "feat",
   "description": "Redesign the About section to adopt the 'Hi Social App' profile-centric layout from Image 2. Transform from the current grid layout to a mobile-social-profile-inspired design with: cover/banner photo at top, circular profile photo overlapping the banner, name + handle below photo, social media icons row, short tagline, biography section, and contact CTA. Keep the existing tab system (story/experience/skills) but integrate it below the new profile header.",
-  "status": "in_progress",
+  "status": "completed",
   "steps": [
     "In src/sections/About.tsx, replace the current two-column grid header with the social-profile-inspired layout: (1) A full-width cover/banner image at top (use picsum.photos for placeholder, e.g. 'https://picsum.photos/seed/cover-banner/1200/400'). (2) A circular profile photo that overlaps the bottom of the banner (positioned with negative margin or absolute positioning). (3) Name ('Fakhul Rohman') and role/handle below the photo, centered. (4) Social media icons row (GitHub, LinkedIn, Instagram, and email) using lucide-react icons. (5) A short tagline/bio text. (6) A 'Follow' or 'Contact Me' CTA button.",
     "Structure the new layout: Banner (aspect-[3/1] or h-48 md:h-56) -> Profile photo (w-24 h-24 md:w-32 md:h-32, rounded-full, border-4 border-sand, -mt-12 md:-mt-16 centered) -> Name + role (text-center) -> Social icons row (flex justify-center gap-4) -> Tagline text (text-center, max-w-lg mx-auto) -> Quick info pills (location, experience, trait) -> Tab section below.",
@@ -28,5 +28,5 @@
     "cd /projects/sandbox/Porto-Fakhul && npx vite build"
   ],
   "blocked_reason": null,
-  "findings": ""
+  "findings": "lucide-react v1.17.0 does not export brand icons (Github, Linkedin, Instagram). Used inline SVG components instead. Mail icon is available from lucide-react. Build and TypeScript checks pass."
 }
