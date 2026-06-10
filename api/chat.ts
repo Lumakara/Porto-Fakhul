@@ -86,6 +86,11 @@ export default async function handler(req: Request): Promise<Response> {
   // Clamp temperature to a sane range regardless of client input.
   const safeTemperature = Math.min(Math.max(Number(temperature) || 0.7, 0), 2);
 
+  // Pin the model to a small allowlist of inexpensive models. The endpoint is
+  // public, so we never let a caller pick a costly model (e.g. gpt-4o, o1).
+  const ALLOWED_MODELS = new Set(['gpt-4o-mini', 'gpt-4.1-mini', 'gpt-3.5-turbo']);
+  const safeModel = ALLOWED_MODELS.has(model) ? model : 'gpt-4o-mini';
+
   // Prefer the server-side key; fall back to a visitor-provided key.
   const serverKey =
     (typeof process !== 'undefined' && process.env && process.env.OPENAI_API_KEY) || '';
@@ -106,7 +111,7 @@ export default async function handler(req: Request): Promise<Response> {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${key}`,
       },
-      body: JSON.stringify({ model, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
+      body: JSON.stringify({ model: safeModel, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
     });
   } catch {
     return new Response(JSON.stringify({ error: 'Failed to reach OpenAI' }), {
