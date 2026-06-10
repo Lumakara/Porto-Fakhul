@@ -51,6 +51,12 @@
         "lofi": "Lo-Fi",
         "electronic": "Electronic",
         "none": "None"
+      },
+      "status": {
+        "playing": "Now playing",
+        "selected": "Selected",
+        "silence": "Silence",
+        "tap": "Tap to select"
       }
     },
     "visualEffects": {

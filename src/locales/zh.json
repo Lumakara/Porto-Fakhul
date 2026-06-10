@@ -51,6 +51,12 @@
         "lofi": "Lo-Fi",
         "electronic": "\u7535\u5b50\u97f3\u4e50",
         "none": "\u65e0"
+      },
+      "status": {
+        "playing": "\u6b63\u5728\u64ad\u653e",
+        "selected": "\u5df2\u9009\u62e9",
+        "silence": "\u9759\u97f3",
+        "tap": "\u70b9\u51fb\u9009\u62e9"
       }
     },
     "visualEffects": {

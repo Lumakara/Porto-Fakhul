@@ -51,6 +51,12 @@
         "lofi": "Lo-Fi",
         "electronic": "Elektronik",
         "none": "Tidak Ada"
+      },
+      "status": {
+        "playing": "Sedang diputar",
+        "selected": "Dipilih",
+        "silence": "Hening",
+        "tap": "Ketuk untuk pilih"
       }
     },
     "visualEffects": {
