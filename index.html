@@ -9,11 +9,12 @@
     <!-- Performance hints -->
     <link rel="dns-prefetch" href="https://formspree.io">
     
-    <!-- Font Optimization -->
+    <!-- Font Optimization: preload critical weights only, swap for non-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="preload" as="style">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v19/co3bmX5slvsuwiOqRqWcl9dMZPRi9exIi4aj0JOebO4.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/dmsans/v15/rP2Yp3x65VusMVCwVw0JNxEJ.woff2" as="font" type="font/woff2" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
     <!-- Primary SEO Meta Tags -->
     <title>Fakhul Rohman | Portfolio</title>

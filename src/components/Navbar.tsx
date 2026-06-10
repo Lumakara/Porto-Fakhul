@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon, Monitor } from 'lucide-react';
 import { Magnetic } from './Magnetic';
@@ -16,6 +16,7 @@ export const Navbar = () => {
   const { t, language, setLanguage } = useLanguage();
   const { preferences, setTheme } = usePreferences();
   const reducedMotion = useReducedMotion();
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const navItems = [
     { id: 'home', labelKey: 'nav.home' },
@@ -24,37 +25,38 @@ export const Navbar = () => {
     { id: 'contact', labelKey: 'nav.contact' },
   ];
 
+  // IntersectionObserver for section tracking (zero layout thrashing)
   useEffect(() => {
-    let rafId: number | null = null;
+    const sections = navItems.map((item) => document.getElementById(item.id)).filter(Boolean);
 
-    const handleScroll = () => {
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
-        setIsScrolled(window.scrollY > 50);
+    if (!sections.length) return;
 
-        const sections = ['home', 'about', 'projects', 'contact'];
-        const scrollPosition = window.scrollY + window.innerHeight / 3;
-
-        for (const section of sections) {
-          const el = document.getElementById(section);
-          if (el) {
-            const top = el.offsetTop;
-            const height = el.offsetHeight;
-            if (scrollPosition >= top && scrollPosition < top + height) {
-              setActiveSection(section);
-              break;
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        // Find the first section that's "most" visible in the viewport
+        let best: { id: string; ratio: number } | null = null;
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            if (!best || entry.intersectionRatio > best.ratio) {
+              best = { id: entry.target.id, ratio: entry.intersectionRatio };
             }
           }
         }
-        rafId = null;
-      });
-    };
+        if (best) setActiveSection(best.id);
+      },
+      { threshold: [0.1, 0.3, 0.5, 0.7, 0.9], rootMargin: '-20% 0px -60% 0px' }
+    );
 
+    sections.forEach((section) => section && observerRef.current?.observe(section));
+
+    return () => observerRef.current?.disconnect();
+  }, []);
+
+  // Lightweight scroll listener only for navbar background state
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Scroll lock when mobile menu is open
