@@ -13,6 +13,7 @@ import { About } from './sections/About';
 import { TextReveal, premiumEase } from './components/Section';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { PreferencesProvider, usePreferences } from './contexts/PreferencesContext';
+import { ToastProvider } from './contexts/ToastContext';
 import { projectsData } from './data/projects';
 
 import { NotFound } from './sections/NotFound';
@@ -270,7 +271,9 @@ function App() {
   return (
     <LanguageProvider>
       <PreferencesProvider>
-        <AppRouter />
+        <ToastProvider>
+          <AppRouter />
+        </ToastProvider>
       </PreferencesProvider>
     </LanguageProvider>
   );
