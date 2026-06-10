@@ -1,4 +1,12 @@
 {
+  "toasts": {
+    "emailCopied": "Email disalin ke papan klip",
+    "settingsReset": "Pengaturan dikembalikan ke default"
+  },
+  "tooltips": {
+    "audioHint": "Tips: aktifkan suara antarmuka halus di Pengaturan",
+    "dismiss": "Tutup"
+  },
   "nav": {
     "home": "Beranda",
     "about": "Tentang",
@@ -50,8 +58,24 @@
       "particles": "Partikel",
       "animations": "Animasi",
       "blur": "Efek Blur",
+      "tilt": "Kemiringan Kartu 3D",
       "motionReduction": "Kurangi Gerakan",
       "cursorEffects": "Efek Kursor"
+    },
+    "audio": {
+      "title": "Umpan Balik Audio",
+      "uiSounds": "Suara Klik Antarmuka",
+      "volume": "Volume Suara"
+    },
+    "ai": {
+      "title": "Asisten AI",
+      "description": "Mengobrol dengan asisten AI tentang portofolio ini. Gunakan kunci API OpenAI Anda sendiri — hanya disimpan di peramban Anda.",
+      "apiKey": "Kunci API OpenAI",
+      "apiKeyHint": "Disimpan secara lokal di peramban Anda. Tidak pernah dikirim ke mana pun selain OpenAI.",
+      "model": "Model",
+      "personality": "Kepribadian / Prompt Sistem",
+      "personalityHint": "Sesuaikan cara asisten berbicara tentang Fakhul dan situs ini.",
+      "temperature": "Kreativitas"
     },
     "interface": {
       "title": "Antarmuka",
@@ -162,7 +186,18 @@
         "solution": "Solusi",
         "tech": "Teknologi",
         "category": "Kategori",
-        "id": "ID Proyek"
+        "id": "ID Proyek",
+        "features": "Fitur Utama",
+        "highlights": "Sorotan",
+        "gallery": "Galeri",
+        "role": "Peran",
+        "year": "Tahun",
+        "status": "Status",
+        "viewLive": "Demo Langsung",
+        "viewRepo": "Kode Sumber",
+        "viewCase": "Studi Kasus",
+        "viewDemo": "Demo",
+        "nextProject": "Proyek Berikutnya"
       }
     },
     "contact": {
@@ -179,6 +214,8 @@
       "githubHover": "Lihat repositori saya",
       "linkedin": "LinkedIn",
       "linkedinHover": "Mari terhubung",
+      "or": "Atau",
+      "assistantBridge": "Lebih suka mengobrol? Tanya asisten AI",
       "form": {
         "nameLabel": "Nama Anda",
         "namePlaceholder": "Fakhul Rohman",

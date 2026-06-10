@@ -1,0 +1,72 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FDFBF7"/>
+      <stop offset="1" stop-color="#F5F2EB"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="0.18" cy="0.2" r="0.5">
+      <stop offset="0" stop-color="#C68A7C" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#C68A7C" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.9" cy="0.95" r="0.55">
+      <stop offset="0" stop-color="#A3B19B" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#A3B19B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow1)"/>
+  <rect width="1200" height="630" fill="url(#glow2)"/>
+
+  <!-- Inner frame -->
+  <rect x="40" y="40" width="1120" height="550" rx="28" fill="none" stroke="#2A2A2A" stroke-opacity="0.10" stroke-width="2"/>
+
+  <!-- Kicker -->
+  <text x="96" y="150" font-family="'DM Sans', Arial, sans-serif" font-size="22" letter-spacing="8" fill="#C68A7C" font-weight="600">PORTFOLIO</text>
+
+  <!-- Name -->
+  <text x="92" y="300" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-size="132" fill="#2A2A2A" font-weight="600">Fakhul Rohman</text>
+
+  <!-- Role -->
+  <text x="96" y="372" font-family="'DM Sans', Arial, sans-serif" font-size="30" fill="#4A4A4A" font-weight="500">Creative Developer &#183; Frontend Architect &#183; Motion Designer</text>
+
+  <!-- Tag chips -->
+  <g font-family="'DM Sans', Arial, sans-serif" font-size="20" font-weight="600">
+    <rect x="96" y="430" width="150" height="48" rx="24" fill="#2A2A2A" fill-opacity="0.06"/>
+    <text x="171" y="461" fill="#2A2A2A" text-anchor="middle">React</text>
+    <rect x="262" y="430" width="180" height="48" rx="24" fill="#2A2A2A" fill-opacity="0.06"/>
+    <text x="352" y="461" fill="#2A2A2A" text-anchor="middle">TypeScript</text>
+    <rect x="458" y="430" width="170" height="48" rx="24" fill="#2A2A2A" fill-opacity="0.06"/>
+    <text x="543" y="461" fill="#2A2A2A" text-anchor="middle">Tailwind</text>
+  </g>
+
+  <!-- Availability -->
+  <circle cx="106" cy="540" r="7" fill="#A3B19B"/>
+  <text x="124" y="547" font-family="'DM Sans', Arial, sans-serif" font-size="20" fill="#4A4A4A">Available for new projects &#183; 2026</text>
+
+  <!-- Monogram badge -->
+  <g>
+    <rect x="940" y="190" width="180" height="180" rx="36" fill="#2A2A2A"/>
+    <text x="1030" y="312" font-family="'Cormorant Garamond', Georgia, serif" font-size="96" fill="#FDFBF7" font-weight="600" text-anchor="middle">FR</text>
+    <circle cx="1110" cy="360" r="18" fill="#C68A7C"/>
+  </g>
+
+  <!-- Decorative dot grid -->
+  <g fill="#2A2A2A" fill-opacity="0.10">
+    <circle cx="960" cy="430" r="4"/>
+    <circle cx="990" cy="430" r="4"/>
+    <circle cx="1020" cy="430" r="4"/>
+    <circle cx="1050" cy="430" r="4"/>
+    <circle cx="1080" cy="430" r="4"/>
+    <circle cx="960" cy="460" r="4"/>
+    <circle cx="990" cy="460" r="4"/>
+    <circle cx="1020" cy="460" r="4"/>
+    <circle cx="1050" cy="460" r="4"/>
+    <circle cx="1080" cy="460" r="4"/>
+    <circle cx="960" cy="490" r="4"/>
+    <circle cx="990" cy="490" r="4"/>
+    <circle cx="1020" cy="490" r="4"/>
+    <circle cx="1050" cy="490" r="4"/>
+    <circle cx="1080" cy="490" r="4"/>
+  </g>
+</svg>

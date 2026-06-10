@@ -1,4 +1,12 @@
 {
+  "toasts": {
+    "emailCopied": "\u90ae\u7bb1\u5df2\u590d\u5236\u5230\u526a\u8d34\u677f",
+    "settingsReset": "\u8bbe\u7f6e\u5df2\u6062\u590d\u4e3a\u9ed8\u8ba4\u503c"
+  },
+  "tooltips": {
+    "audioHint": "\u63d0\u793a\uff1a\u5728\u8bbe\u7f6e\u4e2d\u542f\u7528\u7ec6\u817b\u7684\u754c\u9762\u97f3\u6548",
+    "dismiss": "\u5173\u95ed"
+  },
   "nav": {
     "home": "\u9996\u9875",
     "about": "\u5173\u4e8e",
@@ -50,8 +58,24 @@
       "particles": "\u7c92\u5b50\u6548\u679c",
       "animations": "\u52a8\u753b",
       "blur": "\u6a21\u7cca\u6548\u679c",
+      "tilt": "3D \u5361\u7247\u503e\u659c",
       "motionReduction": "\u51cf\u5c11\u52a8\u6548",
       "cursorEffects": "\u5149\u6807\u6548\u679c"
+    },
+    "audio": {
+      "title": "\u97f3\u6548\u53cd\u9988",
+      "uiSounds": "\u754c\u9762\u70b9\u51fb\u97f3\u6548",
+      "volume": "\u97f3\u91cf"
+    },
+    "ai": {
+      "title": "AI \u52a9\u624b",
+      "description": "\u4e0e AI \u52a9\u624b\u804a\u804a\u8fd9\u4e2a\u4f5c\u54c1\u96c6\u3002\u4f7f\u7528\u60a8\u81ea\u5df1\u7684 OpenAI API \u5bc6\u94a5 \u2014 \u4ec5\u4fdd\u5b58\u5728\u60a8\u7684\u6d4f\u89c8\u5668\u4e2d\u3002",
+      "apiKey": "OpenAI API \u5bc6\u94a5",
+      "apiKeyHint": "\u4ec5\u672c\u5730\u4fdd\u5b58\u5728\u60a8\u7684\u6d4f\u89c8\u5668\u4e2d\u3002\u9664 OpenAI \u5916\u4e0d\u4f1a\u53d1\u9001\u5230\u4efb\u4f55\u5730\u65b9\u3002",
+      "model": "\u6a21\u578b",
+      "personality": "\u4e2a\u6027 / \u7cfb\u7edf\u63d0\u793a",
+      "personalityHint": "\u81ea\u5b9a\u4e49\u52a9\u624b\u5982\u4f55\u4ecb\u7ecd Fakhul \u548c\u672c\u7ad9\u3002",
+      "temperature": "\u521b\u9020\u529b"
     },
     "interface": {
       "title": "\u754c\u9762",
@@ -162,7 +186,18 @@
         "solution": "\u89e3\u51b3\u65b9\u6848",
         "tech": "\u6280\u672f\u6808",
         "category": "\u7c7b\u522b",
-        "id": "\u9879\u76eeID"
+        "id": "\u9879\u76eeID",
+        "features": "\u4e3b\u8981\u529f\u80fd",
+        "highlights": "\u4eae\u70b9",
+        "gallery": "\u753b\u5eca",
+        "role": "\u89d2\u8272",
+        "year": "\u5e74\u4efd",
+        "status": "\u72b6\u6001",
+        "viewLive": "\u5728\u7ebf\u6f14\u793a",
+        "viewRepo": "\u6e90\u4ee3\u7801",
+        "viewCase": "\u6848\u4f8b\u7814\u7a76",
+        "viewDemo": "\u6f14\u793a",
+        "nextProject": "\u4e0b\u4e00\u4e2a\u9879\u76ee"
       }
     },
     "contact": {
@@ -179,6 +214,8 @@
       "githubHover": "\u67e5\u770b\u6211\u7684\u4ed3\u5e93",
       "linkedin": "LinkedIn",
       "linkedinHover": "\u8ba9\u6211\u4eec\u8fde\u63a5",
+      "or": "\u6216",
+      "assistantBridge": "\u66f4\u559c\u6b22\u804a\u5929\uff1f\u95ee\u95ee AI \u52a9\u624b",
       "form": {
         "nameLabel": "\u60a8\u7684\u59d3\u540d",
         "namePlaceholder": "Fakhul Rohman",

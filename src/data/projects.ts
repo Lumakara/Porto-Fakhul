@@ -1,5 +1,10 @@
 export type ProjectStatus = 'live' | 'in-progress' | 'archived' | 'concept';
 
+// Real, active destinations. Swap the `live`/`demo` URLs below for per-project
+// deployment URLs once each project is published.
+const GITHUB_PROFILE = 'https://github.com/lumakara';
+const PORTFOLIO_REPO = 'https://github.com/Lumakara/Porto-Fakhul';
+
 export interface ProjectLink {
   label: string;
   href: string;
@@ -67,8 +72,8 @@ export const projectsData: Project[] = [
       { label: 'Lighthouse', value: '98' },
     ],
     links: [
-      { label: 'Live Demo', href: '#', type: 'live' },
-      { label: 'Source', href: '#', type: 'repo' },
+      { label: 'Live Demo', href: GITHUB_PROFILE, type: 'live' },
+      { label: 'Source', href: GITHUB_PROFILE, type: 'repo' },
     ],
     status: 'live',
     year: '2025',
@@ -104,8 +109,8 @@ export const projectsData: Project[] = [
       { label: 'Test Cov.', value: '92%' },
     ],
     links: [
-      { label: 'Case Study', href: '#', type: 'case-study' },
-      { label: 'Source', href: '#', type: 'repo' },
+      { label: 'Case Study', href: GITHUB_PROFILE, type: 'case-study' },
+      { label: 'Source', href: GITHUB_PROFILE, type: 'repo' },
     ],
     status: 'in-progress',
     year: '2025',
@@ -141,8 +146,8 @@ export const projectsData: Project[] = [
       { label: 'CLS', value: '0.00' },
     ],
     links: [
-      { label: 'Live Demo', href: '#', type: 'live' },
-      { label: 'Source', href: '#', type: 'repo' },
+      { label: 'Live Demo', href: GITHUB_PROFILE, type: 'live' },
+      { label: 'Source', href: PORTFOLIO_REPO, type: 'repo' },
     ],
     status: 'live',
     year: '2024',
@@ -178,8 +183,8 @@ export const projectsData: Project[] = [
       { label: 'Uptime', value: '99.9%' },
     ],
     links: [
-      { label: 'Demo', href: '#', type: 'demo' },
-      { label: 'Source', href: '#', type: 'repo' },
+      { label: 'Demo', href: GITHUB_PROFILE, type: 'demo' },
+      { label: 'Source', href: GITHUB_PROFILE, type: 'repo' },
     ],
     status: 'concept',
     year: '2026',

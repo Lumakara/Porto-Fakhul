@@ -1,6 +1,7 @@
 import type { ChatMessage, AISettings } from '../types';
 
 const OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
+const PROXY_ENDPOINT = '/api/chat';
 
 export interface ChatRequestResult {
   ok: boolean;
@@ -8,41 +9,152 @@ export interface ChatRequestResult {
   error?: string;
 }
 
-interface OpenAIChoice {
-  message?: { content?: string };
+export interface SendOptions {
+  signal?: AbortSignal;
+  /** Called with the full accumulated text every time new tokens arrive. */
+  onToken?: (fullText: string) => void;
 }
-interface OpenAIResponse {
-  choices?: OpenAIChoice[];
+
+interface OpenAIErrorBody {
   error?: { message?: string };
 }
 
+function buildMessages(history: ChatMessage[], settings: AISettings) {
+  const system = {
+    role: 'system' as const,
+    content: settings.personality?.trim() || 'You are a helpful assistant.',
+  };
+  const turns = history
+    .filter((m) => m.role === 'user' || m.role === 'assistant')
+    .map((m) => ({ role: m.role, content: m.content }));
+  return [system, ...turns];
+}
+
+function friendlyError(status: number, apiMessage?: string): string {
+  if (status === 401) return 'Invalid API key. Please check your key in Settings.';
+  if (status === 429) return 'Rate limit or quota exceeded. Try again shortly.';
+  return apiMessage || `Request failed (HTTP ${status}).`;
+}
+
 /**
- * Send a conversation to the OpenAI Chat Completions API.
+ * Read an OpenAI-style SSE stream, accumulating `delta.content` tokens.
+ * Calls `onToken` with the running text so the UI can render incrementally.
+ */
+async function readStream(res: Response, onToken?: (text: string) => void): Promise<string> {
+  if (!res.body) {
+    // Non-streaming fallback: parse a normal completion payload.
+    const data = await res.json().catch(() => ({}));
+    const content =
+      (data as { choices?: { message?: { content?: string } }[] })?.choices?.[0]?.message?.content ||
+      '';
+    if (content && onToken) onToken(content);
+    return content;
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let full = '';
+
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    const lines = buffer.split('\n');
+    buffer = lines.pop() || '';
+
+    for (const raw of lines) {
+      const line = raw.trim();
+      if (!line.startsWith('data:')) continue;
+      const data = line.slice(5).trim();
+      if (data === '[DONE]') return full;
+      try {
+        const json = JSON.parse(data);
+        const token = json?.choices?.[0]?.delta?.content || '';
+        if (token) {
+          full += token;
+          onToken?.(full);
+        }
+      } catch {
+        // Ignore keep-alive / non-JSON lines
+      }
+    }
+  }
+  return full;
+}
+
+/** True when a response looks like a streaming/JSON API response (not SPA HTML). */
+function isApiResponse(res: Response): boolean {
+  const ct = res.headers.get('content-type') || '';
+  return ct.includes('text/event-stream') || ct.includes('application/json');
+}
+
+/**
+ * Send a conversation to the assistant.
  *
- * The API key, model, personality (system prompt) and temperature all come
- * from user preferences so the assistant can be tailored to this portfolio.
- * Returns a normalized result instead of throwing, so the UI can render
- * friendly error states.
+ * Primary path: the serverless proxy (`/api/chat`) which holds the OpenAI key
+ * server-side. Fallback path: a direct, bring-your-own-key call to OpenAI when
+ * the proxy is unavailable (e.g. static hosting / local dev) and the user has
+ * supplied their own key in Settings. Both paths stream tokens via `onToken`.
  */
 export async function sendChatMessage(
   history: ChatMessage[],
   settings: AISettings,
-  signal?: AbortSignal
+  options: SendOptions = {}
 ): Promise<ChatRequestResult> {
-  if (!settings.apiKey.trim()) {
+  const { signal, onToken } = options;
+  const messages = buildMessages(history, settings);
+  const hasByoKey = settings.apiKey.trim().length > 0;
+
+  // ── 1. Primary: serverless proxy ──────────────────────────────────────────
+  try {
+    const res = await fetch(PROXY_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages,
+        model: settings.model || 'gpt-4o-mini',
+        temperature: settings.temperature ?? 0.7,
+        // Pass BYO key so the proxy can use it if it has no server key.
+        apiKey: settings.apiKey.trim() || undefined,
+      }),
+      signal,
+    });
+
+    // 404/501 or an SPA HTML response => proxy not deployed; fall through to BYO.
+    const proxyAvailable = res.status !== 404 && res.status !== 501 && isApiResponse(res);
+    if (proxyAvailable) {
+      if (res.ok) {
+        const content = await readStream(res, onToken);
+        if (!content.trim()) {
+          return { ok: false, content: '', error: 'The assistant returned an empty response.' };
+        }
+        return { ok: true, content };
+      }
+      // Proxy reachable but errored. If the user has their own key, fall back;
+      // otherwise surface the proxy's error.
+      if (!hasByoKey) {
+        const data: OpenAIErrorBody = await res.json().catch(() => ({}));
+        return { ok: false, content: '', error: friendlyError(res.status, data?.error?.message) };
+      }
+    }
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      return { ok: false, content: '', error: 'Request cancelled.' };
+    }
+    // Network error reaching the proxy: fall through to BYO if possible.
+  }
+
+  // ── 2. Fallback: direct BYO-key call to OpenAI ──────────────────────────────
+  if (!hasByoKey) {
     return {
       ok: false,
       content: '',
-      error: 'No API key configured. Add your OpenAI API key in Settings to start chatting.',
+      error:
+        'The AI assistant needs an API key. Add your OpenAI key in Settings, or deploy the serverless proxy.',
     };
   }
-
-  const messages = [
-    { role: 'system' as const, content: settings.personality },
-    ...history
-      .filter((m) => m.role === 'user' || m.role === 'assistant')
-      .map((m) => ({ role: m.role, content: m.content })),
-  ];
 
   try {
     const res = await fetch(OPENAI_ENDPOINT, {
@@ -56,25 +168,20 @@ export async function sendChatMessage(
         messages,
         temperature: settings.temperature ?? 0.7,
         max_tokens: 600,
+        stream: true,
       }),
       signal,
     });
 
-    const data: OpenAIResponse = await res.json().catch(() => ({}));
-
     if (!res.ok) {
-      const apiMsg = data?.error?.message;
-      let friendly = apiMsg || `Request failed (HTTP ${res.status}).`;
-      if (res.status === 401) friendly = 'Invalid API key. Please check your key in Settings.';
-      if (res.status === 429) friendly = 'Rate limit or quota exceeded. Try again shortly.';
-      return { ok: false, content: '', error: friendly };
+      const data: OpenAIErrorBody = await res.json().catch(() => ({}));
+      return { ok: false, content: '', error: friendlyError(res.status, data?.error?.message) };
     }
 
-    const content = data?.choices?.[0]?.message?.content?.trim();
-    if (!content) {
+    const content = await readStream(res, onToken);
+    if (!content.trim()) {
       return { ok: false, content: '', error: 'The assistant returned an empty response.' };
     }
-
     return { ok: true, content };
   } catch (err) {
     if (err instanceof DOMException && err.name === 'AbortError') {

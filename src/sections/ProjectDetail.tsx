@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
   Target,
@@ -15,10 +15,19 @@ import {
   ArrowRight,
   ImageIcon,
   Sparkles,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
 } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { premiumEase } from '../components/Section';
 import { getStatusMeta, type Project, type ProjectLink } from '../data/projects';
+
+/** A "screen" entry is treated as a real image when it looks like a path/URL. */
+function isImagePath(s: string): boolean {
+  return /^(https?:\/\/|\/)/.test(s) && /\.(png|jpe?g|webp|gif|avif)$/i.test(s);
+}
 
 const GithubGlyph = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -58,14 +67,34 @@ const LINK_META: Record<ProjectLink['type'], { icon: React.ComponentType<{ class
 export const ProjectDetail = ({ project, onBack, nextProject, onNavigate }: ProjectDetailProps) => {
   const { t } = useLanguage();
   const status = getStatusMeta(project.status);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const closeLightbox = () => setLightboxIndex(null);
+  const showPrev = () =>
+    setLightboxIndex((i) => (i === null ? i : (i - 1 + project.screens.length) % project.screens.length));
+  const showNext = () =>
+    setLightboxIndex((i) => (i === null ? i : (i + 1) % project.screens.length));
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onBack();
+      if (e.key === 'Escape') {
+        // Escape closes the lightbox first, otherwise the whole detail view.
+        if (lightboxIndex !== null) {
+          setLightboxIndex(null);
+        } else {
+          onBack();
+        }
+        return;
+      }
+      if (lightboxIndex !== null) {
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+      }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [onBack]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onBack, lightboxIndex, project.screens.length]);
 
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="fixed inset-0 z-[100]">
@@ -195,11 +224,16 @@ export const ProjectDetail = ({ project, onBack, nextProject, onNavigate }: Proj
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {project.screens.map((screen, i) => (
-                  <motion.div
+                  <motion.button
                     key={screen}
+                    type="button"
+                    onClick={() => setLightboxIndex(i)}
+                    data-sound="click"
+                    data-cursor="grow"
                     whileHover={{ y: -4 }}
                     transition={{ duration: 0.3 }}
-                    className="rounded-xl overflow-hidden border border-charcoal/10 bg-surface shadow-sm"
+                    className="group/frame text-left rounded-xl overflow-hidden border border-charcoal/10 bg-surface shadow-sm cursor-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2"
+                    aria-label={`${t('sections.projects.detail.gallery')}: ${screen}`}
                   >
                     {/* Faux browser chrome */}
                     <div className="flex items-center gap-1.5 px-3 py-2 border-b border-charcoal/5 bg-charcoal/[0.02]">
@@ -207,13 +241,23 @@ export const ProjectDetail = ({ project, onBack, nextProject, onNavigate }: Proj
                       <span className="w-2 h-2 rounded-full bg-yellow-400/60" />
                       <span className="w-2 h-2 rounded-full bg-green-400/60" />
                     </div>
-                    <div className="relative aspect-[4/3] flex items-center justify-center" style={{ background: project.gradient }}>
-                      <div className="absolute inset-0 bg-charcoal/5 mix-blend-overlay" />
-                      <div className="absolute inset-0 cyber-grid opacity-10" />
-                      <span className="relative font-display text-charcoal/30 text-3xl font-semibold">0{i + 1}</span>
-                      <span className="absolute bottom-2 left-2 text-[9px] font-hud text-charcoal/60 uppercase tracking-widest bg-surface/70 px-2 py-0.5 rounded-full">{screen}</span>
+                    <div className="relative aspect-[4/3] flex items-center justify-center overflow-hidden" style={{ background: project.gradient }}>
+                      {isImagePath(screen) ? (
+                        <img src={screen} alt={screen} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 bg-charcoal/5 mix-blend-overlay" />
+                          <div className="absolute inset-0 cyber-grid opacity-10" />
+                          <span className="relative font-display text-charcoal/30 text-3xl font-semibold">0{i + 1}</span>
+                          <span className="absolute bottom-2 left-2 text-[9px] font-hud text-charcoal/60 uppercase tracking-widest bg-surface/70 px-2 py-0.5 rounded-full">{screen}</span>
+                        </>
+                      )}
+                      {/* Expand affordance on hover */}
+                      <span className="absolute top-2 right-2 w-7 h-7 rounded-full bg-surface/80 backdrop-blur flex items-center justify-center opacity-0 group-hover/frame:opacity-100 transition-opacity duration-300">
+                        <Maximize2 className="w-3.5 h-3.5 text-charcoal" />
+                      </span>
                     </div>
-                  </motion.div>
+                  </motion.button>
                 ))}
               </div>
             </motion.div>
@@ -320,6 +364,104 @@ export const ProjectDetail = ({ project, onBack, nextProject, onNavigate }: Proj
           </div>
         </div>
       </div>
+
+      {/* Gallery lightbox */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div
+            key="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[130] flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-md"
+            onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${project.title} — ${project.screens[lightboxIndex]}`}
+          >
+            {/* Close */}
+            <button
+              onClick={closeLightbox}
+              data-sound="click"
+              className="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white cursor-none transition-colors"
+              data-cursor="magnetic"
+              aria-label="Close preview"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Counter */}
+            <span className="absolute top-6 left-6 text-[11px] font-hud text-white/70 tracking-widest">
+              {String(lightboxIndex + 1).padStart(2, '0')} / {String(project.screens.length).padStart(2, '0')}
+            </span>
+
+            {project.screens.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => { e.stopPropagation(); showPrev(); }}
+                  data-sound="click"
+                  className="absolute left-3 sm:left-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white cursor-none transition-colors"
+                  data-cursor="magnetic"
+                  aria-label="Previous"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); showNext(); }}
+                  data-sound="click"
+                  className="absolute right-3 sm:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white cursor-none transition-colors"
+                  data-cursor="magnetic"
+                  aria-label="Next"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </>
+            )}
+
+            {/* Frame */}
+            <motion.div
+              key={lightboxIndex}
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-3xl rounded-2xl overflow-hidden border border-white/15 shadow-2xl"
+            >
+              <div className="flex items-center gap-1.5 px-4 py-2.5 bg-charcoal border-b border-white/10">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-400/70" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
+                <span className="ml-3 text-[10px] font-hud text-white/50 tracking-widest truncate">
+                  {project.title} — {project.screens[lightboxIndex]}
+                </span>
+              </div>
+              <div className="relative aspect-[16/10] flex items-center justify-center" style={{ background: project.gradient }}>
+                {isImagePath(project.screens[lightboxIndex]) ? (
+                  <img
+                    src={project.screens[lightboxIndex]}
+                    alt={project.screens[lightboxIndex]}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <>
+                    <div className="absolute inset-0 bg-charcoal/5 mix-blend-overlay" />
+                    <div className="absolute inset-0 cyber-grid opacity-10" />
+                    <div className="relative text-center">
+                      <span className="block font-display text-charcoal/30 text-6xl font-semibold">
+                        0{lightboxIndex + 1}
+                      </span>
+                      <span className="mt-2 inline-block text-[11px] font-hud text-charcoal/70 uppercase tracking-widest bg-surface/70 px-3 py-1 rounded-full">
+                        {project.screens[lightboxIndex]}
+                      </span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };

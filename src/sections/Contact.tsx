@@ -5,6 +5,7 @@ import { Send, Terminal, Compass, Mail, ArrowUpRight, AlertCircle, RotateCcw, Co
 import { Section, premiumEase, Parallax } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useToast } from '../contexts/ToastContext';
 
 const MAX_MESSAGE_LENGTH = 500;
 const CONTACT_EMAIL = 'fakhulrohman2@gmail.com';
@@ -29,16 +30,18 @@ export const Contact = () => {
   const [copied, setCopied] = useState(false);
   const isSubmitting = useRef(false);
   const { t } = useLanguage();
+  const { showToast } = useToast();
 
   const handleCopyEmail = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(CONTACT_EMAIL);
       setCopied(true);
+      showToast(t('toasts.emailCopied'), 'success');
       setTimeout(() => setCopied(false), 1800);
     } catch {
       // Clipboard unavailable - silently ignore
     }
-  }, []);
+  }, [showToast, t]);
 
   const validateField = useCallback((name: string, value: string): string | undefined => {
     if (!value.trim()) {
@@ -348,6 +351,35 @@ export const Contact = () => {
                   </motion.a>
                 </Magnetic>
               ))}
+            </div>
+
+            {/* Contact → Assistant bridge */}
+            <div className="pt-2">
+              <div className="relative mb-4">
+                <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                  <div className="w-full border-t border-charcoal/10" />
+                </div>
+                <div className="relative flex justify-center">
+                  <span className="px-3 text-[10px] font-hud text-charcoal-light uppercase tracking-widest bg-sand">
+                    {t('sections.contact.or')}
+                  </span>
+                </div>
+              </div>
+              <Magnetic range={0.3}>
+                <motion.button
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-fab', { detail: { tab: 'chat' } }))}
+                  data-sound="click"
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
+                  className="group flex items-center justify-center gap-2.5 w-full py-4 rounded-xl bg-gradient-to-r from-terracotta to-terracotta/80 text-white font-hud text-xs font-medium tracking-widest hover:shadow-lg hover:shadow-terracotta/25 transition-all duration-300 cursor-none"
+                  data-cursor="grow"
+                  aria-label={t('sections.contact.assistantBridge')}
+                >
+                  <Sparkles className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                  {t('sections.contact.assistantBridge')}
+                  <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                </motion.button>
+              </Magnetic>
             </div>
           </motion.div>
 

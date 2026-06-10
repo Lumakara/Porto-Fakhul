@@ -1,4 +1,12 @@
 {
+  "toasts": {
+    "emailCopied": "Email copied to clipboard",
+    "settingsReset": "Settings reset to defaults"
+  },
+  "tooltips": {
+    "audioHint": "Tip: enable subtle UI sounds in Settings",
+    "dismiss": "Dismiss"
+  },
   "nav": {
     "home": "Home",
     "about": "About",
@@ -206,6 +214,8 @@
       "githubHover": "View my repositories",
       "linkedin": "LinkedIn",
       "linkedinHover": "Let's connect",
+      "or": "Or",
+      "assistantBridge": "Prefer to chat? Ask the AI assistant",
       "form": {
         "nameLabel": "Your name",
         "namePlaceholder": "Fakhul Rohman",

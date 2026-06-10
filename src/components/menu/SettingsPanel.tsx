@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { usePreferences } from '../../contexts/PreferencesContext';
+import { useToast } from '../../contexts/ToastContext';
 import { useReducedMotion } from '../../lib/motion';
 import type { Theme, InterfaceMode, PerformanceMode, Language } from '../../types';
 import { RippleEffect } from './RippleEffect';
@@ -70,6 +71,7 @@ function CollapsibleSection({ title, children, defaultOpen = false }: { title: s
 export function SettingsPanel() {
   const { t, language, setLanguage } = useLanguage();
   const { preferences, setTheme, setMusic, setVisualEffects, setInterfaceMode, setPerformanceMode, setAudio, setAI, resetPreferences } = usePreferences();
+  const { showToast } = useToast();
   const reducedMotion = useReducedMotion();
 
   const themeOptions: { value: Theme; labelKey: string }[] = [
@@ -393,7 +395,10 @@ export function SettingsPanel() {
       {/* Reset */}
       <div className="px-4 py-4">
         <button
-          onClick={resetPreferences}
+          onClick={() => {
+            resetPreferences();
+            showToast(t('toasts.settingsReset'), 'info');
+          }}
           data-sound="click"
           className="w-full py-2.5 rounded-lg border border-charcoal/10 text-charcoal-light font-hud text-xs uppercase tracking-wider hover:text-terracotta hover:border-terracotta/30 transition-colors cursor-none"
           data-cursor="magnetic"

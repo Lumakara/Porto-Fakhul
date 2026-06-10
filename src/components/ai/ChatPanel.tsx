@@ -61,16 +61,56 @@ export function ChatPanel({ onOpenSettings }: ChatPanelProps) {
       const controller = new AbortController();
       abortRef.current = controller;
 
-      const result = await sendChatMessage(nextHistory, preferences.ai, controller.signal);
+      // Create a placeholder assistant message we stream tokens into.
+      const assistantId = createMessageId();
+      let streamStarted = false;
 
-      const assistantMsg: ChatMessage = {
-        id: createMessageId(),
-        role: 'assistant',
-        content: result.ok ? result.content : result.error || 'Something went wrong.',
-        timestamp: Date.now(),
-        error: !result.ok,
-      };
-      setMessages((prev) => [...prev, assistantMsg]);
+      const result = await sendChatMessage(nextHistory, preferences.ai, {
+        signal: controller.signal,
+        onToken: (fullText) => {
+          setMessages((prev) => {
+            if (!streamStarted) {
+              streamStarted = true;
+              return [
+                ...prev,
+                {
+                  id: assistantId,
+                  role: 'assistant',
+                  content: fullText,
+                  timestamp: Date.now(),
+                },
+              ];
+            }
+            return prev.map((m) => (m.id === assistantId ? { ...m, content: fullText } : m));
+          });
+        },
+      });
+
+      setMessages((prev) => {
+        if (result.ok) {
+          // Ensure the final content is present (covers non-streaming responses).
+          if (streamStarted) {
+            return prev.map((m) => (m.id === assistantId ? { ...m, content: result.content } : m));
+          }
+          return [
+            ...prev,
+            { id: assistantId, role: 'assistant', content: result.content, timestamp: Date.now() },
+          ];
+        }
+        // Error: replace any partial stream with the error message.
+        const errorMsg: ChatMessage = {
+          id: assistantId,
+          role: 'assistant',
+          content: result.error || 'Something went wrong.',
+          timestamp: Date.now(),
+          error: true,
+        };
+        if (streamStarted) {
+          return prev.map((m) => (m.id === assistantId ? errorMsg : m));
+        }
+        return [...prev, errorMsg];
+      });
+
       setIsSending(false);
       abortRef.current = null;
     },
@@ -93,13 +133,11 @@ export function ChatPanel({ onOpenSettings }: ChatPanelProps) {
       <div className="flex items-center justify-between px-1 pb-3 mb-1 border-b border-charcoal/10">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
-            <span
-              className={`absolute inline-flex h-full w-full rounded-full ${hasApiKey ? 'bg-sage animate-ping' : 'bg-charcoal/30'} opacity-75`}
-            />
-            <span className={`relative inline-flex rounded-full h-2 w-2 ${hasApiKey ? 'bg-sage' : 'bg-charcoal/30'}`} />
+            <span className="absolute inline-flex h-full w-full rounded-full bg-sage animate-ping opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-sage" />
           </span>
           <span className="font-hud text-[11px] tracking-widest uppercase text-charcoal-light">
-            {hasApiKey ? 'Assistant Online' : 'Setup Required'}
+            AI Assistant
           </span>
         </div>
         {messages.length > 0 && (
@@ -188,7 +226,7 @@ export function ChatPanel({ onOpenSettings }: ChatPanelProps) {
           ))}
         </AnimatePresence>
 
-        {isSending && (
+        {isSending && messages[messages.length - 1]?.role === 'user' && (
           <div className="flex items-end gap-2">
             <div className="flex-shrink-0 w-7 h-7 rounded-full bg-terracotta/15 text-terracotta border border-terracotta/25 flex items-center justify-center">
               <Bot className="w-3.5 h-3.5" />
@@ -206,19 +244,6 @@ export function ChatPanel({ onOpenSettings }: ChatPanelProps) {
           </div>
         )}
       </div>
-
-      {/* No-key hint */}
-      {!hasApiKey && messages.length === 0 && (
-        <button
-          onClick={onOpenSettings}
-          data-sound="click"
-          className="mb-2 flex items-center justify-center gap-2 w-full py-2 rounded-xl bg-terracotta/10 border border-terracotta/20 text-[11px] font-hud uppercase tracking-wider text-terracotta hover:bg-terracotta/15 transition-colors cursor-none"
-          data-cursor="magnetic"
-        >
-          <KeyRound className="w-3.5 h-3.5" />
-          Add OpenAI API key in Settings
-        </button>
-      )}
 
       {/* Input */}
       <form onSubmit={handleSubmit} className="flex items-center gap-2 pt-2">

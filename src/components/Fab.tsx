@@ -1,12 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, X, MessageCircle, SlidersHorizontal } from 'lucide-react';
+import { Sparkles, X, MessageCircle, SlidersHorizontal, Volume2 } from 'lucide-react';
 import { useReducedMotion } from '../lib/motion';
+import { usePreferences } from '../contexts/PreferencesContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { FocusTrap } from './menu/FocusTrap';
 import { SettingsPanel } from './menu/SettingsPanel';
 import { ChatPanel } from './ai/ChatPanel';
 
 type FabTab = 'chat' | 'settings';
+
+const FAB_SEEN_KEY = 'porto-fab-seen';
+const AUDIO_TIP_KEY = 'porto-audio-tip-seen';
 
 /**
  * Floating Action Button that expands into a control surface containing the
@@ -16,7 +21,46 @@ type FabTab = 'chat' | 'settings';
 export function Fab() {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<FabTab>('chat');
+  const [hasSeen, setHasSeen] = useState(() => {
+    try {
+      return localStorage.getItem(FAB_SEEN_KEY) === '1';
+    } catch {
+      return true;
+    }
+  });
+  const [showAudioTip, setShowAudioTip] = useState(false);
   const reducedMotion = useReducedMotion();
+  const { preferences } = usePreferences();
+  const { t } = useLanguage();
+
+  const dismissAudioTip = useCallback(() => {
+    setShowAudioTip(false);
+    try {
+      localStorage.setItem(AUDIO_TIP_KEY, '1');
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const markSeen = useCallback(() => {
+    setHasSeen(true);
+    setShowAudioTip(false);
+    try {
+      localStorage.setItem(FAB_SEEN_KEY, '1');
+      localStorage.setItem(AUDIO_TIP_KEY, '1');
+    } catch {
+      // ignore storage failures
+    }
+  }, []);
+
+  const openFab = useCallback(
+    (nextTab?: FabTab) => {
+      setOpen(true);
+      if (nextTab) setTab(nextTab);
+      markSeen();
+    },
+    [markSeen]
+  );
 
   // Close on Escape handled by FocusTrap; also lock scroll on mobile sheet.
   useEffect(() => {
@@ -25,6 +69,55 @@ export function Fab() {
     if (mq.matches) document.body.classList.add('scroll-locked');
     return () => document.body.classList.remove('scroll-locked');
   }, [open]);
+
+  // Allow other parts of the app (e.g. the Contact bridge) to open the FAB.
+  useEffect(() => {
+    const onOpenEvent = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { tab?: FabTab } | undefined;
+      openFab(detail?.tab ?? 'chat');
+    };
+    window.addEventListener('open-fab', onOpenEvent as EventListener);
+    return () => window.removeEventListener('open-fab', onOpenEvent as EventListener);
+  }, [openFab]);
+
+  // Keyboard shortcut: "g" or "?" toggles the panel (ignored while typing).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const el = document.activeElement as HTMLElement | null;
+      const typing =
+        !!el &&
+        (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+      if (typing) return;
+      if (e.key === '?' || e.key.toLowerCase() === 'g') {
+        e.preventDefault();
+        setOpen((v) => {
+          const next = !v;
+          if (next) markSeen();
+          return next;
+        });
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [markSeen]);
+
+  // First-run hint: let users know subtle UI sounds exist (only when they're off).
+  useEffect(() => {
+    let seen: boolean;
+    try {
+      seen = localStorage.getItem(AUDIO_TIP_KEY) === '1';
+    } catch {
+      seen = true;
+    }
+    if (seen || preferences.audio.uiSounds) return;
+    const showTimer = window.setTimeout(() => setShowAudioTip(true), 3000);
+    const hideTimer = window.setTimeout(() => dismissAudioTip(), 12000);
+    return () => {
+      window.clearTimeout(showTimer);
+      window.clearTimeout(hideTimer);
+    };
+  }, [preferences.audio.uiSounds, dismissAudioTip]);
 
   const panelTransition = reducedMotion
     ? { duration: 0 }
@@ -39,16 +132,28 @@ export function Fab() {
         transition={{ delay: 0.4, type: 'spring', stiffness: 300, damping: 20 }}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.92 }}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setOpen((v) => !v);
+          markSeen();
+        }}
         data-sound="click"
         className="fixed bottom-5 right-5 z-[80] w-14 h-14 rounded-full bg-charcoal text-sand shadow-xl flex items-center justify-center cursor-none border border-white/10 group"
         data-cursor="grow"
         aria-label={open ? 'Close assistant & settings' : 'Open assistant & settings'}
         aria-expanded={open}
+        aria-keyshortcuts="g"
+        title="Assistant & settings (press G)"
       >
         {/* Pulsing halo */}
         {!open && !reducedMotion && (
           <span className="absolute inset-0 rounded-full bg-terracotta/40 animate-ping opacity-60" />
+        )}
+        {/* First-visit "new" indicator */}
+        {!open && !hasSeen && (
+          <span className="absolute -top-0.5 -right-0.5 z-20 flex h-3.5 w-3.5">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-terracotta opacity-75 animate-ping" />
+            <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-terracotta border-2 border-charcoal" />
+          </span>
         )}
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
@@ -76,6 +181,48 @@ export function Fab() {
         </AnimatePresence>
       </motion.button>
 
+      {/* First-run audio hint */}
+      <AnimatePresence>
+        {showAudioTip && !open && (
+          <motion.div
+            key="audio-tip"
+            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.96 }}
+            animate={reducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={reducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.96 }}
+            transition={{ duration: 0.25 }}
+            className="fixed bottom-[5.5rem] right-5 z-[79] max-w-[250px]"
+            role="status"
+          >
+            <div className="relative flex items-start gap-2 rounded-2xl bg-charcoal text-sand border border-white/10 shadow-xl pl-3.5 pr-2 py-3">
+              <button
+                onClick={() => {
+                  dismissAudioTip();
+                  openFab('settings');
+                }}
+                data-sound="click"
+                className="flex items-start gap-2.5 text-left cursor-none"
+                data-cursor="magnetic"
+              >
+                <Volume2 className="w-4 h-4 text-terracotta flex-shrink-0 mt-0.5" />
+                <span className="text-[11px] font-hud leading-snug tracking-wide">
+                  {t('tooltips.audioHint')}
+                </span>
+              </button>
+              <button
+                onClick={dismissAudioTip}
+                aria-label={t('tooltips.dismiss')}
+                className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full flex items-center justify-center text-sand/50 hover:text-sand transition-colors cursor-none"
+                data-cursor="magnetic"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+              {/* Pointer arrow */}
+              <span className="absolute -bottom-1.5 right-7 w-3 h-3 rotate-45 bg-charcoal border-r border-b border-white/10" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {open && (
           <>
@@ -87,7 +234,7 @@ export function Fab() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-[78] bg-charcoal/20 backdrop-blur-[2px] sm:bg-transparent sm:backdrop-blur-none"
+              className="fixed inset-0 z-[78] bg-black/30 backdrop-blur-[2px] sm:bg-transparent sm:backdrop-blur-none"
               aria-hidden="true"
             />
 
