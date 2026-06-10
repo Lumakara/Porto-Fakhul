@@ -138,6 +138,10 @@ export function Fab() {
         }}
         data-sound="click"
         className="fixed bottom-5 right-5 z-[80] w-14 h-14 rounded-full bg-charcoal text-sand shadow-xl flex items-center justify-center cursor-none border border-white/10 group"
+        style={{
+          bottom: 'max(env(safe-area-inset-bottom, 0px) + 0.5rem, 1.25rem)',
+          right: 'max(env(safe-area-inset-right, 0px) + 0.5rem, 1.25rem)',
+        }}
         data-cursor="grow"
         aria-label={open ? 'Close assistant & settings' : 'Open assistant & settings'}
         aria-expanded={open}
@@ -249,13 +253,21 @@ export function Fab() {
               aria-modal="true"
               aria-label="Assistant and settings"
               className="fixed z-[81] bg-sand/95 backdrop-blur-xl border border-charcoal/10 shadow-2xl flex flex-col
-                         bottom-0 left-0 right-0 rounded-t-3xl max-h-[85vh] h-[85vh]
-                         sm:bottom-24 sm:right-5 sm:left-auto sm:w-[380px] sm:h-[560px] sm:max-h-[78vh] sm:rounded-3xl"
+                         inset-x-0 bottom-0 rounded-t-3xl h-[88dvh] max-h-[88dvh]
+                         sm:inset-x-auto sm:bottom-24 sm:right-5 sm:left-auto sm:w-[min(384px,calc(100vw-2.5rem))] sm:h-[560px] sm:max-h-[calc(100dvh-8rem)] sm:rounded-3xl
+                         lg:w-[408px] lg:h-[620px] lg:max-h-[calc(100dvh-9rem)]"
+              style={{
+                paddingBottom: 'max(env(safe-area-inset-bottom), 0px)',
+              }}
             >
               <FocusTrap active={open} onEscape={() => setOpen(false)}>
                 <div className="flex flex-col h-full min-h-0">
+                  {/* Mobile grab handle (bottom-sheet affordance) */}
+                  <div className="flex justify-center pt-2.5 pb-0.5 sm:hidden" aria-hidden="true">
+                    <span className="w-10 h-1 rounded-full bg-charcoal/15" />
+                  </div>
                   {/* Tab header */}
-                  <div className="flex items-center justify-between gap-2 p-3 border-b border-charcoal/10">
+                  <div className="flex items-center justify-between gap-2 px-3 py-2.5 sm:p-3 border-b border-charcoal/10">
                     <div className="flex items-center gap-1 bg-charcoal/5 rounded-full p-1">
                       {([
                         { id: 'chat', label: 'Assistant', icon: MessageCircle },
@@ -268,7 +280,7 @@ export function Fab() {
                             key={t.id}
                             onClick={() => setTab(t.id)}
                             data-sound="click"
-                            className="relative px-3.5 py-1.5 rounded-full text-xs font-hud tracking-wide cursor-none flex items-center gap-1.5"
+                            className="relative px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-hud tracking-wide cursor-none flex items-center gap-1.5"
                             data-cursor="magnetic"
                             aria-pressed={active}
                           >
@@ -302,7 +314,7 @@ export function Fab() {
                   <div className="flex-1 min-h-0 overflow-hidden">
                     {tab === 'chat' ? (
                       <div className="h-full px-3 pb-3">
-                        <ChatPanel onOpenSettings={() => setTab('settings')} />
+                        <ChatPanel />
                       </div>
                     ) : (
                       <div className="h-full overflow-y-auto">

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Trash2, Sparkles, Bot, User, KeyRound, Loader2 } from 'lucide-react';
+import { Send, Trash2, Sparkles, Bot, User, Loader2 } from 'lucide-react';
 import type { ChatMessage } from '../../types';
 import { usePreferences } from '../../contexts/PreferencesContext';
 import { loadChatHistory, saveChatHistory, clearChatHistory } from '../../lib/chatStorage';
@@ -13,20 +13,13 @@ const SUGGESTIONS = [
   'How can I contact him?',
 ];
 
-interface ChatPanelProps {
-  /** Switch the parent FAB panel to the Settings tab. */
-  onOpenSettings?: () => void;
-}
-
-export function ChatPanel({ onOpenSettings }: ChatPanelProps) {
+export function ChatPanel() {
   const { preferences } = usePreferences();
   const [messages, setMessages] = useState<ChatMessage[]>(() => loadChatHistory());
   const [input, setInput] = useState('');
   const [isSending, setIsSending] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
-
-  const hasApiKey = preferences.ai.apiKey.trim().length > 0;
 
   // Persist history whenever it changes.
   useEffect(() => {
@@ -212,15 +205,6 @@ export function ChatPanel({ onOpenSettings }: ChatPanelProps) {
                 }`}
               >
                 {m.content}
-                {m.error && !hasApiKey && (
-                  <button
-                    onClick={onOpenSettings}
-                    className="mt-2 flex items-center gap-1.5 text-[11px] font-hud uppercase tracking-wider text-terracotta hover:underline cursor-none"
-                    data-cursor="magnetic"
-                  >
-                    <KeyRound className="w-3 h-3" /> Open Settings
-                  </button>
-                )}
               </div>
             </motion.div>
           ))}
