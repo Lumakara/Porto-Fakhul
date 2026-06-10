@@ -1,4 +1,5 @@
 import type { ChatMessage, AISettings } from '../types';
+import { AI_API_KEY } from '../config/ai';
 
 const OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
 const PROXY_ENDPOINT = '/api/chat';
@@ -31,7 +32,7 @@ function buildMessages(history: ChatMessage[], settings: AISettings) {
 }
 
 function friendlyError(status: number, apiMessage?: string): string {
-  if (status === 401) return 'Invalid API key. Please check your key in Settings.';
+  if (status === 401) return 'Invalid API key. Please check the key in src/config/ai.ts.';
   if (status === 429) return 'Rate limit or quota exceeded. Try again shortly.';
   return apiMessage || `Request failed (HTTP ${status}).`;
 }
@@ -105,7 +106,10 @@ export async function sendChatMessage(
 ): Promise<ChatRequestResult> {
   const { signal, onToken } = options;
   const messages = buildMessages(history, settings);
-  const hasByoKey = settings.apiKey.trim().length > 0;
+  // The key comes from src/config/ai.ts (env var or manual constant). A key
+  // typed into settings still takes precedence if one is ever set.
+  const effectiveKey = settings.apiKey.trim() || AI_API_KEY;
+  const hasByoKey = effectiveKey.length > 0;
 
   // ── 1. Primary: serverless proxy ──────────────────────────────────────────
   try {
@@ -117,7 +121,7 @@ export async function sendChatMessage(
         model: settings.model || 'gpt-4o-mini',
         temperature: settings.temperature ?? 0.7,
         // Pass BYO key so the proxy can use it if it has no server key.
-        apiKey: settings.apiKey.trim() || undefined,
+        apiKey: effectiveKey || undefined,
       }),
       signal,
     });
@@ -152,7 +156,7 @@ export async function sendChatMessage(
       ok: false,
       content: '',
       error:
-        'The AI assistant needs an API key. Add your OpenAI key in Settings, or deploy the serverless proxy.',
+        'The AI assistant has no API key configured. Add it in src/config/ai.ts (VITE_AI_API_KEY or MANUAL_API_KEY), or deploy the serverless proxy.',
     };
   }
 
@@ -161,7 +165,7 @@ export async function sendChatMessage(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${settings.apiKey.trim()}`,
+        Authorization: `Bearer ${effectiveKey}`,
       },
       body: JSON.stringify({
         model: settings.model || 'gpt-4o-mini',

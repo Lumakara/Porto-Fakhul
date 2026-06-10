@@ -94,21 +94,24 @@ export const Navbar = () => {
     { value: 'system', icon: Monitor },
   ];
 
+  // Dropdown that unfolds downward from just beneath the header capsule.
   const panelVariants = {
-    hidden: { y: '110%', opacity: 0.5 },
+    hidden: { y: -16, opacity: 0, scale: 0.96 },
     visible: {
       y: 0,
       opacity: 1,
+      scale: 1,
       transition: reducedMotion
         ? { duration: 0 }
-        : { type: 'spring' as const, stiffness: 320, damping: 32 },
+        : { type: 'spring' as const, stiffness: 360, damping: 30 },
     },
     exit: {
-      y: '110%',
-      opacity: 0.5,
+      y: -12,
+      opacity: 0,
+      scale: 0.97,
       transition: reducedMotion
         ? { duration: 0 }
-        : { duration: 0.25, ease: [0.16, 1, 0.3, 1] as const },
+        : { duration: 0.18, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -227,19 +230,19 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
+            {/* Backdrop - light scrim, keeps page visible behind the dropdown */}
             <motion.div
               key="backdrop"
               variants={backdropVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed inset-0 bg-charcoal/20 backdrop-blur-sm z-[60] lg:hidden"
+              className="fixed inset-0 bg-charcoal/10 backdrop-blur-[2px] z-[60] lg:hidden"
               onClick={closeMenu}
               aria-hidden="true"
             />
 
-            {/* Panel - compact bottom sheet */}
+            {/* Panel - dropdown that unfolds from beneath the header capsule */}
             <motion.div
               key="panel"
               id="mobile-menu"
@@ -250,59 +253,72 @@ export const Navbar = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed left-3 right-3 bottom-3 z-[70] lg:hidden rounded-3xl bg-sand/98 backdrop-blur-xl shadow-2xl border border-charcoal/10 overflow-hidden"
+              style={{
+                transformOrigin: 'top right',
+                top: 'calc(env(safe-area-inset-top, 0px) + 5.25rem)',
+              }}
+              className="fixed left-4 right-4 sm:left-auto z-[70] lg:hidden w-auto sm:w-[340px] max-w-[calc(100vw-2rem)] max-h-[calc(100dvh-7rem)] rounded-2xl bg-sand/98 backdrop-blur-xl shadow-2xl border border-charcoal/10 overflow-hidden flex flex-col"
             >
-              <FocusTrap active={isMobileMenuOpen} onEscape={closeMenu}>
-                <div className="relative flex flex-col">
-                  {/* Grab handle */}
-                  <div className="flex justify-center pt-3 pb-1">
-                    <span className="w-10 h-1 rounded-full bg-charcoal/15" />
-                  </div>
+              {/* Up-pointing caret aimed at the hamburger toggle */}
+              <span
+                aria-hidden="true"
+                className="absolute -top-1.5 right-6 w-3 h-3 rotate-45 bg-sand/98 border-l border-t border-charcoal/10"
+              />
 
+              <FocusTrap active={isMobileMenuOpen} onEscape={closeMenu}>
+                <div className="relative flex flex-col min-h-0 overflow-y-auto">
                   {/* Header */}
-                  <div className="flex items-center justify-between px-5 pt-1 pb-3">
+                  <div className="flex items-center justify-between px-4 pt-4 pb-3">
                     <span className="font-hud text-[10px] font-medium text-charcoal-light tracking-widest uppercase">
                       {t('accessibility.mainNavigation')}
                     </span>
                     <button
                       onClick={closeMenu}
-                      className="w-8 h-8 flex items-center justify-center rounded-full border border-charcoal/10 text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta hover:bg-stone/30 transition-colors duration-200"
+                      className="w-7 h-7 flex items-center justify-center rounded-full border border-charcoal/10 text-charcoal cursor-none focus-visible:ring-2 focus-visible:ring-terracotta hover:bg-stone/30 transition-colors duration-200"
                       aria-label={t('menu.close')}
                       data-cursor="magnetic"
                       data-sound="click"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
-                  {/* Navigation Links - 2-col grid of large touch tiles */}
-                  <nav className="px-4 pb-4" aria-label={t('accessibility.mainNavigation')}>
-                    <ul className="grid grid-cols-2 gap-2.5">
+                  {/* Navigation Links - stacked rows with active indicator */}
+                  <nav className="px-3 pb-3" aria-label={t('accessibility.mainNavigation')}>
+                    <ul className="flex flex-col gap-1">
                       {navItems.map((item, i) => {
                         const isActive = activeSection === item.id;
                         return (
                           <motion.li
                             key={item.id}
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: 12 }}
+                            animate={{ opacity: 1, x: 0 }}
                             transition={
                               reducedMotion
                                 ? { duration: 0 }
-                                : { delay: i * 0.04, duration: 0.3, ease: [0.16, 1, 0.3, 1] }
+                                : { delay: 0.04 + i * 0.04, duration: 0.3, ease: [0.16, 1, 0.3, 1] }
                             }
                           >
                             <button
                               onClick={() => handleNavClick(item.id)}
                               data-sound="click"
-                              className={`w-full flex items-center justify-center px-4 py-4 rounded-2xl text-center transition-all duration-200 min-h-[56px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta ${
+                              className={`group w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-left transition-all duration-200 min-h-[48px] cursor-none focus-visible:ring-2 focus-visible:ring-terracotta ${
                                 isActive
-                                  ? 'bg-terracotta/10 border border-terracotta/30 text-terracotta font-medium'
-                                  : 'text-charcoal-light hover:text-charcoal bg-stone/20 border border-transparent hover:bg-stone/40'
+                                  ? 'bg-terracotta/10 border border-terracotta/25 text-terracotta font-medium'
+                                  : 'text-charcoal-light hover:text-charcoal border border-transparent hover:bg-stone/30'
                               }`}
                               data-cursor="magnetic"
                               aria-current={isActive ? 'true' : undefined}
                             >
-                              <span className="font-hud text-sm tracking-wide">{t(item.labelKey)}</span>
+                              <span
+                                className={`flex-shrink-0 w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                                  isActive ? 'bg-terracotta scale-100' : 'bg-charcoal/20 scale-75 group-hover:bg-charcoal/40'
+                                }`}
+                              />
+                              <span className="font-hud text-sm tracking-wide flex-1">{t(item.labelKey)}</span>
+                              <span className="font-mono text-[10px] text-charcoal-light/40 tabular-nums">
+                                0{i + 1}
+                              </span>
                             </button>
                           </motion.li>
                         );
@@ -311,7 +327,7 @@ export const Navbar = () => {
                   </nav>
 
                   {/* Footer: Theme + Language in one compact row */}
-                  <div className="px-4 pb-5 flex items-center justify-between gap-3 border-t border-stone/30 pt-4">
+                  <div className="px-4 pb-4 flex items-center justify-between gap-3 border-t border-stone/30 pt-3">
                     <div className="flex items-center gap-1">
                       {themeOptions.map((option) => {
                         const Icon = option.icon;
@@ -320,7 +336,7 @@ export const Navbar = () => {
                             key={option.value}
                             onClick={() => setTheme(option.value)}
                             data-sound="click"
-                            className={`flex items-center justify-center w-9 h-9 rounded-full cursor-none focus-visible:ring-2 focus-visible:ring-terracotta transition-colors duration-200 ${
+                            className={`flex items-center justify-center w-8 h-8 rounded-full cursor-none focus-visible:ring-2 focus-visible:ring-terracotta transition-colors duration-200 ${
                               preferences.theme === option.value
                                 ? 'bg-terracotta/10 text-terracotta border border-terracotta/20'
                                 : 'text-charcoal-light hover:text-charcoal hover:bg-stone/30'
@@ -340,7 +356,7 @@ export const Navbar = () => {
                           key={pill.value}
                           onClick={() => setLanguage(pill.value)}
                           data-sound="click"
-                          className={`px-3 py-2 rounded-full font-hud text-xs tracking-wide cursor-none focus-visible:ring-2 focus-visible:ring-terracotta transition-colors duration-200 ${
+                          className={`px-2.5 py-1.5 rounded-full font-hud text-xs tracking-wide cursor-none focus-visible:ring-2 focus-visible:ring-terracotta transition-colors duration-200 ${
                             language === pill.value
                               ? 'bg-terracotta text-white font-medium'
                               : 'bg-stone/30 text-charcoal-light hover:text-charcoal hover:bg-stone/50'
