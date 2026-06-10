@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
 import { AudioFeedbackManager } from './components/AudioFeedbackManager';
+import { BackgroundMusic } from './components/BackgroundMusic';
 import { Navbar } from './components/Navbar';
 import { Fab } from './components/Fab';
 import { Marquee } from './components/Marquee';
@@ -106,6 +107,7 @@ function AppContent() {
     <>
       <ThemeApplicator />
       <AudioFeedbackManager />
+      <BackgroundMusic />
       {/* Cinematic Boot preloader */}
       <Preloader onComplete={() => setIsLoading(false)} />
 

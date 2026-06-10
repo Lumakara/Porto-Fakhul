@@ -6,7 +6,30 @@ import { usePreferences } from '../../contexts/PreferencesContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useReducedMotion } from '../../lib/motion';
 import type { Theme, InterfaceMode, PerformanceMode, Language } from '../../types';
+import { musicTracks } from '../../data/music';
 import { RippleEffect } from './RippleEffect';
+
+/** Animated 4-bar equalizer; bars dance only while the track is playing. */
+function Equalizer({ playing, barClass, reducedMotion }: { playing: boolean; barClass: string; reducedMotion: boolean }) {
+  const bars = [0, 1, 2, 3];
+  return (
+    <span className="flex items-end justify-center gap-[3px] h-4 w-6" aria-hidden="true">
+      {bars.map((i) => (
+        <motion.span
+          key={i}
+          className={`w-1 rounded-full ${playing ? barClass : 'bg-charcoal/20'}`}
+          style={{ height: '35%' }}
+          animate={playing && !reducedMotion ? { height: ['35%', '100%', '50%', '85%', '35%'] } : { height: '35%' }}
+          transition={
+            playing && !reducedMotion
+              ? { duration: 0.8 + i * 0.18, repeat: Infinity, ease: 'easeInOut' }
+              : { duration: 0.3 }
+          }
+        />
+      ))}
+    </span>
+  );
+}
 
 function ToggleSwitch({ enabled, onToggle, label }: { enabled: boolean; onToggle: (val: boolean) => void; label: string }) {
   const reducedMotion = useReducedMotion();
@@ -99,8 +122,6 @@ export function SettingsPanel() {
     { value: 'zh', flag: '\uD83C\uDDE8\uD83C\uDDF3', name: '\u4E2D\u6587\u7B80\u4F53' },
   ];
 
-  const playlistOptions = ['ambient', 'lofi', 'electronic', 'none'];
-
   return (
     <div className="flex flex-col" role="region" aria-label={t('accessibility.settingsPanel')}>
       {/* Theme */}
@@ -164,20 +185,54 @@ export function SettingsPanel() {
             />
           </div>
 
-          {/* Playlist */}
+          {/* Playlist — animated track cards */}
           <div className="flex flex-col space-y-2">
             <span className="font-hud text-xs text-charcoal-light">{t('settings.music.playlist')}</span>
-            <select
-              value={preferences.music.playlist}
-              onChange={(e) => setMusic({ ...preferences.music, playlist: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg bg-stone/30 border border-stone text-charcoal font-hud text-xs cursor-none min-h-[44px] focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2"
-            >
-              {playlistOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {t(`settings.music.playlistOptions.${opt}`)}
-                </option>
-              ))}
-            </select>
+            <div className="grid grid-cols-1 gap-2">
+              {musicTracks.map((track) => {
+                const Icon = track.icon;
+                const active = preferences.music.playlist === track.id;
+                const playing = active && preferences.music.enabled && track.id !== 'none';
+                const statusKey = playing
+                  ? 'playing'
+                  : active
+                    ? (track.id === 'none' ? 'silence' : 'selected')
+                    : 'tap';
+                return (
+                  <motion.button
+                    key={track.id}
+                    onClick={() => setMusic({ ...preferences.music, playlist: track.id })}
+                    data-sound="click"
+                    aria-pressed={active}
+                    whileTap={reducedMotion ? undefined : { scale: 0.98 }}
+                    className="relative flex items-center gap-3 w-full px-3 py-2.5 min-h-[52px] rounded-xl cursor-none text-left focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 transition-colors duration-200 hover:bg-stone/30"
+                    data-cursor="magnetic"
+                  >
+                    {active && (
+                      <motion.div
+                        layoutId="playlist-active"
+                        className="absolute inset-0 bg-terracotta/10 border border-terracotta/25 rounded-xl"
+                        transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span className={`relative z-10 flex items-center justify-center w-9 h-9 rounded-lg bg-charcoal/5 ${track.iconClass}`}>
+                      <Icon className="w-4 h-4" />
+                    </span>
+                    <span className="relative z-10 flex flex-col min-w-0">
+                      <span className={`font-hud text-xs leading-tight ${active ? 'text-charcoal font-medium' : 'text-charcoal-light'}`}>
+                        {t(track.labelKey)}
+                      </span>
+                      <span className="font-hud text-[10px] text-charcoal-light/60 leading-tight mt-0.5">
+                        {t(`settings.music.status.${statusKey}`)}
+                      </span>
+                    </span>
+                    <span className="relative z-10 ml-auto">
+                      <Equalizer playing={playing} barClass={track.barClass} reducedMotion={reducedMotion} />
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </CollapsibleSection>
