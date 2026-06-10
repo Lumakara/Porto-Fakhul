@@ -1,35 +1,11 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Magnetic } from '../components/Magnetic';
 import { premiumEase } from '../components/Section';
 import { LazyWebGL } from '../components/LazyWebGL';
 import { useLanguage } from '../contexts/LanguageContext';
 
-// Animated counter hook
-const useCounter = (target: number, duration: number = 2000, delay: number = 0) => {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const startTime = Date.now();
-      const animate = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // Ease out cubic
-        const eased = 1 - Math.pow(1 - progress, 3);
-        setCount(Math.floor(eased * target));
-        if (progress < 1) requestAnimationFrame(animate);
-      };
-      requestAnimationFrame(animate);
-    }, delay);
-    return () => clearTimeout(timeout);
-  }, [target, duration, delay]);
-  return count;
-};
-
 export const Hero = () => {
-  const handleScrollDown = () => {
-    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const { t } = useLanguage();
 
   return (
     <section
@@ -52,7 +28,7 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 0.8, ease: premiumEase }}
           className="text-[10px] md:text-xs font-hud text-terracotta tracking-[0.4em] uppercase mb-6 block"
         >
-{t('sections.hero.kicker')}
+          {t('sections.hero.kicker')}
         </motion.span>
 
         {/* Giant Headline */}
@@ -90,7 +66,7 @@ export const Hero = () => {
           transition={{ duration: 1.2, delay: 1.5, ease: premiumEase }}
           className="text-sm md:text-base lg:text-lg text-charcoal-light max-w-2xl font-sans leading-relaxed mt-8 md:mt-10"
         >
-{t('sections.hero.description')}
+          {t('sections.hero.description')}
         </motion.p>
 
         {/* CTAs */}

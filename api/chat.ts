@@ -46,6 +46,46 @@ export default async function handler(req: Request): Promise<Response> {
     });
   }
 
+  // ── Abuse / cost guards ─────────────────────────────────────────────────
+  // This endpoint is public, so cap the request size to limit how much a
+  // single caller can spend against the server-side OpenAI key.
+  const MAX_MESSAGES = 50;
+  const MAX_TOTAL_CHARS = 24_000;
+  const VALID_ROLES = new Set(['system', 'user', 'assistant']);
+
+  if (messages.length > MAX_MESSAGES) {
+    return new Response(
+      JSON.stringify({ error: `Too many messages (max ${MAX_MESSAGES}).` }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  let totalChars = 0;
+  for (const m of messages) {
+    if (
+      m === null ||
+      typeof m !== 'object' ||
+      !VALID_ROLES.has((m as { role?: string }).role ?? '') ||
+      typeof (m as { content?: unknown }).content !== 'string'
+    ) {
+      return new Response(JSON.stringify({ error: 'Invalid message format' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    totalChars += (m as { content: string }).content.length;
+  }
+
+  if (totalChars > MAX_TOTAL_CHARS) {
+    return new Response(
+      JSON.stringify({ error: `Conversation too long (max ${MAX_TOTAL_CHARS} characters).` }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
+  // Clamp temperature to a sane range regardless of client input.
+  const safeTemperature = Math.min(Math.max(Number(temperature) || 0.7, 0), 2);
+
   // Prefer the server-side key; fall back to a visitor-provided key.
   const serverKey =
     (typeof process !== 'undefined' && process.env && process.env.OPENAI_API_KEY) || '';
@@ -66,7 +106,7 @@ export default async function handler(req: Request): Promise<Response> {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${key}`,
       },
-      body: JSON.stringify({ model, messages, temperature, max_tokens: 600, stream: true }),
+      body: JSON.stringify({ model, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
     });
   } catch {
     return new Response(JSON.stringify({ error: 'Failed to reach OpenAI' }), {
