@@ -1,12 +1,13 @@
 import { useState, useCallback, useRef } from 'react';
 import type { FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Terminal, Compass, Mail, ArrowUpRight, AlertCircle, RotateCcw } from 'lucide-react';
+import { Send, Terminal, Compass, Mail, ArrowUpRight, AlertCircle, RotateCcw, Copy, Check, MessageSquare, Sparkles, Clock } from 'lucide-react';
 import { Section, premiumEase, Parallax } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const MAX_MESSAGE_LENGTH = 500;
+const CONTACT_EMAIL = 'fakhulrohman2@gmail.com';
 
 interface ValidationErrors {
   name?: string;
@@ -25,8 +26,19 @@ export const Contact = () => {
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [sendingProgress, setSendingProgress] = useState(0);
+  const [copied, setCopied] = useState(false);
   const isSubmitting = useRef(false);
   const { t } = useLanguage();
+
+  const handleCopyEmail = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // Clipboard unavailable - silently ignore
+    }
+  }, []);
 
   const validateField = useCallback((name: string, value: string): string | undefined => {
     if (!value.trim()) {
@@ -177,8 +189,9 @@ export const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: premiumEase }}
-            className="text-[10px] font-hud text-terracotta tracking-[0.3em] uppercase block mb-4"
+            className="text-[10px] font-hud text-terracotta tracking-[0.3em] uppercase flex items-center gap-2 mb-4"
           >
+            <MessageSquare className="w-3.5 h-3.5" />
             {t('sections.contact.sectionLabel')}
           </motion.span>
           <motion.h2
@@ -205,6 +218,30 @@ export const Contact = () => {
             transition={{ duration: 1.2, delay: 0.2, ease: premiumEase }}
             className="lg:col-span-5 flex flex-col space-y-8 text-left"
           >
+            {/* Availability card with micro-interaction */}
+            <motion.div
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.3 }}
+              className="relative overflow-hidden rounded-2xl bg-surface border border-charcoal/5 p-5 shadow-sm"
+            >
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-sage/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75" />
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-sage" />
+                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-display font-medium text-charcoal">Available for new projects</span>
+                    <span className="text-[11px] font-hud text-charcoal-light flex items-center gap-1.5 mt-0.5">
+                      <Clock className="w-3 h-3" /> Typically replies within 24 hours
+                    </span>
+                  </div>
+                </div>
+                <Sparkles className="w-5 h-5 text-terracotta/60" />
+              </div>
+            </motion.div>
+
             <p className="text-base text-charcoal-light font-sans leading-relaxed">
               {t('sections.contact.description')}
             </p>
@@ -221,20 +258,39 @@ export const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4 group">
                 <div className="p-2.5 rounded-xl bg-surface border border-charcoal/5 shadow-sm">
                   <Mail className="w-4 h-4 text-sage" />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col flex-1 min-w-0">
                   <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">{t('sections.contact.emailLabel')}</span>
-                  <a 
-                    href="mailto:fakhulrohman2@gmail.com" 
-                    className="text-sm text-charcoal font-medium font-sans hover:text-terracotta transition-colors duration-300 cursor-none"
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="text-sm text-charcoal font-medium font-sans hover:text-terracotta transition-colors duration-300 cursor-none truncate"
                     data-cursor="grow"
                   >
-                    fakhulrohman2@gmail.com
+                    {CONTACT_EMAIL}
                   </a>
                 </div>
+                <button
+                  onClick={handleCopyEmail}
+                  data-sound="click"
+                  aria-label={copied ? 'Email copied' : 'Copy email address'}
+                  className="flex-shrink-0 w-9 h-9 rounded-xl bg-surface border border-charcoal/5 flex items-center justify-center text-charcoal-light hover:text-terracotta hover:border-terracotta/30 transition-colors cursor-none"
+                  data-cursor="magnetic"
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    {copied ? (
+                      <motion.span key="check" initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
+                        <Check className="w-4 h-4 text-sage" />
+                      </motion.span>
+                    ) : (
+                      <motion.span key="copy" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
+                        <Copy className="w-4 h-4" />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
               </div>
             </div>
 

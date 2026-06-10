@@ -12,6 +12,19 @@ export interface VisualEffects {
   blur: boolean;
   motionReduction: boolean;
   cursorEffects: boolean;
+  tilt: boolean;
+}
+
+export interface AudioSettings {
+  uiSounds: boolean;
+  volume: number;
+}
+
+export interface AISettings {
+  apiKey: string;
+  model: string;
+  personality: string;
+  temperature: number;
 }
 
 export interface MusicSettings {
@@ -27,4 +40,15 @@ export interface UserPreferences {
   performanceMode: PerformanceMode;
   visualEffects: VisualEffects;
   music: MusicSettings;
+  audio: AudioSettings;
+  ai: AISettings;
+}
+
+
+export interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  timestamp: number;
+  error?: boolean;
 }

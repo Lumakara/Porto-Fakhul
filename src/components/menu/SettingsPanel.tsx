@@ -69,7 +69,7 @@ function CollapsibleSection({ title, children, defaultOpen = false }: { title: s
 
 export function SettingsPanel() {
   const { t, language, setLanguage } = useLanguage();
-  const { preferences, setTheme, setMusic, setVisualEffects, setInterfaceMode, setPerformanceMode } = usePreferences();
+  const { preferences, setTheme, setMusic, setVisualEffects, setInterfaceMode, setPerformanceMode, setAudio, setAI, resetPreferences } = usePreferences();
   const reducedMotion = useReducedMotion();
 
   const themeOptions: { value: Theme; labelKey: string }[] = [
@@ -187,6 +187,7 @@ export function SettingsPanel() {
             { key: 'particles', labelKey: 'settings.visualEffects.particles' },
             { key: 'animations', labelKey: 'settings.visualEffects.animations' },
             { key: 'blur', labelKey: 'settings.visualEffects.blur' },
+            { key: 'tilt', labelKey: 'settings.visualEffects.tilt' },
             { key: 'motionReduction', labelKey: 'settings.visualEffects.motionReduction' },
             { key: 'cursorEffects', labelKey: 'settings.visualEffects.cursorEffects' },
           ] as const).map((effect) => (
@@ -279,6 +280,127 @@ export function SettingsPanel() {
           ))}
         </div>
       </CollapsibleSection>
+
+      {/* Audio Feedback */}
+      <CollapsibleSection title={t('settings.audio.title')}>
+        <div className="flex flex-col space-y-4">
+          <div className="flex items-center justify-between min-h-[44px]">
+            <span className="font-hud text-xs text-charcoal-light">{t('settings.audio.uiSounds')}</span>
+            <ToggleSwitch
+              enabled={preferences.audio.uiSounds}
+              onToggle={(val) => setAudio({ ...preferences.audio, uiSounds: val })}
+              label={t('settings.audio.uiSounds')}
+            />
+          </div>
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-hud text-xs text-charcoal-light">{t('settings.audio.volume')}</span>
+              <span className="font-hud text-xs text-charcoal-light">{Math.round(preferences.audio.volume * 100)}%</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={preferences.audio.volume}
+              onChange={(e) => setAudio({ ...preferences.audio, volume: parseFloat(e.target.value) })}
+              aria-label={t('settings.audio.volume')}
+              className="w-full h-2 rounded-full appearance-none cursor-none bg-stone accent-terracotta focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2"
+              style={{
+                background: `linear-gradient(to right, var(--color-terracotta) 0%, var(--color-terracotta) ${preferences.audio.volume * 100}%, var(--color-stone) ${preferences.audio.volume * 100}%, var(--color-stone) 100%)`,
+              }}
+            />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* AI Assistant */}
+      <CollapsibleSection title={t('settings.ai.title')}>
+        <div className="flex flex-col space-y-4">
+          <p className="font-sans text-[11px] text-charcoal-light leading-relaxed">
+            {t('settings.ai.description')}
+          </p>
+
+          <div className="flex flex-col space-y-1.5">
+            <label className="font-hud text-xs text-charcoal-light" htmlFor="ai-api-key">
+              {t('settings.ai.apiKey')}
+            </label>
+            <input
+              id="ai-api-key"
+              type="password"
+              autoComplete="off"
+              spellCheck={false}
+              value={preferences.ai.apiKey}
+              onChange={(e) => setAI({ ...preferences.ai, apiKey: e.target.value })}
+              placeholder="sk-..."
+              className="w-full px-3 py-2 rounded-lg bg-stone/30 border border-stone text-charcoal font-mono text-xs cursor-none min-h-[44px] outline-none focus:border-terracotta/50 focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2"
+            />
+            <span className="font-sans text-[10px] text-charcoal-light/70">{t('settings.ai.apiKeyHint')}</span>
+          </div>
+
+          <div className="flex flex-col space-y-1.5">
+            <label className="font-hud text-xs text-charcoal-light" htmlFor="ai-model">
+              {t('settings.ai.model')}
+            </label>
+            <select
+              id="ai-model"
+              value={preferences.ai.model}
+              onChange={(e) => setAI({ ...preferences.ai, model: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg bg-stone/30 border border-stone text-charcoal font-hud text-xs cursor-none min-h-[44px] focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2"
+            >
+              {['gpt-4o-mini', 'gpt-4o', 'gpt-4-turbo', 'gpt-3.5-turbo'].map((m) => (
+                <option key={m} value={m}>{m}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col space-y-1.5">
+            <label className="font-hud text-xs text-charcoal-light" htmlFor="ai-personality">
+              {t('settings.ai.personality')}
+            </label>
+            <textarea
+              id="ai-personality"
+              rows={4}
+              value={preferences.ai.personality}
+              onChange={(e) => setAI({ ...preferences.ai, personality: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg bg-stone/30 border border-stone text-charcoal font-sans text-xs cursor-none resize-none outline-none focus:border-terracotta/50 focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 leading-relaxed"
+            />
+            <span className="font-sans text-[10px] text-charcoal-light/70">{t('settings.ai.personalityHint')}</span>
+          </div>
+
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-hud text-xs text-charcoal-light">{t('settings.ai.temperature')}</span>
+              <span className="font-hud text-xs text-charcoal-light">{preferences.ai.temperature.toFixed(1)}</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              value={preferences.ai.temperature}
+              onChange={(e) => setAI({ ...preferences.ai, temperature: parseFloat(e.target.value) })}
+              aria-label={t('settings.ai.temperature')}
+              className="w-full h-2 rounded-full appearance-none cursor-none bg-stone accent-terracotta focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2"
+              style={{
+                background: `linear-gradient(to right, var(--color-terracotta) 0%, var(--color-terracotta) ${preferences.ai.temperature * 100}%, var(--color-stone) ${preferences.ai.temperature * 100}%, var(--color-stone) 100%)`,
+              }}
+            />
+          </div>
+        </div>
+      </CollapsibleSection>
+
+      {/* Reset */}
+      <div className="px-4 py-4">
+        <button
+          onClick={resetPreferences}
+          data-sound="click"
+          className="w-full py-2.5 rounded-lg border border-charcoal/10 text-charcoal-light font-hud text-xs uppercase tracking-wider hover:text-terracotta hover:border-terracotta/30 transition-colors cursor-none"
+          data-cursor="magnetic"
+        >
+          {t('settings.reset')}
+        </button>
+      </div>
     </div>
   );
 }
