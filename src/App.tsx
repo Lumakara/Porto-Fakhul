@@ -1,5 +1,4 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import Lenis from 'lenis';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
@@ -16,6 +15,8 @@ import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { PreferencesProvider, usePreferences } from './contexts/PreferencesContext';
 import { ToastProvider } from './contexts/ToastContext';
 import { projectsData } from './data/projects';
+import { getDeviceCapability } from './lib/deviceCapability';
+import { useReducedMotion } from './lib/motion';
 
 import { NotFound } from './sections/NotFound';
 
@@ -54,6 +55,17 @@ function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const { t } = useLanguage();
+  const { preferences } = usePreferences();
+  const reducedMotion = useReducedMotion();
+
+  // Smooth scroll (Lenis) hijacks native scrolling. On low/medium-tier devices
+  // or when the user prefers reduced motion / a lighter perf mode this causes
+  // jank and a "different" scroll feel — so we fall back to native scrolling
+  // (which is buttery and GPU-accelerated by the browser) in those cases.
+  const enableSmoothScroll =
+    getDeviceCapability() === 'high' &&
+    !reducedMotion &&
+    preferences.performanceMode === 'full';
 
   const selectedProject = selectedProjectId
     ? projectsData.find((p) => p.id === selectedProjectId) || null
@@ -76,28 +88,37 @@ function AppContent() {
   }, [selectedProjectId]);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading || !enableSmoothScroll) return;
 
-    // Initialize Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      wheelMultiplier: 1.1,
-      touchMultiplier: 1.5,
-      infinite: false,
+    // Lenis is loaded lazily so low/medium-tier devices never download or
+    // parse it — they use native scrolling instead.
+    let lenis: { raf: (time: number) => void; destroy: () => void } | undefined;
+    let rafId = 0;
+    let cancelled = false;
+
+    import('lenis').then(({ default: Lenis }) => {
+      if (cancelled) return;
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        wheelMultiplier: 1.1,
+        touchMultiplier: 1.5,
+        infinite: false,
+      });
+
+      const raf = (time: number) => {
+        lenis?.raf(time);
+        rafId = requestAnimationFrame(raf);
+      };
+      rafId = requestAnimationFrame(raf);
     });
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    requestAnimationFrame(raf);
-
     return () => {
-      lenis.destroy();
+      cancelled = true;
+      cancelAnimationFrame(rafId);
+      lenis?.destroy();
     };
-  }, [isLoading]);
+  }, [isLoading, enableSmoothScroll]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });

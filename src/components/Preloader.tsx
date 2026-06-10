@@ -2,19 +2,45 @@ import { useEffect, useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useDeviceCapability } from '../lib/deviceCapability';
+import { useReducedMotion } from '../lib/motion';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
+const PRELOADED_KEY = 'fr-preloaded';
+
 export const Preloader = ({ onComplete }: PreloaderProps) => {
   const { t, language } = useLanguage();
   const capability = useDeviceCapability();
+  const reducedMotion = useReducedMotion();
   const [progress, setProgress] = useState(0);
   const [statusIdx, setStatusIdx] = useState(0);
   const [isDone, setIsDone] = useState(false);
 
   const isLow = capability === 'low';
+
+  // Skip the cinematic boot sequence entirely when the user prefers reduced
+  // motion, or when they've already seen it this session. This makes repeat
+  // navigation feel instant instead of waiting ~2-3s every time.
+  const shouldSkip = useMemo(() => {
+    if (reducedMotion) return true;
+    try {
+      return sessionStorage.getItem(PRELOADED_KEY) === '1';
+    } catch {
+      return false;
+    }
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    if (!shouldSkip) return;
+    try {
+      sessionStorage.setItem(PRELOADED_KEY, '1');
+    } catch {
+      // sessionStorage unavailable — ignore
+    }
+    onComplete();
+  }, [shouldSkip, onComplete]);
 
   const statusReadouts = useMemo(() => [
     t('preloader.status1'),
@@ -27,6 +53,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
   ], [language]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    if (shouldSkip) return;
     // Faster progression on low-end devices
     const intervalMs = isLow ? 60 : 120;
     const minIncrement = isLow ? 8 : 4;
@@ -48,6 +75,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
   }, [isLow]);
 
   useEffect(() => {
+    if (shouldSkip) return;
     // Sync status readouts with progress thresholds
     const index = Math.min(
       Math.floor((progress / 100) * statusReadouts.length),
@@ -56,6 +84,11 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
     setStatusIdx(index);
 
     if (progress === 100) {
+      try {
+        sessionStorage.setItem(PRELOADED_KEY, '1');
+      } catch {
+        // sessionStorage unavailable — ignore
+      }
       const doneDelay = isLow ? 300 : 700;
       const completeDelay = isLow ? 400 : 800;
       const timeout = setTimeout(() => {
@@ -64,7 +97,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
       }, doneDelay);
       return () => clearTimeout(timeout);
     }
-  }, [progress, onComplete, statusReadouts.length, isLow]);
+  }, [progress, onComplete, statusReadouts.length, isLow, shouldSkip]);
 
   // Framer motion variants for split screen slide
   const upperCurtainVariants = {
@@ -91,7 +124,7 @@ export const Preloader = ({ onComplete }: PreloaderProps) => {
 
   return (
     <AnimatePresence>
-      {!isDone && (
+      {!isDone && !shouldSkip && (
         <div className="fixed inset-0 z-[99999] overflow-hidden flex flex-col justify-between font-hud">
           {/* Upper Curtain */}
           <motion.div 
