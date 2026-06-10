@@ -27,7 +27,7 @@ export const musicTracks: MusicTrack[] = [
   {
     id: 'ambient',
     labelKey: 'settings.music.playlistOptions.ambient',
-    src: '/music/ambient.mp3',
+    src: '/public/music/ambient.mp3',
     icon: Waves,
     iconClass: 'text-terracotta',
     barClass: 'bg-terracotta',
@@ -35,7 +35,7 @@ export const musicTracks: MusicTrack[] = [
   {
     id: 'lofi',
     labelKey: 'settings.music.playlistOptions.lofi',
-    src: '/music/lofi.mp3',
+    src: '/public/music/lofi.mp3',
     icon: Disc3,
     iconClass: 'text-sage',
     barClass: 'bg-sage',
@@ -43,7 +43,7 @@ export const musicTracks: MusicTrack[] = [
   {
     id: 'electronic',
     labelKey: 'settings.music.playlistOptions.electronic',
-    src: '/music/electronic.mp3',
+    src: '/public/music/electronic.mp3',
     icon: Radio,
     iconClass: 'text-gold',
     barClass: 'bg-gold',
