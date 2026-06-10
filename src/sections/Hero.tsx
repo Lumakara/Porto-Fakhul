@@ -27,18 +27,6 @@ const useCounter = (target: number, duration: number = 2000, delay: number = 0) 
 };
 
 export const Hero = () => {
-  const { t } = useLanguage();
-  const years = useCounter(2, 1800, 2200);
-  const organization = useCounter(15, 2000, 2400);
-  const projects = useCounter(7, 2300, 2600);
-  const counters = [years, organization, projects];
-
-  const stats = [
-    { suffix: '+', label: t('sections.hero.yearsExp') },
-    { suffix: '+', label: t('sections.hero.organizations') },
-    { suffix: '+', label: t('sections.hero.projects') },
-  ];
-
   const handleScrollDown = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -132,48 +120,6 @@ export const Hero = () => {
           </button>
         </motion.div>
       </div>
-
-      {/* Stats strip — bottom of viewport */}
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.4, delay: 2.1, ease: premiumEase }}
-        className="absolute bottom-0 left-0 right-0 z-10 border-t border-charcoal/5"
-      >
-        <div className="max-w-6xl mx-auto w-full grid md:grid-cols-3 divide-x divide-charcoal/5">
-          {stats.map((stat, idx) => (
-            <div
-              key={stat.label}
-              className="flex flex-col items-center justify-center py-6 md:py-8 px-4"
-            >
-              <span className="text-2xl md:text-3xl lg:text-4xl font-display font-semibold text-charcoal tabular-nums">
-                {counters[idx]}{stat.suffix}
-              </span>
-              <span className="text-[9px] md:text-[10px] font-hud text-charcoal-light tracking-widest uppercase mt-1.5">
-                {stat.label}
-              </span>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3.0, duration: 0.8 }}
-        className="absolute bottom-22 md:bottom-27 z-10 flex flex-col items-center space-y-2 cursor-none select-none"
-        onClick={handleScrollDown}
-        data-cursor="magnetic"
-      >
-        <div className="w-5 h-8 border border-charcoal/20 rounded-full flex justify-center p-1">
-          <motion.div 
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-0.5 h-1.5 bg-terracotta/60 rounded-full"
-          />
-        </div>
-      </motion.div>
     </section>
   );
 };

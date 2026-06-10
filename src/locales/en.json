@@ -131,13 +131,13 @@
       "tabs": {
         "story": "Story",
         "experience": "Experience",
-        "skills": "Soft & Hard Skills"
+        "skills": "Skills"
       },
       "story": {
         "title": "From Accounting to Technology",
         "p1": "My journey started from vocational school (SMK) majoring in Accounting, but during school I discovered a strong interest in the world of technology and web development. Curiosity about how websites and applications work pushed me to learn independently beyond the curriculum.",
         "p2": "Work experience at ION Network as a network and CCTV technician taught me about technology infrastructure and problem-solving. Meanwhile at A&W Restaurant, I learned about discipline, teamwork, and the importance of quality control in every job. Both experiences shaped my attention to detail and quality standards.",
-        "p3": "Now I focus on building meaningful web experiences, combining technical abilities with creative vision. Based in Depok, West Java, I continue to develop skills in React, TypeScript, and other modern frontend technologies."
+        "p3": "Now I focus on building meaningful web experiences, combining technical abilities with creative vision. Based in Depok, West Java, I continue to develop skills in React, TypeScript, and other modern frontend & backend technologies."
       },
       "experienceTimeline": {
         "entry1": {
@@ -290,12 +290,12 @@
     "copyright": "\u00a9 2025 \u2014 Designed with precision",
     "backToTop": "Back to top",
     "techStack": "React + Vite + Lenis",
-    "live": "Live"
+    "live": "Redy To Work"
   },
   "preloader": {
-    "logo": "SORA",
-    "logoSub": "Portfolio 2026",
-    "init": "INIT",
+    "logo": "Welcome To",
+    "logoSub": "My Portofolio",
+    "init": "Wait...",
     "status1": "HEY YOU...",
     "status2": "YES, YOU WHO'S WAITING...",
     "status3": "THANKS FOR STOPPING BY...",
@@ -310,7 +310,7 @@
   },
   "accessibility": {
     "skipToContent": "Skip to content",
-    "mainNavigation": "Main navigation",
+    "mainNavigation": "List of contents",
     "menuToggle": "Toggle navigation menu",
     "settingsPanel": "Settings panel",
     "languageSelector": "Language selector",

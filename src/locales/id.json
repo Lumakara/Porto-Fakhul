@@ -131,13 +131,13 @@
       "tabs": {
         "story": "Cerita",
         "experience": "Pengalaman",
-        "skills": "Soft & Hard Skills"
+        "skills": "Keahlian"
       },
       "story": {
         "title": "Dari Akuntansi ke Teknologi",
         "p1": "Perjalanan saya dimulai dari bangku SMK jurusan Akuntansi, namun selama masa sekolah saya menemukan ketertarikan yang kuat terhadap dunia teknologi dan pengembangan web. Rasa penasaran terhadap cara kerja website dan aplikasi mendorong saya untuk belajar secara mandiri di luar kurikulum.",
         "p2": "Pengalaman kerja di ION Network sebagai teknisi jaringan dan CCTV mengajarkan saya tentang infrastruktur teknologi dan problem-solving. Sementara di A&W Restaurant, saya belajar tentang disiplin, kerja tim, dan pentingnya quality control dalam setiap pekerjaan. Kedua pengalaman ini membentuk perhatian saya terhadap detail dan standar kualitas.",
-        "p3": "Sekarang saya fokus membangun web experience yang bermakna, menggabungkan kemampuan teknis dengan visi kreatif. Berbasis di Depok, Jawa Barat, saya terus mengembangkan skill di React, TypeScript, dan teknologi frontend modern lainnya."
+        "p3": "Sekarang saya fokus membangun web experience yang bermakna, menggabungkan kemampuan teknis dengan visi kreatif. Berbasis di Depok, Jawa Barat, saya terus mengembangkan skill di React, TypeScript, dan teknologi frontend & backend modern lainnya."
       },
       "experienceTimeline": {
         "entry1": {
@@ -287,15 +287,15 @@
     "letsCreate": "Mari ciptakan",
     "somethingExtraordinary": "sesuatu yang luar biasa.",
     "startProject": "MULAI PROYEK",
-    "copyright": "\u00a9 2025 \u2014 Dirancang dengan presisi",
+    "copyright": "\u00a9 2026 \u2014 Dirancang dengan presisi",
     "backToTop": "Kembali ke atas",
-    "techStack": "React + Vite + Lenis",
-    "live": "Aktif"
+    "techStack": "React + Vite + Lenis + Node + Git",
+    "live": "Siap Untuk Bekerja"
   },
   "preloader": {
-    "logo": "SORA",
-    "logoSub": "Portofolio 2026",
-    "init": "INIT",
+    "logo": "Selamat Datang",
+    "logoSub": "Di Portofolio Saya",
+    "init": "Tunggu...",
     "status1": "HALO KAMU...",
     "status2": "IYA, KAMU YANG LAGI NUNGGU...",
     "status3": "MAKASIH UDAH MAMPIR...",
@@ -310,7 +310,7 @@
   },
   "accessibility": {
     "skipToContent": "Lewati ke konten",
-    "mainNavigation": "Navigasi utama",
+    "mainNavigation": "Daftar Isi",
     "menuToggle": "Buka/tutup menu navigasi",
     "settingsPanel": "Panel pengaturan",
     "languageSelector": "Pemilih bahasa",
