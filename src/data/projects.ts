@@ -48,42 +48,70 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
-    id: 'neo-tokyo',
-    title: 'NEO-TOKYO FLUIDS',
-    category: 'creative',
-    categoryLabel: 'CREATIVE CORE',
-    tagline: 'WebGL fluid-distortion simulation of neon rain ripples.',
-    description:
-      'A high-performance WebGL fluid canvas simulation replicating dark rain-slicked Tokyo streets reacting to mouse coordinates. Built as an interactive landing experience that turns cursor movement into living neon ripples.',
-    tech: ['React Three Fiber', 'Three.js', 'GLSL Shaders', 'GSAP'],
-    challenge:
-      'Achieving stable 60fps on mobile touch interfaces while rendering complex vector fluid math in real-time.',
-    solution:
-      'Optimized fragment shaders by utilizing downscaled physics framebuffers and custom linear interpolation matrices, maintaining high-fidelity particle trails at low processing costs.',
-    features: [
-      'Real-time fluid simulation reacting to pointer velocity',
-      'Adaptive resolution that scales with device GPU tier',
-      'Bloom + chromatic aberration post-processing pass',
-      'Touch and multi-pointer support for mobile',
-    ],
-    metrics: [
-      { label: 'Frame Rate', value: '60 FPS' },
-      { label: 'Bundle', value: '142 KB' },
-      { label: 'Lighthouse', value: '98' },
-    ],
-    links: [
-      { label: 'Live Demo', href: GITHUB_PROFILE, type: 'live' },
-      { label: 'Source', href: GITHUB_PROFILE, type: 'repo' },
-    ],
-    status: 'live',
-    year: '2025',
-    role: 'Creative Developer',
-    screens: ['Landing ripple', 'Neon palette', 'Mobile view'],
-    color: 'from-[#A3B19B] to-[#C68A7C]',
-    gradient: 'linear-gradient(135deg, #E5E2DA 0%, #A3B19B 100%)',
-    accent: '#C68A7C',
-    cyberId: 'PRJ_NODE_09X',
-  },
+  id: 'audit-bot-whatsapp',
+  title: 'Audit Arsitektur Bot WhatsApp Lumakara',
+  category: 'engineering',
+  categoryLabel: 'ANALISIS SISTEM',
+  tagline: 'Audit menyeluruh terhadap source code bot WhatsApp dengan lebih dari 19.000 baris kode.',
+
+  description:
+    'Melakukan analisis mendalam terhadap source code bot WhatsApp berbasis Baileys yang memiliki berbagai fitur seperti AI otomatis, sistem pembayaran, panel Pterodactyl, manajemen grup, game interaktif, serta sistem moderasi. Audit dilakukan untuk mengidentifikasi bug, risiko keamanan, masalah performa, dan peluang optimasi arsitektur.',
+
+  tech: [
+    'Node.js',
+    'Baileys',
+    'JavaScript',
+    'JSON Database',
+    'REST API',
+    'Cron Job'
+  ],
+
+  challenge:
+    'Menganalisis source code monolitik dengan lebih dari 19.000 baris kode yang berisi puluhan sistem saling terhubung, sekaligus menemukan potensi bug tersembunyi, bottleneck performa, memory leak, dan kerentanan keamanan.',
+
+  solution:
+    'Melakukan audit struktur kode, konfigurasi global, database, sistem command, integrasi AI, pembayaran, automasi grup, dan manajemen panel. Menghasilkan rekomendasi untuk modularisasi kode, peningkatan keamanan, optimasi database, serta peningkatan skalabilitas agar lebih stabil pada trafik tinggi.',
+
+  features: [
+    'Analisis struktur source code secara menyeluruh',
+    'Deteksi circular dependency antar modul',
+    'Identifikasi API Key yang tersimpan langsung di source code',
+    'Audit performa database dan file I/O',
+    'Analisis penggunaan cron job dan setInterval',
+    'Evaluasi sistem AI otomatis pada grup',
+    'Audit sistem pembayaran dan manajemen produk',
+    'Identifikasi potensi memory leak dan bottleneck'
+  ],
+
+  metrics: [
+    { label: 'Baris Kode', value: '19.761+' },
+    { label: 'Temuan Kritis', value: '8+' },
+    { label: 'Modul Dianalisis', value: '30+' },
+    { label: 'Tingkat Risiko', value: 'Menengah-Tinggi' }
+  ],
+
+  links: [
+    { label: 'Laporan Audit', href: GITHUB_PROFILE, type: 'live' },
+    { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' }
+  ],
+
+  status: 'selesai',
+  year: '2026',
+
+  role: 'Software Auditor & System Analyst',
+
+  screens: [
+    'Analisis Arsitektur',
+    'Temuan Keamanan',
+    'Analisis Performa'
+  ],
+
+  color: 'from-[#A3B19B] to-[#C68A7C]',
+  gradient: 'linear-gradient(135deg, #E5E2DA 0%, #A3B19B 100%)',
+  accent: '#C68A7C',
+
+  cyberId: 'AUDIT_WA_19K'
+},
   {
     id: 'sakura-erp',
     title: 'SAKURA_CORE ERP',
