@@ -1,0 +1,412 @@
+📦 Smart Inventory Management System
+
+Modern Warehouse & Inventory Management Platform untuk mengelola stok barang, gudang, supplier, transaksi, dan laporan secara real-time.
+
+"Version" (https://img.shields.io/badge/version-1.0.0-blue)
+"License" (https://img.shields.io/badge/license-MIT-green)
+"Next.js" (https://img.shields.io/badge/Next.js-15-black)
+"TypeScript" (https://img.shields.io/badge/TypeScript-5-blue)
+"PostgreSQL" (https://img.shields.io/badge/PostgreSQL-16-blue)
+
+---
+
+🚀 Overview
+
+Smart Inventory Management System adalah aplikasi berbasis web yang dirancang untuk membantu perusahaan, UMKM, distributor, dan toko dalam mengelola inventaris secara efisien.
+
+Sistem menyediakan fitur manajemen stok, barang masuk, barang keluar, supplier, laporan, analitik, multi gudang, dan monitoring inventaris secara real-time.
+
+---
+
+✨ Features
+
+📊 Dashboard Analytics
+
+- Total Produk
+- Total Supplier
+- Total Gudang
+- Total Transaksi
+- Nilai Inventaris
+- Grafik Stok
+- Grafik Penjualan
+- Aktivitas Terbaru
+- Produk Terlaris
+
+---
+
+📦 Product Management
+
+Manajemen Barang
+
+- Tambah Barang
+- Edit Barang
+- Hapus Barang
+- Detail Produk
+- Upload Foto Produk
+- Kategori Produk
+- SKU Otomatis
+- Barcode Generator
+- QR Code Generator
+
+Informasi Produk
+
+- Nama Barang
+- Kode Barang
+- Kategori
+- Harga Beli
+- Harga Jual
+- Stok Saat Ini
+- Minimum Stok
+- Lokasi Penyimpanan
+
+---
+
+🏢 Warehouse Management
+
+Gudang
+
+- Multi Warehouse
+- Lokasi Gudang
+- Kapasitas Gudang
+- Monitoring Gudang
+- Statistik Gudang
+
+Transfer Stok
+
+- Transfer Antar Gudang
+- Riwayat Transfer
+- Tracking Transfer
+- Approval Transfer
+
+---
+
+📥 Goods Receipt
+
+Barang Masuk
+
+- Pembelian Supplier
+- Retur Barang
+- Penambahan Stok
+- Upload Invoice
+- Riwayat Barang Masuk
+
+Informasi Penerimaan
+
+- Nomor Transaksi
+- Supplier
+- Tanggal Masuk
+- Jumlah Barang
+- Harga Pembelian
+
+---
+
+📤 Goods Issue
+
+Barang Keluar
+
+- Penjualan
+- Distribusi
+- Pemakaian Internal
+- Barang Rusak
+- Retur Keluar
+
+Tracking
+
+- Riwayat Barang Keluar
+- Detail Pengeluaran
+- Approval Manager
+
+---
+
+🤝 Supplier Management
+
+Data Supplier
+
+- Nama Supplier
+- Kontak Supplier
+- Alamat
+- Email
+- Nomor Telepon
+
+Monitoring Supplier
+
+- Riwayat Pembelian
+- Total Transaksi
+- Performa Supplier
+- Rating Supplier
+
+---
+
+🔍 Stock Monitoring
+
+Monitoring Real-Time
+
+- Stok Tersedia
+- Stok Menipis
+- Stok Habis
+- Barang Kadaluarsa
+- Barang Tidak Bergerak
+
+Alert System
+
+- Low Stock Alert
+- Out Of Stock Alert
+- Expired Alert
+- Restock Reminder
+
+---
+
+📋 Stock Opname
+
+Audit Inventaris
+
+- Stock Opname
+- Selisih Stok
+- Koreksi Inventaris
+- Riwayat Audit
+
+Laporan Audit
+
+- Hasil Audit
+- Perbandingan Data
+- Riwayat Perubahan
+
+---
+
+📈 Reports & Analytics
+
+Laporan
+
+- Laporan Stok
+- Laporan Barang Masuk
+- Laporan Barang Keluar
+- Laporan Supplier
+- Laporan Gudang
+- Laporan Penjualan
+
+Export
+
+- Export PDF
+- Export Excel
+- Export CSV
+
+---
+
+🔔 Notification System
+
+- Real-Time Notification
+- Email Notification
+- Low Stock Alert
+- Restock Reminder
+- System Notification
+
+---
+
+👥 User & Role Management
+
+Super Admin
+
+- Full Access
+
+Warehouse Manager
+
+- Kelola Gudang
+- Approval Transfer
+- Approval Audit
+
+Warehouse Staff
+
+- Input Barang
+- Update Stok
+
+Owner
+
+- Monitoring
+- Laporan
+- Analytics
+
+---
+
+📱 Barcode & QR Scanner
+
+Features
+
+- Scan Barcode
+- Scan QR Code
+- Mobile Camera Scanner
+- Instant Product Lookup
+- Quick Stock Update
+
+---
+
+🔒 Security Features
+
+- JWT Authentication
+- Role Based Access Control
+- Activity Log
+- Session Management
+- Data Encryption
+- Audit Trail
+
+---
+
+🛠 Technology Stack
+
+Frontend
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- Shadcn UI
+- Framer Motion
+- TanStack Table
+- Recharts
+
+Backend
+
+- Node.js
+- Express.js
+- Socket.io
+
+Database
+
+- PostgreSQL
+- Prisma ORM
+
+Authentication
+
+- JWT
+- NextAuth
+
+File Storage
+
+- Cloudinary
+- AWS S3
+
+Reporting
+
+- ExcelJS
+- PDFKit
+
+Deployment
+
+- Docker
+- Nginx
+- PM2
+- VPS Linux
+- Vercel
+
+---
+
+📂 Project Structure
+
+src/
+│
+├── app/
+├── components/
+├── hooks/
+├── services/
+├── store/
+├── utils/
+├── layouts/
+├── types/
+│
+server/
+│
+├── controllers/
+├── routes/
+├── middleware/
+├── models/
+├── services/
+├── database/
+│
+prisma/
+│
+├── schema.prisma
+│
+public/
+
+---
+
+⚙️ Installation
+
+git clone https://github.com/username/inventory-management-system.git
+
+cd inventory-management-system
+
+npm install
+
+npm run dev
+
+---
+
+🔑 Environment Variables
+
+DATABASE_URL=
+
+JWT_SECRET=
+
+NEXTAUTH_SECRET=
+
+CLOUDINARY_API_KEY=
+
+CLOUDINARY_API_SECRET=
+
+AWS_ACCESS_KEY=
+
+AWS_SECRET_KEY=
+
+---
+
+📸 Core Modules
+
+✅ Dashboard
+
+✅ Inventory
+
+✅ Product Management
+
+✅ Supplier Management
+
+✅ Warehouse Management
+
+✅ Stock Transfer
+
+✅ Stock Opname
+
+✅ Reports
+
+✅ User Management
+
+✅ Notifications
+
+✅ Settings
+
+---
+
+🎯 Suitable For
+
+- Toko Bangunan
+- Distributor
+- Gudang Logistik
+- Toko Elektronik
+- Toko Sparepart
+- UMKM
+- Retail
+- Minimarket
+- Perusahaan Manufaktur
+
+---
+
+📄 License
+
+MIT License
+
+---
+
+👨‍💻 Developer
+
+Developed with ❤️ using Next.js, TypeScript, PostgreSQL, and modern web technologies.
+
+Smart Inventory Management System © 2026
