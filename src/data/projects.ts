@@ -48,180 +48,204 @@ export interface Project {
 
 export const projectsData: Project[] = [
   {
-  id: 'audit-bot-whatsapp',
-  title: 'Audit Arsitektur Bot WhatsApp Lumakara',
-  category: 'engineering',
-  categoryLabel: 'ANALISIS SISTEM',
-  tagline: 'Audit menyeluruh terhadap source code bot WhatsApp dengan lebih dari 19.000 baris kode.',
-
-  description:
-    'Melakukan analisis mendalam terhadap source code bot WhatsApp berbasis Baileys yang memiliki berbagai fitur seperti AI otomatis, sistem pembayaran, panel Pterodactyl, manajemen grup, game interaktif, serta sistem moderasi. Audit dilakukan untuk mengidentifikasi bug, risiko keamanan, masalah performa, dan peluang optimasi arsitektur.',
-
-  tech: [
-    'Node.js',
-    'Baileys',
-    'JavaScript',
-    'JSON Database',
-    'REST API',
-    'Cron Job'
-  ],
-
-  challenge:
-    'Menganalisis source code monolitik dengan lebih dari 19.000 baris kode yang berisi puluhan sistem saling terhubung, sekaligus menemukan potensi bug tersembunyi, bottleneck performa, memory leak, dan kerentanan keamanan.',
-
-  solution:
-    'Melakukan audit struktur kode, konfigurasi global, database, sistem command, integrasi AI, pembayaran, automasi grup, dan manajemen panel. Menghasilkan rekomendasi untuk modularisasi kode, peningkatan keamanan, optimasi database, serta peningkatan skalabilitas agar lebih stabil pada trafik tinggi.',
-
-  features: [
-    'Analisis struktur source code secara menyeluruh',
-    'Deteksi circular dependency antar modul',
-    'Identifikasi API Key yang tersimpan langsung di source code',
-    'Audit performa database dan file I/O',
-    'Analisis penggunaan cron job dan setInterval',
-    'Evaluasi sistem AI otomatis pada grup',
-    'Audit sistem pembayaran dan manajemen produk',
-    'Identifikasi potensi memory leak dan bottleneck'
-  ],
-
-  metrics: [
-    { label: 'Baris Kode', value: '19.761+' },
-    { label: 'Temuan Kritis', value: '8+' },
-    { label: 'Modul Dianalisis', value: '30+' },
-    { label: 'Tingkat Risiko', value: 'Menengah-Tinggi' }
-  ],
-
-  links: [
-    { label: 'Laporan Audit', href: GITHUB_PROFILE, type: 'live' },
-    { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' }
-  ],
-
-  status: 'selesai',
-  year: '2026',
-
-  role: 'Software Auditor & System Analyst',
-
-  screens: [
-    'Analisis Arsitektur',
-    'Temuan Keamanan',
-    'Analisis Performa'
-  ],
-
-  color: 'from-[#A3B19B] to-[#C68A7C]',
-  gradient: 'linear-gradient(135deg, #E5E2DA 0%, #A3B19B 100%)',
-  accent: '#C68A7C',
-
-  cyberId: 'AUDIT_WA_19K'
-},
-  {
-    id: 'sakura-erp',
-    title: 'SAKURA_CORE ERP',
+    id: 'bot-whatsapp-multifungsi',
+    title: 'Bot WhatsApp Multi-Fungsi',
     category: 'systems',
-    categoryLabel: 'SYSTEM ARCHITECTURE',
-    tagline: 'Accessible high-end enterprise resource command dashboard.',
+    categoryLabel: 'BACKEND / AUTOMATION',
+    tagline:
+      'Bot WhatsApp berbasis Node.js & Baileys dengan AI Chat, sistem ekonomi, game interaktif, dan manajemen grup.',
     description:
-      'A deeply optimized enterprise console incorporating accessible screen-reading attributes, keyboard controls, and real-time canvas charting. Designed to make dense operational data calm, legible and fully WCAG-compliant.',
-    tech: ['React', 'TypeScript', 'TailwindCSS', 'Recharts', 'ARIA'],
+      'Bot WhatsApp multi-fungsi berbasis Node.js dan Baileys yang menyediakan administrasi grup, AI Chat, game interaktif, sistem ekonomi, auto-respon, manajemen pengguna, hingga sistem sewa grup. Mendukung Multi Device dan dirancang untuk berjalan 24/7 di VPS bagi komunitas maupun toko digital.',
+    tech: ['Node.js', 'Baileys', 'GPT-4 API', 'Axios', 'FFmpeg', 'node-cron'],
     challenge:
-      'Satisfying extreme Web Accessibility (WCAG 2.1 AA) criteria while delivering deep sensory motion styling and complex dark aesthetics.',
+      'Mengelola puluhan sistem yang saling terhubung — AI otomatis, pembayaran, manajemen grup, dan game — dalam satu bot Multi Device yang tetap stabil dan responsif saat berjalan terus-menerus.',
     solution:
-      'Engineered custom semantic ARIA focus-traps and styled fully customizable glowing borders using standard utility tokens that respect user high-contrast system requests.',
+      'Membangun sistem command modular dengan penyimpanan database berbasis JSON, automasi via node-cron, integrasi GPT untuk Auto AI Chat, serta kontrol hak akses berjenjang (Owner, Premium, VIP, User) agar fitur tetap terkelola dan aman.',
     features: [
-      'Fully keyboard-navigable data tables and dialogs',
-      'Live charts with reduced-motion fallbacks',
-      'Role-based access control and audit trail',
-      'Dark / high-contrast theming out of the box',
+      'Auto AI Chat di grup dengan integrasi GPT-4',
+      'Manajemen grup: welcome, anti-link, anti-spam, hidetag',
+      'Sistem ekonomi: saldo digital, limit harian, transaksi',
+      'Sistem produk & konfirmasi pembayaran otomatis',
+      '15+ game interaktif (Family 100, Tebak Gambar, dll.)',
+      'Fitur otomatis: auto-sholat reminder, broadcast, story',
     ],
     metrics: [
-      { label: 'WCAG', value: '2.1 AA' },
-      { label: 'Widgets', value: '40+' },
-      { label: 'Test Cov.', value: '92%' },
+      { label: 'Fitur', value: '100+' },
+      { label: 'Game', value: '15+' },
+      { label: 'Hak Akses', value: '4 Tier' },
     ],
     links: [
-      { label: 'Case Study', href: GITHUB_PROFILE, type: 'case-study' },
-      { label: 'Source', href: GITHUB_PROFILE, type: 'repo' },
+      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
+      { label: 'Demo', href: GITHUB_PROFILE, type: 'demo' },
     ],
-    status: 'in-progress',
+    status: 'live',
     year: '2025',
-    role: 'Frontend Architect',
-    screens: ['Dashboard', 'Data tables', 'Settings'],
+    role: 'Backend Developer',
+    screens: ['Menu Bot', 'Panel AI Chat', 'Sistem Game'],
+    color: 'from-[#A3B19B] to-[#C68A7C]',
+    gradient: 'linear-gradient(135deg, #E5E2DA 0%, #A3B19B 100%)',
+    accent: '#C68A7C',
+    cyberId: 'BOT_WA_MULTI',
+  },
+  {
+    id: 'ecommerce-platform',
+    title: 'E-Commerce Platform',
+    category: 'systems',
+    categoryLabel: 'FULL-STACK COMMERCE',
+    tagline:
+      'Platform e-commerce modern dengan integrasi pembayaran, sistem dukungan, dan notifikasi real-time.',
+    description:
+      'Platform e-commerce kaya fitur yang dibangun dengan React 19, TypeScript, dan Tailwind CSS. Menghadirkan pengalaman belanja mulus mulai dari katalog produk, keranjang, hingga pembayaran melalui Pakasir (QRIS, Virtual Account, e-wallet), dilengkapi sistem tiket dukungan serta notifikasi via Email dan Telegram.',
+    tech: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS', 'Supabase', 'Zustand'],
+    challenge:
+      'Menyatukan pengalaman belanja yang mulus dengan banyak metode pembayaran, sistem dukungan pelanggan, dan notifikasi real-time dalam satu antarmuka mobile-first yang ringan.',
+    solution:
+      'Mengintegrasikan payment gateway Pakasir untuk QRIS, VA, dan e-wallet, memakai Supabase sebagai backend, EmailJS dan Telegram Bot untuk notifikasi, serta Zustand untuk state management yang ringkas dan persisten.',
+    features: [
+      'Katalog produk dengan rating, ulasan, dan kategori',
+      'Keranjang dengan pemilihan tier dan kuantitas',
+      'Pembayaran Pakasir: QRIS, Virtual Account, e-wallet',
+      'Sistem tiket dukungan dengan kategorisasi',
+      'Dark mode dengan beberapa skema warna',
+      'Desain responsif mobile-first + dukungan dwibahasa',
+    ],
+    metrics: [
+      { label: 'Metode Bayar', value: '10+' },
+      { label: 'Tema', value: '4' },
+      { label: 'Bahasa', value: '2' },
+    ],
+    links: [
+      { label: 'Live', href: GITHUB_PROFILE, type: 'live' },
+      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
+    ],
+    status: 'live',
+    year: '2025',
+    role: 'Full-Stack Developer',
+    screens: ['Katalog Produk', 'Checkout', 'Support'],
     color: 'from-[#C68A7C] to-[#D4AF37]',
     gradient: 'linear-gradient(135deg, #F5F2EB 0%, #C68A7C 100%)',
     accent: '#D4AF37',
-    cyberId: 'PRJ_NODE_404',
+    cyberId: 'ECOM_PAKASIR',
   },
   {
-    id: 'komorebi-os',
-    title: 'KOMOREBI INTERFACE',
-    category: 'creative',
-    categoryLabel: 'CREATIVE CORE',
-    tagline: 'Canvas-based operating system exploring organic natural physics.',
+    id: 'smart-inventory',
+    title: 'Smart Inventory Management',
+    category: 'systems',
+    categoryLabel: 'WAREHOUSE SYSTEM',
+    tagline:
+      'Platform manajemen gudang & inventaris untuk stok, supplier, transaksi, dan laporan real-time.',
     description:
-      'An interactive web portfolio layout inspired by forest light filtering through branches, utilizing physical particle colliders. A study in how nature-driven motion can make a UI feel alive without overwhelming the content.',
-    tech: ['React', 'HTML5 Canvas', 'Framer Motion', 'Lenis Scroll'],
+      'Smart Inventory Management System adalah platform berbasis web untuk mengelola stok barang, gudang, supplier, transaksi, dan laporan secara real-time. Dirancang untuk UMKM, distributor, dan retail dengan fitur multi-gudang, monitoring stok, stock opname, serta analitik inventaris.',
+    tech: ['Next.js 15', 'React 19', 'TypeScript', 'PostgreSQL', 'Prisma', 'Socket.io'],
     challenge:
-      'Simulating natural light particle scatter that sways organically in 2.5D space while responding to multi-scroll coordinates.',
+      'Mengelola inventaris multi-gudang dengan monitoring stok real-time, transfer antar gudang, audit, dan kontrol akses berbasis peran tanpa kehilangan akurasi data.',
     solution:
-      'Crafted a customized vector gravity loop calculating shadow intersections on canvas layers synced smoothly with Lenis scroll positions.',
+      'Membangun dashboard analitik dengan PostgreSQL + Prisma, pembaruan real-time via Socket.io, scanner barcode/QR, sistem alert stok, dan kontrol akses berjenjang (Super Admin, Manager, Staff, Owner).',
     features: [
-      'Komorebi light-scatter particle field',
-      'Scroll-linked parallax depth layers',
-      'Custom spring cursor + magnetic hover',
-      'Battery-aware particle throttling',
+      'Dashboard analitik & grafik stok real-time',
+      'Manajemen produk dengan barcode & QR generator',
+      'Multi-gudang dengan transfer stok antar lokasi',
+      'Tracking barang masuk, keluar, dan stock opname',
+      'Alert stok menipis, habis, dan kadaluarsa',
+      'Laporan & export ke PDF, Excel, dan CSV',
     ],
     metrics: [
-      { label: 'Particles', value: '1.2k' },
-      { label: 'Frame Rate', value: '60 FPS' },
-      { label: 'CLS', value: '0.00' },
+      { label: 'Modul Inti', value: '11' },
+      { label: 'Role', value: '4' },
+      { label: 'Database', value: 'PostgreSQL' },
     ],
     links: [
-      { label: 'Live Demo', href: GITHUB_PROFILE, type: 'live' },
-      { label: 'Source', href: PORTFOLIO_REPO, type: 'repo' },
+      { label: 'Live', href: GITHUB_PROFILE, type: 'live' },
+      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
     ],
     status: 'live',
-    year: '2024',
-    role: 'Creative Developer',
-    screens: ['Hero scatter', 'Scroll depth', 'Cursor'],
+    year: '2026',
+    role: 'Full-Stack Developer',
+    screens: ['Dashboard', 'Manajemen Stok', 'Laporan'],
     color: 'from-[#A3B19B] to-[#F5F2EB]',
     gradient: 'linear-gradient(135deg, #FDFBF7 0%, #A3B19B 100%)',
     accent: '#A3B19B',
-    cyberId: 'PRJ_NODE_77K',
+    cyberId: 'INV_SMART_01',
   },
   {
-    id: 'antigravity-cli',
-    title: 'ANTIGRAVITY CONSOLE',
-    category: 'lab',
-    categoryLabel: 'RESEARCH LAB',
-    tagline: 'Futuristic developer CLI automation suite and sandbox.',
+    id: 'management-platform',
+    title: 'Multi-Purpose Management Platform',
+    category: 'systems',
+    categoryLabel: 'FULL-STACK DASHBOARD',
+    tagline:
+      'Platform terintegrasi untuk komunitas, pengguna, transaksi digital, AI, dan otomatisasi.',
     description:
-      'An agentic console terminal helper designed to compile, debug, and manage code files in isolated local environments. A research playground for what a developer command center could feel like in the browser.',
-    tech: ['React', 'Node.js', 'Xterm.js', 'TailwindCSS', 'WebSockets'],
+      'Platform manajemen serbaguna yang dibangun dengan React, Node.js, Express, dan MongoDB untuk mengelola komunitas, pengguna, transaksi digital, sistem AI, dan otomatisasi dalam satu tempat. Menggunakan arsitektur full-stack modern dengan dashboard admin, panel pengguna, dan sistem keamanan yang scalable.',
+    tech: ['React', 'Next.js', 'TypeScript', 'Node.js', 'Express', 'MongoDB'],
     challenge:
-      'Creating a highly secure, sandboxed terminal dashboard delivering real-time logs and process controls in active windows.',
+      'Menyatukan manajemen komunitas, pengguna, transaksi digital, AI, dan game ke dalam satu platform yang aman dan dapat diskalakan tanpa membuat sistem menjadi rumit.',
     solution:
-      'Established secure, authenticated WebSocket pipelines paired with lightweight Docker containers, providing instantaneous feedback loops.',
+      'Merancang arsitektur full-stack dengan dashboard admin dan pengguna, keamanan JWT + RBAC, dompet digital terintegrasi payment gateway, AI assistant multi-model, serta otomatisasi berbasis cron dan background jobs.',
     features: [
-      'In-browser terminal with command history',
-      'Real-time log streaming over WebSockets',
-      'Sandboxed container execution',
-      'Command palette + keyboard-first UX',
+      'AI Assistant dengan integrasi GPT, Gemini, dan Claude',
+      'Manajemen pengguna, role, dan membership premium/VIP',
+      'Dompet digital & integrasi payment gateway',
+      'Keamanan JWT, RBAC, anti-spam, dan audit log',
+      'Game interaktif dengan leaderboard & reward',
+      'Dashboard analitik dengan otomatisasi terjadwal',
     ],
     metrics: [
-      { label: 'Latency', value: '<40ms' },
-      { label: 'Commands', value: '60+' },
-      { label: 'Uptime', value: '99.9%' },
+      { label: 'Role', value: '6' },
+      { label: 'Model AI', value: '3' },
+      { label: 'Stack', value: 'MERN' },
     ],
     links: [
+      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
       { label: 'Demo', href: GITHUB_PROFILE, type: 'demo' },
-      { label: 'Source', href: GITHUB_PROFILE, type: 'repo' },
     ],
-    status: 'concept',
+    status: 'in-progress',
     year: '2026',
-    role: 'Full-stack Tinkerer',
-    screens: ['Terminal', 'Logs', 'Palette'],
+    role: 'Full-Stack Developer',
+    screens: ['Admin Dashboard', 'AI Assistant', 'Digital Wallet'],
     color: 'from-[#E5E2DA] to-[#2A2A2A]',
     gradient: 'linear-gradient(135deg, #E5E2DA 0%, #C68A7C 100%)',
     accent: '#4A4A4A',
-    cyberId: 'PRJ_NODE_11B',
+    cyberId: 'MGMT_PLATFORM',
+  },
+  {
+    id: 'whatsapp-chat-clone',
+    title: 'WhatsApp Chat Clone',
+    category: 'lab',
+    categoryLabel: 'REAL-TIME CHAT',
+    tagline:
+      'Aplikasi chat real-time terinspirasi WhatsApp Web dengan Socket.io dan arsitektur full-stack.',
+    description:
+      'Aplikasi chat real-time modern yang terinspirasi WhatsApp Web, dibangun dengan arsitektur full-stack (React, Node.js, Express, MongoDB) untuk pesan yang cepat, aman, dan responsif. Menghadirkan pesan instan one-to-one, indikator mengetik, status online, dan read receipts.',
+    tech: ['React', 'Node.js', 'Express', 'Socket.io', 'MongoDB', 'JWT'],
+    challenge:
+      'Menghadirkan pesan one-to-one yang instan dan aman lengkap dengan indikator mengetik, status online/offline, dan read receipts secara real-time.',
+    solution:
+      'Memakai Socket.io untuk komunikasi real-time, autentikasi JWT dengan enkripsi bcrypt, MongoDB + Mongoose untuk penyimpanan, serta Multer untuk upload media dan berbagi file.',
+    features: [
+      'Autentikasi JWT dengan enkripsi password bcrypt',
+      'Pesan instan one-to-one secara real-time',
+      'Indikator mengetik & status online/offline',
+      'Read receipts dan timestamp pesan',
+      'Upload gambar, file, dan foto profil (Multer)',
+      'UI responsif ala WhatsApp dengan dark mode',
+    ],
+    metrics: [
+      { label: 'Realtime', value: 'Socket.io' },
+      { label: 'Auth', value: 'JWT' },
+      { label: 'Database', value: 'MongoDB' },
+    ],
+    links: [
+      { label: 'Live', href: GITHUB_PROFILE, type: 'live' },
+      { label: 'Repository', href: PORTFOLIO_REPO, type: 'repo' },
+    ],
+    status: 'live',
+    year: '2024',
+    role: 'Full-Stack Developer',
+    screens: ['Login', 'Chat Interface', 'Profil'],
+    color: 'from-[#C68A7C] to-[#A3B19B]',
+    gradient: 'linear-gradient(135deg, #F5F2EB 0%, #C68A7C 100%)',
+    accent: '#C68A7C',
+    cyberId: 'CHAT_RT_SIO',
   },
 ];
 

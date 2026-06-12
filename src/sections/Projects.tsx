@@ -290,6 +290,14 @@ export const Projects = ({ onSelectProject }: ProjectsProps) => {
             layout="horizontal"
             onClick={() => handleProjectClick(projectsData[3])}
           />
+
+          {/* Project 5 - Full-width horizontal on desktop */}
+          <ProjectCard
+            project={projectsData[4]}
+            index={4}
+            layout="horizontal"
+            onClick={() => handleProjectClick(projectsData[4])}
+          />
         </div>
       </div>
     </Section>
