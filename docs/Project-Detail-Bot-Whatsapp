@@ -1,0 +1,259 @@
+Satanic WhatsApp Bot
+
+Bot WhatsApp multi-fungsi berbasis Node.js dan Baileys yang menyediakan fitur administrasi grup, AI Chat, game interaktif, sistem ekonomi, auto respon, manajemen pengguna, hingga sistem sewa grup.
+
+✨ Fitur Utama
+
+🤖 Artificial Intelligence
+
+- Auto AI Chat di grup
+- Integrasi GPT-4 API
+- Respon otomatis terhadap pesan pengguna
+- Mode AI khusus grup
+
+👥 Manajemen Grup
+
+- Welcome Message
+- Goodbye Message
+- Auto Open Group
+- Auto Close Group
+- Anti Link Grup
+- Anti Tag Status
+- Anti Badword
+- Anti Delete
+- Anti Spam
+- Anti View Once
+- Auto Join Group dari link
+- Revoke Link Group
+- Hidetag
+- Tag All
+- Kick Member
+- Add Member
+- Promote Admin
+- Demote Admin
+- Request Join Management
+
+👤 Sistem Pengguna
+
+- Auto Register
+- Manual Register
+- Premium User
+- VIP User
+- Ban User
+- Blacklist User
+- AFK System
+- Profil Pengguna
+- Limit System
+- Level System
+- Saldo System
+
+💰 Sistem Ekonomi
+
+- Saldo Digital
+- Limit Harian
+- Claim Limit
+- Top Saldo
+- Tambah Saldo
+- Kurangi Saldo
+- Riwayat Transaksi
+- Sistem Pembayaran
+- Pending Order
+- Auto Cancel Order
+
+🛒 Sistem Produk
+
+- Tambah Produk
+- Hapus Produk
+- List Produk
+- Konfirmasi Pembayaran
+- Approve Pesanan
+- Reject Pesanan
+- Manajemen Stok
+
+🎮 Game
+
+- Family 100
+- Tebak Gambar
+- Tebak Kata
+- Tebak Kalimat
+- Tebak Lagu
+- Tebak Kimia
+- Tebak Bendera
+- Tebak Kabupaten
+- Tebak Lirik
+- Asah Otak
+- Siapa Aku
+- Cak Lontong
+- Teka-Teki
+- Kuis Matematika
+- Tic Tac Toe
+
+🔔 Fitur Otomatis
+
+- Auto Read Chat
+- Auto Typing
+- Auto Sholat Reminder
+- Auto Bio Update
+- Auto Welcome
+- Auto Left
+- Auto AI Group
+- Auto Open Group
+- Auto Close Group
+
+📢 Broadcast
+
+- JPM
+- Push Kontak
+- Broadcast Status
+- Upload Story Teks
+- Upload Story Gambar
+- Upload Story Video
+- Upload Story Audio
+
+📂 Manajemen Database
+
+- Backup Script
+- Reset Database
+- Reset Register
+- Hapus User
+- List User Register
+- Database JSON Management
+
+---
+
+🛠 Framework & Library
+
+Core Framework
+
+- Node.js
+- Baileys (@whiskeysockets/baileys)
+
+HTTP & API
+
+- axios
+- node-fetch
+- request
+- form-data
+- qs
+
+Media Processing
+
+- jimp
+- fluent-ffmpeg
+- file-type
+
+Utility
+
+- chalk
+- moment-timezone
+- crypto
+- path
+- fs
+- util
+
+Automation
+
+- node-cron
+
+Web Scraping
+
+- cheerio
+
+Security
+
+- js-confuser
+
+Phone Number
+
+- awesome-phonenumber
+
+Primbon
+
+- scrape-primbon
+
+---
+
+📁 Struktur Database
+
+database/
+├── afk.json
+├── owner.json
+├── premium.json
+├── uservip.json
+├── registered.json
+├── welcome.json
+├── left.json
+├── openaigc.json
+├── antilink.json
+├── antibadword.json
+├── badword.json
+├── banuser.json
+├── blacklist.json
+├── pending.json
+├── payment.json
+├── database.json
+└── list-message.json
+
+📁 Struktur Library
+
+lib/
+├── myfunction.js
+├── uploader.js
+├── sewa.js
+├── set_done.js
+└── set_proses.js
+
+🚀 Instalasi
+
+git clone https://github.com/username/repository.git
+
+cd repository
+
+npm install
+
+node .
+
+📋 Persyaratan
+
+- Node.js v18+
+- FFmpeg
+- Git
+- WhatsApp Account
+- VPS / Server Linux (Recommended)
+
+🔐 Sistem Hak Akses
+
+Owner
+
+Memiliki akses penuh terhadap seluruh fitur bot.
+
+Premium
+
+Mendapatkan akses ke fitur premium dan limit lebih besar.
+
+VIP
+
+Mendapatkan fitur eksklusif dan prioritas penggunaan.
+
+User
+
+Pengguna biasa dengan batas limit tertentu.
+
+📝 Catatan
+
+- Bot menggunakan penyimpanan database berbasis JSON.
+- Mendukung Multi Device WhatsApp.
+- Mendukung Auto AI Chat berbasis GPT.
+- Cocok digunakan untuk komunitas, toko digital, dan grup publik.
+- Direkomendasikan berjalan pada VPS 24/7.
+
+👨‍💻 Developer
+
+Developed with ❤️ using Baileys WhatsApp Library.
+
+---
+
+Version: Latest
+Platform: Node.js
+Library: Baileys Multi Device
+Database: JSON File Storage
