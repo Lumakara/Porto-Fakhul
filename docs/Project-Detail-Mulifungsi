@@ -1,0 +1,321 @@
+
+
+Modern Multi-Purpose Management Platform built with React, Node.js, Express, and MongoDB.
+
+🚀 Overview
+
+Satanic Dashboard adalah aplikasi web modern yang dirancang untuk mengelola komunitas, pengguna, transaksi digital, sistem AI, permainan interaktif, dan otomatisasi dalam satu platform terintegrasi.
+
+Dirancang menggunakan arsitektur full-stack modern dengan dashboard admin, panel pengguna, API backend, serta sistem keamanan yang scalable.
+
+---
+
+✨ Features
+
+🤖 AI Assistant
+
+- AI Chat Assistant
+- GPT Integration
+- Context Memory
+- Multi Language Support
+- Real-Time Conversation
+- Chat History
+- AI Workspace
+
+👥 User Management
+
+- User Registration
+- Login & Authentication
+- Email Verification
+- User Profile
+- Role Management
+- Premium Membership
+- VIP Membership
+- Ban & Suspension System
+- User Activity Tracking
+
+🛡️ Security System
+
+- JWT Authentication
+- Role Based Access Control (RBAC)
+- Anti Spam Protection
+- Blacklist System
+- Bad Word Filter
+- Login Monitoring
+- Session Management
+- Audit Logs
+
+💰 Digital Wallet
+
+- User Balance
+- Transaction History
+- Top Up System
+- Payment Gateway Integration
+- Order Management
+- Pending Transactions
+- Auto Cancel Orders
+- Revenue Statistics
+
+🛒 Product Management
+
+- Product Catalog
+- Product Categories
+- Inventory Management
+- Stock Tracking
+- Purchase Orders
+- Sales Reports
+- Product Analytics
+
+📢 Community Management
+
+- Announcement System
+- Community Dashboard
+- Event Scheduling
+- User Notification
+- Community Statistics
+- Membership Control
+
+🎮 Interactive Games
+
+- Quiz Challenge
+- Guess The Picture
+- Guess The Word
+- Guess The Song
+- Math Challenge
+- Puzzle Challenge
+- Tic Tac Toe
+- Leaderboard System
+- Reward System
+
+📈 Analytics Dashboard
+
+- Active Users
+- Revenue Overview
+- User Growth
+- Transaction Statistics
+- Product Performance
+- Community Insights
+- AI Usage Analytics
+
+🔔 Notification System
+
+- Push Notification
+- Email Notification
+- Real-Time Alerts
+- Scheduled Messages
+- System Announcement
+
+📅 Automation System
+
+- Scheduled Tasks
+- Automatic Reports
+- Reminder System
+- Daily Statistics
+- Background Jobs
+- Cron Scheduler
+
+---
+
+🖥️ Tech Stack
+
+Frontend
+
+- React.js
+- TypeScript
+- Next.js
+- Tailwind CSS
+- Framer Motion
+- Zustand
+- React Query
+- Axios
+
+Backend
+
+- Node.js
+- Express.js
+- Socket.io
+- JWT
+- Bcrypt
+
+Database
+
+- MongoDB
+- Mongoose
+- Redis (Caching)
+
+Storage
+
+- Cloudinary
+- AWS S3
+
+Authentication
+
+- JWT Authentication
+- Google OAuth
+- GitHub OAuth
+
+Payment
+
+- Midtrans
+- Xendit
+- Stripe
+
+AI
+
+- OpenAI API
+- Gemini API
+- Claude API
+
+Deployment
+
+- Docker
+- Nginx
+- PM2
+- Vercel
+- VPS Linux
+
+---
+
+📂 Project Structure
+
+src/
+│
+├── app/
+├── components/
+├── pages/
+├── hooks/
+├── lib/
+├── services/
+├── api/
+├── middleware/
+├── store/
+├── utils/
+├── layouts/
+├── assets/
+├── styles/
+│
+server/
+│
+├── controllers/
+├── routes/
+├── middleware/
+├── models/
+├── services/
+├── config/
+├── jobs/
+└── database/
+
+---
+
+🎨 UI Features
+
+- Modern Dashboard
+- Responsive Design
+- Dark Mode
+- Light Mode
+- Glassmorphism Effects
+- Animated Components
+- Mobile Friendly
+- Interactive Charts
+- Premium UI Experience
+
+---
+
+📊 Dashboard Modules
+
+Admin Dashboard
+
+- User Management
+- Product Management
+- Revenue Monitoring
+- Analytics
+- System Settings
+- Activity Logs
+
+User Dashboard
+
+- Profile Management
+- Wallet
+- Membership
+- Orders
+- Notifications
+- AI Assistant
+
+---
+
+🔐 Roles
+
+Super Admin
+
+Full Access
+
+Admin
+
+Manage Users & Products
+
+Moderator
+
+Community Management
+
+Premium User
+
+Premium Features
+
+VIP User
+
+Exclusive Features
+
+User
+
+Basic Access
+
+---
+
+⚡ Installation
+
+git clone https://github.com/username/satanic-dashboard.git
+
+cd satanic-dashboard
+
+npm install
+
+npm run dev
+
+---
+
+🌐 Environment Variables
+
+MONGODB_URI=
+
+JWT_SECRET=
+
+OPENAI_API_KEY=
+
+GEMINI_API_KEY=
+
+MIDTRANS_SERVER_KEY=
+
+CLOUDINARY_API_KEY=
+
+REDIS_URL=
+
+---
+
+📱 Responsive Support
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+---
+
+📄 License
+
+MIT License
+
+---
+
+👨‍💻 Developer
+
+Developed using modern web technologies with scalability, security, and performance in mind.
