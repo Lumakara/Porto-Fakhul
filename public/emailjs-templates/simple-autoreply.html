@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You for Your Message</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f2eb;
+        }
+        .container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #C68A7C;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            color: #2A2A2A;
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            color: #666;
+            margin-top: 10px;
+        }
+        .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .message-card {
+            background-color: #FDFBF7;
+            border: 1px solid #E5E2DA;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .message-label {
+            color: #C68A7C;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .message-content {
+            white-space: pre-wrap;
+            line-height: 1.8;
+        }
+        .info-box {
+            background-color: #A3B19B15;
+            border-left: 4px solid #A3B19B;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .cta-buttons {
+            text-align: center;
+            margin: 25px 0;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #C68A7C;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            margin: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #A3B19B;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+        .social-links {
+            margin: 15px 0;
+        }
+        .social-links a {
+            color: #C68A7C;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .signature {
+            margin-top: 20px;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">✨</div>
+            <h1>Thank You, {{name}}!</h1>
+            <p>Your message has been received successfully</p>
+        </div>
+        
+        <div class="info-box">
+            <p><strong>✅ Message Status:</strong> Delivered and saved</p>
+            <p><strong>📅 Received:</strong> {{time}} (WIB)</p>
+            <p><strong>⏱️ Response Time:</strong> Usually within 24 hours</p>
+        </div>
+        
+        <div class="message-card">
+            <div class="message-label">Your Message:</div>
+            <div class="message-content">{{message}}</div>
+        </div>
+        
+        <div class="info-box">
+            <h3>What happens next?</h3>
+            <ol>
+                <li>I'll review your message personally</li>
+                <li>You'll receive a detailed response via email</li>
+                <li>We can schedule a call if needed</li>
+            </ol>
+        </div>
+        
+        <div class="cta-buttons">
+            <a href="https://porto-fakhul.vercel.app" class="btn" target="_blank">Visit Portfolio</a>
+            <a href="https://github.com/lumakara" class="btn" target="_blank">View GitHub</a>
+        </div>
+        
+        <div class="social-links">
+            <p>Connect with me:</p>
+            <a href="https://github.com/lumakara" target="_blank">GitHub</a> • 
+            <a href="https://www.linkedin.com/in/fakhul-rohman-nurokhim-b24276411" target="_blank">LinkedIn</a> • 
+            <a href="mailto:fakhulrohman2@gmail.com">Email</a>
+        </div>
+        
+        <div class="signature">
+            <p>Best regards,</p>
+            <p><strong>Fakhul Rohman</strong><br>
+            Web Developer • Depok, Indonesia</p>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated response. Please do not reply to this email.</p>
+            <p>Your message was sent via Porto-Fakhul portfolio contact form.</p>
+            <p style="font-size: 11px; color: #aaa;">Email ID: {{time}} | Powered by EmailJS</p>
+        </div>
+    </div>
+</body>
+</html>

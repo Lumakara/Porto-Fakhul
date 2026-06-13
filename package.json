@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "setup:emailjs": "bash scripts/setup-emailjs.sh",
+    "check:emailjs": "node -e \"const config = require('./src/config/email.js'); console.log('EmailJS Config:', config.EMAIL_CONFIG);\""
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

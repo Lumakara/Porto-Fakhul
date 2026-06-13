@@ -72,3 +72,60 @@ export default defineConfig([
 ])
 ```
 # Porto-Fakhul
+
+
+
+## 📧 EmailJS Contact Form
+
+The portfolio includes a fully functional contact form powered by EmailJS. The form sends messages directly to your email and can optionally send auto-replies to visitors.
+
+### Quick Setup
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Set up EmailJS:**
+   ```bash
+   npm run setup:emailjs
+   ```
+   Or manually create `.env` file from `.env.example`
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Test the contact form:**
+   - Navigate to Contact section
+   - Fill out the form
+   - Check your email for notifications
+
+### Documentation
+
+- 📖 [Full EmailJS Setup Guide](docs/EMAILJS_SETUP_GUIDE.md)
+- ✅ [Setup Checklist](docs/EMAILJS_CHECKLIST.md)
+- 🎨 [Email Templates](public/emailjs-templates/README.md)
+- ⚙️ [Manual Setup](docs/MANUAL_SETUP.md)
+
+### Features
+
+- ✅ Real-time email delivery
+- ✅ Auto-reply to visitors (optional)
+- ✅ Console logging for debugging
+- ✅ Form validation
+- ✅ Loading states and error handling
+- ✅ Mobile responsive design
+
+### Troubleshooting
+
+If emails are not sending:
+
+1. Check browser console for error messages
+2. Verify `.env` file configuration
+3. Check EmailJS dashboard for activity logs
+4. Ensure templates are published (not draft)
+5. Verify allowed origins in EmailJS security settings
+
+For detailed troubleshooting, see the [EmailJS Setup Guide](docs/EMAILJS_SETUP_GUIDE.md#troubleshooting).
