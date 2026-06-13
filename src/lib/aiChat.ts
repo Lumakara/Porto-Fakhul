@@ -147,7 +147,7 @@ async function tryEndpoint(
  * Send a conversation to the assistant via the Neoxr API.
  *
  * Order of attempts:
- *   1. Primary endpoint  (default /gpt4Mini)
+ *   1. Primary endpoint  (default /gpt4)
  *   2. Fallback endpoint (default /llama)
  *
  * Every attempt is recorded in `logs` so the UI can show a detailed trace on

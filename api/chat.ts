@@ -5,13 +5,13 @@
 // but this proxy provides a server-side option that keeps the Neoxr key out of
 // the client bundle and centralises the primary/fallback endpoint logic.
 //
-//   • Primary  →  /gpt4Mini
+//   • Primary  →  /gpt4
 //   • Fallback →  /llama
 //
 // Configure on Vercel (Project Settings → Environment Variables), all optional:
 //   NEOXR_BASE_URL   (default https://api.neoxr.eu/api)
 //   NEOXR_API_KEY    (default oggwWy)
-//   NEOXR_PRIMARY    (default /gpt4Mini)
+//   NEOXR_PRIMARY    (default /gpt4)
 //   NEOXR_FALLBACK   (default /llama)
 
 export const config = { runtime: 'edge' };
@@ -100,7 +100,7 @@ export default async function handler(req: Request): Promise<Response> {
     (typeof process !== 'undefined' && process.env) || ({} as Record<string, string | undefined>);
   const baseUrl = (env.NEOXR_BASE_URL || 'https://api.neoxr.eu/api').replace(/\/+$/, '');
   const apiKey = (env.NEOXR_API_KEY || 'oggwWy').trim();
-  const primary = env.NEOXR_PRIMARY || '/gpt4Mini';
+  const primary = env.NEOXR_PRIMARY || '/gpt4';
   const fallback = env.NEOXR_FALLBACK || '/llama';
   const endpoints = Array.from(new Set([primary, fallback].filter(Boolean)));
 
