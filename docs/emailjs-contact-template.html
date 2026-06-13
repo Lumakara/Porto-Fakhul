@@ -1,0 +1,316 @@
+<!--
+  ════════════════════════════════════════════════════════════════════════════
+  EMAILJS — TEMPLATE NOTIFIKASI KONTAK  (Masuk ke Gmail kamu)
+  ────────────────────────────────────────────────────────────────────────────
+  Template ini dikirim ke INBOX KAMU setiap ada pengunjung yang mengisi form
+  kontak. Tempel seluruh kode ini ke template EmailJS kamu (mode HTML/Code).
+
+  CARA PAKAI (ringkas — detail di docs/EMAILJS_SETUP.md):
+  ─────────────────────────────────────────────────────
+  1. Buka emailjs.com → Email Templates → Create New Template
+  2. Klik tab "Code" / "HTML" di bagian Body
+  3. Hapus semua isi, lalu paste SELURUH kode di bawah ini
+  4. Isi field pengiriman:
+       To:       fakhulrohman2@gmail.com  (email kamu, bukan variabel)
+       From:     {{from_name}} <noreply@emailjs.com>
+       Reply To: {{reply_to}}
+       Subject:  📬 Pesan baru dari {{name}} — Porto-Fakhul
+  5. Klik "Save" → catat Template ID
+  6. Masukkan ID ke .env sebagai: VITE_EMAILJS_TEMPLATE_CONTACT=template_xxxxx
+
+  VARIABEL YANG TERSEDIA (dikirim otomatis oleh aplikasi):
+  ─────────────────────────────────────────────────────────
+    {{name}}        → Nama pengirim (dari field "Nama" form)
+    {{from_name}}   → Sama dengan {{name}}
+    {{email}}       → Alamat email pengirim
+    {{from_email}}  → Sama dengan {{email}}
+    {{reply_to}}    → Sama dengan {{email}} (untuk tombol Reply di Gmail)
+    {{message}}     → Isi pesan yang dikirim
+    {{title}}       → "New message from <nama>" (untuk subject alternatif)
+    {{time}}        → Waktu pengiriman (zona WIB, format: "13 Jun 2025, 14:30")
+    {{to_name}}     → Fakhul Rohman (nama pemilik)
+    {{to_email}}    → fakhulrohman2@gmail.com (email pemilik)
+
+  CATATAN GIF:
+    Ganti URL GIF yang ditandai "GANTI GIF" dengan link .gif pilihanmu.
+    Sumber GIF gratis: giphy.com atau tenor.com (klik kanan → salin link GIF).
+    Email tetap bagus meski GIF gagal load (ada emoji cadangan).
+  ════════════════════════════════════════════════════════════════════════════
+-->
+<!DOCTYPE html>
+<html lang="id" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>📬 Pesan baru dari {{name}}</title>
+  <!--[if mso]>
+  <noscript>
+    <xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
+  </noscript>
+  <![endif]-->
+</head>
+<body style="margin:0;padding:0;background-color:#1A1A1A;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;color:#2A2A2A;">
+
+  <!-- ░░░ HIDDEN PREHEADER (teks preview di inbox) ░░░ -->
+  <div style="display:none;max-height:0;overflow:hidden;font-size:1px;line-height:1px;color:#1A1A1A;opacity:0;">
+    📬 {{name}} ({{email}}) mengirim pesan di {{time}} — Klik untuk membaca.
+  </div>
+
+  <!-- ░░░ WRAPPER ░░░ -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+         style="background-color:#1A1A1A;padding:32px 16px 48px 16px;">
+    <tr>
+      <td align="center">
+
+        <!-- ╔═══ KARTU UTAMA ═══╗ -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+               style="max-width:620px;width:100%;border-radius:20px;overflow:hidden;background-color:#FDFBF7;box-shadow:0 24px 64px -16px rgba(0,0,0,0.7);">
+
+          <!-- ▓▓▓ HEADER — ANIMATED BANNER ▓▓▓ -->
+          <tr>
+            <td style="padding:0;background:linear-gradient(145deg,#2A2A2A 0%,#3D3030 45%,#C68A7C 100%);position:relative;text-align:center;">
+              <!-- GANTI GIF: hero banner (saran ukuran 600×200px) -->
+              <img
+                src="https://media.giphy.com/media/077i6AULCXc0FKTj9s/giphy.gif"
+                alt="📬 Pesan Masuk"
+                width="620"
+                style="display:block;width:100%;max-width:620px;height:auto;max-height:200px;object-fit:cover;opacity:0.85;mix-blend-mode:luminosity;"
+              />
+              <!-- OVERLAY + BADGE -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                     style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                <tr>
+                  <td align="center" valign="middle" style="padding:24px 20px;">
+                    <div style="display:inline-block;background:rgba(198,138,124,0.92);border-radius:999px;padding:8px 22px;backdrop-filter:blur(6px);">
+                      <span style="color:#FFFFFF;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">
+                        📬 &nbsp; PESAN BARU MASUK
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ▓▓▓ TITLE STRIP ▓▓▓ -->
+          <tr>
+            <td style="background-color:#2A2A2A;padding:22px 36px;border-bottom:3px solid #C68A7C;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <p style="margin:0 0 4px 0;color:#C68A7C;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;">
+                      PORTO-FAKHUL · FORM KONTAK
+                    </p>
+                    <h1 style="margin:0;color:#FDFBF7;font-size:22px;font-weight:700;letter-spacing:-0.2px;line-height:1.3;">
+                      {{name}} mengirim pesan kepadamu
+                    </h1>
+                  </td>
+                  <td align="right" valign="top" style="padding-left:16px;white-space:nowrap;">
+                    <!-- Animated pulse dot -->
+                    <div style="display:inline-block;background-color:#A3B19B;border-radius:999px;padding:7px 16px;">
+                      <span style="color:#FFFFFF;font-size:11px;font-weight:600;letter-spacing:1px;">
+                        🟢 &nbsp;BARU
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ▓▓▓ SENDER INFO GRID ▓▓▓ -->
+          <tr>
+            <td style="padding:28px 36px 12px 36px;">
+              <p style="margin:0 0 14px 0;color:#9A9A9A;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;">
+                INFORMASI PENGIRIM
+              </p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <!-- Row: Nama -->
+                <tr>
+                  <td style="padding:10px 16px;background-color:#F5F2EB;border-radius:12px 12px 0 0;border-bottom:1px solid #E8E4DC;width:36%;">
+                    <span style="font-size:10px;font-weight:700;color:#9A9A9A;letter-spacing:1.5px;text-transform:uppercase;">
+                      👤 &nbsp;NAMA
+                    </span>
+                  </td>
+                  <td style="padding:10px 16px;background-color:#F5F2EB;border-radius:12px 12px 0 0;border-bottom:1px solid #E8E4DC;">
+                    <span style="font-size:15px;font-weight:600;color:#2A2A2A;">{{name}}</span>
+                  </td>
+                </tr>
+                <!-- Row: Email -->
+                <tr>
+                  <td style="padding:10px 16px;background-color:#FDFBF7;border-bottom:1px solid #E8E4DC;">
+                    <span style="font-size:10px;font-weight:700;color:#9A9A9A;letter-spacing:1.5px;text-transform:uppercase;">
+                      ✉️ &nbsp;EMAIL
+                    </span>
+                  </td>
+                  <td style="padding:10px 16px;background-color:#FDFBF7;border-bottom:1px solid #E8E4DC;">
+                    <a href="mailto:{{email}}"
+                       style="font-size:15px;font-weight:600;color:#C68A7C;text-decoration:none;">
+                      {{email}}
+                    </a>
+                  </td>
+                </tr>
+                <!-- Row: Waktu -->
+                <tr>
+                  <td style="padding:10px 16px;background-color:#F5F2EB;border-radius:0 0 12px 12px;">
+                    <span style="font-size:10px;font-weight:700;color:#9A9A9A;letter-spacing:1.5px;text-transform:uppercase;">
+                      🕒 &nbsp;WAKTU
+                    </span>
+                  </td>
+                  <td style="padding:10px 16px;background-color:#F5F2EB;border-radius:0 0 12px 12px;">
+                    <span style="font-size:14px;color:#4A4A4A;">{{time}}</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ▓▓▓ MESSAGE CARD ▓▓▓ -->
+          <tr>
+            <td style="padding:20px 36px 10px 36px;">
+              <p style="margin:0 0 14px 0;color:#9A9A9A;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;">
+                ISI PESAN
+              </p>
+              <!-- Decorative quote mark strip -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                     style="background-color:#2A2A2A;border-radius:16px;overflow:hidden;">
+                <tr>
+                  <!-- Left accent bar -->
+                  <td width="6" style="background-color:#C68A7C;"></td>
+                  <td style="padding:22px 22px 22px 20px;">
+                    <div style="font-size:36px;line-height:1;color:#C68A7C;margin-bottom:6px;font-family:Georgia,serif;">&ldquo;</div>
+                    <p style="margin:0 0 16px 0;color:#FDFBF7;font-size:16px;line-height:1.75;white-space:pre-wrap;word-break:break-word;">{{message}}</p>
+                    <div style="font-size:36px;line-height:0.5;color:#C68A7C;text-align:right;font-family:Georgia,serif;">&rdquo;</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ▓▓▓ GIF SPACER + QUICK ACTIONS ▓▓▓ -->
+          <tr>
+            <td style="padding:24px 36px 16px 36px;text-align:center;">
+              <!-- GANTI GIF: animasi kecil (opsional, 80–120px) -->
+              <img
+                src="https://media.giphy.com/media/WoWm8YzFnXete/giphy.gif"
+                alt=""
+                width="80"
+                style="width:80px;height:auto;display:block;margin:0 auto 20px auto;border-radius:12px;opacity:0.9;"
+              />
+              <p style="margin:0 0 18px 0;color:#4A4A4A;font-size:14px;line-height:1.5;">
+                Balas langsung ke <strong>{{name}}</strong> dengan mengklik tombol di bawah 👇
+              </p>
+              <!-- CTA BUTTON -->
+              <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                <tr>
+                  <td style="border-radius:999px;background-color:#C68A7C;box-shadow:0 6px 20px -4px rgba(198,138,124,0.55);">
+                    <a href="mailto:{{reply_to}}?subject=Re: Pesanmu di Porto-Fakhul 💬&body=Halo {{name}},%0A%0ATerima kasih sudah menghubungi! 😊%0A%0A----%0APesan aslimu:%0A{{message}}%0A----"
+                       target="_blank"
+                       style="display:inline-block;padding:14px 32px;color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none;letter-spacing:0.5px;border-radius:999px;">
+                      ✉️ &nbsp; Balas Pesan {{name}}
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <!-- Secondary: copy email -->
+              <p style="margin:14px 0 0 0;">
+                <a href="mailto:{{email}}"
+                   style="color:#A3B19B;font-size:12px;text-decoration:underline;letter-spacing:0.3px;">
+                  {{email}}
+                </a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- ▓▓▓ METADATA STRIP ▓▓▓ -->
+          <tr>
+            <td style="padding:16px 36px 8px 36px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                     style="background-color:#F5F2EB;border-radius:12px;padding:14px 18px;">
+                <tr>
+                  <td>
+                    <p style="margin:0;font-size:11px;color:#9A9A9A;line-height:1.8;">
+                      🌐 &nbsp;<strong>Sumber</strong>: Form kontak di portfolio Porto-Fakhul<br/>
+                      📅 &nbsp;<strong>Diterima</strong>: {{time}}<br/>
+                      🔖 &nbsp;<strong>Template</strong>: VITE_EMAILJS_TEMPLATE_CONTACT<br/>
+                      ⚡ &nbsp;<strong>Dikirim via</strong>: EmailJS Serverless Transport
+                    </p>
+                  </td>
+                  <td align="right" valign="middle" style="padding-left:12px;white-space:nowrap;">
+                    <div style="background-color:#2A2A2A;border-radius:8px;padding:8px 12px;text-align:center;">
+                      <span style="color:#C68A7C;font-size:18px;display:block;">📬</span>
+                      <span style="color:#FDFBF7;font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;display:block;margin-top:3px;">INBOX</span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ▓▓▓ DIVIDER + SOCIAL ▓▓▓ -->
+          <tr>
+            <td style="padding:20px 36px 16px 36px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="height:1px;background:linear-gradient(to right, transparent, #C68A7C, #A3B19B, transparent);"></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 36px 20px 36px;text-align:center;">
+              <p style="margin:0 0 14px 0;color:#9A9A9A;font-size:11px;letter-spacing:1px;text-transform:uppercase;">
+                Akses cepat
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+                <tr>
+                  <td style="padding:0 5px;">
+                    <a href="https://github.com/lumakara" target="_blank"
+                       style="display:inline-block;background-color:#2A2A2A;color:#FDFBF7;text-decoration:none;font-size:12px;font-weight:600;padding:9px 18px;border-radius:999px;letter-spacing:0.3px;">
+                      💻 GitHub
+                    </a>
+                  </td>
+                  <td style="padding:0 5px;">
+                    <a href="https://www.linkedin.com/in/fakhul-rohman-nurokhim-b24276411" target="_blank"
+                       style="display:inline-block;background-color:#C68A7C;color:#FFFFFF;text-decoration:none;font-size:12px;font-weight:600;padding:9px 18px;border-radius:999px;letter-spacing:0.3px;">
+                      🔗 LinkedIn
+                    </a>
+                  </td>
+                  <td style="padding:0 5px;">
+                    <a href="mailto:{{reply_to}}" target="_blank"
+                       style="display:inline-block;background-color:#A3B19B;color:#FFFFFF;text-decoration:none;font-size:12px;font-weight:600;padding:9px 18px;border-radius:999px;letter-spacing:0.3px;">
+                      ✉️ Balas
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ▓▓▓ FOOTER ▓▓▓ -->
+          <tr>
+            <td style="background-color:#2A2A2A;padding:20px 36px 24px 36px;text-align:center;border-top:1px solid #3A3A3A;">
+              <p style="margin:0 0 6px 0;color:#FDFBF7;font-size:13px;font-weight:700;letter-spacing:0.5px;">
+                Fakhul Rohman &nbsp;✦
+              </p>
+              <p style="margin:0 0 10px 0;color:#9A9A9A;font-size:11px;">
+                Porto-Fakhul Portfolio · fakhulrohman2@gmail.com
+              </p>
+              <p style="margin:0;color:#5A5A5A;font-size:10px;line-height:1.6;">
+                Notifikasi otomatis dari form kontak portfolio 🤖<br/>
+                Pesan ini dikirim menggunakan <strong style="color:#C68A7C;">EmailJS</strong>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- ╚═══ /KARTU UTAMA ═══╝ -->
+
+      </td>
+    </tr>
+  </table>
+  <!-- ░░░ /WRAPPER ░░░ -->
+
+</body>
+</html>
