@@ -5,8 +5,8 @@
 //  It uses a primary chat endpoint and automatically falls back to a secondary
 //  endpoint if the primary one fails (e.g. returns an error or is unavailable).
 //
-//    • Primary  →  /gpt4Mini   (GPT-4o mini style model)
-//    • Fallback →  /llama      (Llama model)
+//    • Primary  →  /gpt4       (Chat GPT-4 Mini style model)
+//    • Fallback →  /llama      (Meta Llama model)
 //
 //  The Neoxr API is a simple GET API that accepts a `q` (question/prompt) and an
 //  `apikey` query parameter, and returns JSON: { status, data: { message } }.
@@ -18,7 +18,7 @@
 //
 //        VITE_NEOXR_BASE_URL=https://api.neoxr.eu/api
 //        VITE_NEOXR_API_KEY=your-neoxr-key
-//        VITE_NEOXR_PRIMARY=/gpt4Mini
+//        VITE_NEOXR_PRIMARY=/gpt4
 //        VITE_NEOXR_FALLBACK=/llama
 //
 //  ⚠️  SECURITY NOTE: the Neoxr key is a lightweight usage key designed to be
@@ -40,7 +40,7 @@ export const NEOXR_BASE_URL = envStr(
 export const NEOXR_API_KEY = envStr(import.meta.env.VITE_NEOXR_API_KEY, 'oggwWy');
 
 /** Primary chat endpoint path (tried first). */
-export const NEOXR_PRIMARY_ENDPOINT = envStr(import.meta.env.VITE_NEOXR_PRIMARY, '/gpt4Mini');
+export const NEOXR_PRIMARY_ENDPOINT = envStr(import.meta.env.VITE_NEOXR_PRIMARY, '/gpt4');
 
 /** Fallback chat endpoint path (used when the primary fails). */
 export const NEOXR_FALLBACK_ENDPOINT = envStr(import.meta.env.VITE_NEOXR_FALLBACK, '/llama');
