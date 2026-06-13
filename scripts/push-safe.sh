@@ -1,12 +1,11 @@
 #!/bin/bash
 
-# Push to GitHub with Personal Access Token
-# Usage: ./scripts/push-with-token.sh "commit message" [branch-name]
+# Safe push script - prompts for token instead of hardcoding
+# Usage: ./scripts/push-safe.sh "commit message" [branch-name]
 
 set -e
 
 # Configuration
-# TOKEN="YOUR_GITHUB_TOKEN_HERE" - Add your token when running
 REPO_OWNER="Lumakara"
 REPO_NAME="Porto-Fakhul"
 DEFAULT_BRANCH="emailjs-integration"
@@ -15,13 +14,25 @@ DEFAULT_BRANCH="emailjs-integration"
 COMMIT_MESSAGE="${1:-'Add EmailJS contact form integration'}"
 BRANCH_NAME="${2:-$DEFAULT_BRANCH}"
 
-echo "🚀 GitHub Push Script with Token"
-echo "=================================="
+echo "🚀 GitHub Push Script (Safe)"
+echo "============================="
 echo ""
 echo "Repository: $REPO_OWNER/$REPO_NAME"
 echo "Branch: $BRANCH_NAME"
 echo "Commit: $COMMIT_MESSAGE"
 echo ""
+
+# Prompt for token securely
+read -sp "Enter your GitHub Personal Access Token: " TOKEN
+echo ""
+echo ""
+
+if [ -z "$TOKEN" ]; then
+    echo "❌ Token is required"
+    echo "   Create a token at: https://github.com/settings/tokens"
+    echo "   Required scopes: repo, workflow"
+    exit 1
+fi
 
 # Check if git is initialized
 if [ ! -d ".git" ]; then
@@ -91,13 +102,19 @@ if git push -u origin "$BRANCH_NAME"; then
     echo ""
 else
     echo "❌ Failed to push to GitHub"
-    echo "   Check your token permissions and network connection."
+    echo "   Check:"
+    echo "   1. Token permissions (repo scope required)"
+    echo "   2. Network connection"
+    echo "   3. Repository access"
     exit 1
 fi
 
 # Clean up token from remote URL (security)
 echo "🔒 Cleaning up token from git configuration..."
 git remote set-url origin "https://github.com/$REPO_OWNER/$REPO_NAME.git"
+
+# Clear token from memory
+TOKEN=""
 
 echo ""
 echo "✨ Done! The EmailJS integration is ready for review."
