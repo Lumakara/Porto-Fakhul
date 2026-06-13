@@ -200,7 +200,13 @@
         "viewRepo": "Source Code",
         "viewCase": "Case Study",
         "viewDemo": "Demo",
-        "nextProject": "Next Project"
+        "nextProject": "Next Project",
+        "tabs": {
+          "overview": "Overview",
+          "insight": "Insight",
+          "gallery": "Gallery"
+        },
+        "swipeHint": "Swipe"
       }
     },
     "contact": {
@@ -219,6 +225,8 @@
       "linkedinHover": "Let's connect",
       "or": "Or",
       "assistantBridge": "Prefer to chat? Ask the AI assistant",
+      "connectTitle": "Connect",
+      "verified": "Verified",
       "form": {
         "nameLabel": "Your name",
         "namePlaceholder": "Fakhul Rohman",
@@ -248,7 +256,8 @@
         "title": "Transmission failed",
         "description": "Something went wrong while sending your message. Please try again.",
         "retry": "Try Again",
-        "backToForm": "Back to form"
+        "backToForm": "Back to form",
+        "logsTitle": "Diagnostic log"
       },
       "charCount": "{count}/{max}"
     }

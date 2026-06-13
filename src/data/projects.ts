@@ -39,6 +39,13 @@ export interface Project {
   role: string;
   /** Short list of "screenshot" captions used to label preview frames. */
   screens: string[];
+  /**
+   * Optional dedicated cover image for the project card + detail banner.
+   * Drop a file at /public/projects/{id}/cover.webp and set this to
+   * "/projects/{id}/cover.webp". When omitted it falls back to the first
+   * gallery screenshot, so cards work immediately with the screens you upload.
+   */
+  cover?: string;
   color: string;
   gradient: string;
   /** Accent color (hex) used for badges, glows and tilt highlights. */
@@ -278,4 +285,12 @@ const STATUS_META: Record<ProjectStatus, { label: string; color: string }> = {
 
 export function getStatusMeta(status: ProjectStatus) {
   return STATUS_META[status];
+}
+
+/**
+ * Resolve the image used for a project's card thumbnail and detail banner.
+ * Prefers an explicit `cover`, otherwise reuses the first gallery screenshot.
+ */
+export function getProjectCover(project: Project): string {
+  return project.cover || project.screens[0] || '';
 }

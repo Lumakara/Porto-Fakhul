@@ -91,53 +91,64 @@ export default async function handler(req: Request): Promise<Response> {
   const ALLOWED_MODELS = new Set(['gpt-4o-mini', 'gpt-4.1-mini', 'gpt-3.5-turbo']);
   const safeModel = ALLOWED_MODELS.has(model) ? model : 'gpt-4o-mini';
 
-  // Prefer the server-side key; fall back to a visitor-provided key.
-  const serverKey =
-    (typeof process !== 'undefined' && process.env && process.env.OPENAI_API_KEY) || '';
-  const key = serverKey || (byoKey ? byoKey.trim() : '');
+  // Prefer server-side keys; fall back to a visitor-provided key. Two server
+  // keys are supported so the proxy can fail over automatically.
+  const env = (typeof process !== 'undefined' && process.env) || ({} as Record<string, string | undefined>);
+  const serverKey1 = (env.OPENAI_API_KEY || '').trim();
+  const serverKey2 = (env.OPENAI_API_KEY_2 || '').trim();
+  const trimmedByo = byoKey ? byoKey.trim() : '';
+  const keys = Array.from(new Set([serverKey1, serverKey2, trimmedByo].filter(Boolean)));
 
-  if (!key) {
+  if (keys.length === 0) {
     return new Response(
-      JSON.stringify({ error: 'No server API key configured. Add your own key in Settings.' }),
+      JSON.stringify({ error: 'No server API key configured. Add OPENAI_API_KEY in Vercel env, or your own key in Settings.' }),
       { status: 400, headers: { 'Content-Type': 'application/json' } }
     );
   }
 
-  let upstream: Response;
-  try {
-    upstream = await fetch(OPENAI_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({ model: safeModel, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
-    });
-  } catch {
-    return new Response(JSON.stringify({ error: 'Failed to reach OpenAI' }), {
-      status: 502,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
+  // Try each key in order; fail over to the next on error (e.g. quota/invalid).
+  let lastStatus = 502;
+  let lastMessage = 'Failed to reach OpenAI';
 
-  if (!upstream.ok || !upstream.body) {
+  for (let i = 0; i < keys.length; i++) {
+    let upstream: Response;
+    try {
+      upstream = await fetch(OPENAI_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${keys[i]}`,
+        },
+        body: JSON.stringify({ model: safeModel, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
+      });
+    } catch {
+      lastStatus = 502;
+      lastMessage = `Failed to reach OpenAI (key #${i + 1})`;
+      continue;
+    }
+
+    if (upstream.ok && upstream.body) {
+      // Pass the OpenAI SSE stream straight through to the client.
+      return new Response(upstream.body, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/event-stream; charset=utf-8',
+          'Cache-Control': 'no-cache, no-transform',
+          Connection: 'keep-alive',
+        },
+      });
+    }
+
     const errData = await upstream.json().catch(() => ({}));
-    const message =
+    lastStatus = upstream.status;
+    lastMessage =
       (errData as { error?: { message?: string } })?.error?.message ||
-      `OpenAI request failed (HTTP ${upstream.status})`;
-    return new Response(JSON.stringify({ error: message }), {
-      status: upstream.status,
-      headers: { 'Content-Type': 'application/json' },
-    });
+      `OpenAI request failed (HTTP ${upstream.status}) on key #${i + 1}`;
+    // Continue to the next key.
   }
 
-  // Pass the OpenAI SSE stream straight through to the client.
-  return new Response(upstream.body, {
-    status: 200,
-    headers: {
-      'Content-Type': 'text/event-stream; charset=utf-8',
-      'Cache-Control': 'no-cache, no-transform',
-      Connection: 'keep-alive',
-    },
+  return new Response(JSON.stringify({ error: lastMessage }), {
+    status: lastStatus,
+    headers: { 'Content-Type': 'application/json' },
   });
 }
