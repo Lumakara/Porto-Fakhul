@@ -1,54 +1,54 @@
 // ============================================================================
-//  AI ASSISTANT CONFIGURATION  ──  *** PUT YOUR API KEY(S) HERE ***
+//  AI ASSISTANT CONFIGURATION
 // ----------------------------------------------------------------------------
-//  The floating chat assistant needs an OpenAI API key to work. You can supply
-//  up to TWO keys — the assistant uses the 1st, and automatically falls back to
-//  the 2nd if the 1st fails (e.g. quota exhausted / rate-limited / invalid).
+//  The floating chat assistant is powered by the Neoxr API (https://neoxr.eu).
+//  It uses a primary chat endpoint and automatically falls back to a secondary
+//  endpoint if the primary one fails (e.g. returns an error or is unavailable).
 //
-//  ── Option A (recommended): environment variables ──────────────────────────
-//   1. Create a file named `.env` in the project root (next to package.json).
-//   2. Add (note the required VITE_ prefix):
+//    • Primary  →  /gpt4Mini   (GPT-4o mini style model)
+//    • Fallback →  /llama      (Llama model)
 //
-//          VITE_AI_API_KEY=sk-your-primary-key
-//          VITE_AI_API_KEY_2=sk-your-backup-key   (optional fallback)
+//  The Neoxr API is a simple GET API that accepts a `q` (question/prompt) and an
+//  `apikey` query parameter, and returns JSON: { status, data: { message } }.
+//  It supports browser CORS, so the assistant calls it directly from the client.
 //
-//   3. Restart the dev server.
+//  ── Configuration ───────────────────────────────────────────────────────────
+//  You can override the defaults below with environment variables (note the
+//  required VITE_ prefix), then restart the dev server / redeploy:
 //
-//  ── Option B (quick / local testing): paste the keys below ──────────────────
-//          const MANUAL_API_KEY   = 'sk-your-primary-key';
-//          const MANUAL_API_KEY_2 = 'sk-your-backup-key';
+//        VITE_NEOXR_BASE_URL=https://api.neoxr.eu/api
+//        VITE_NEOXR_API_KEY=your-neoxr-key
+//        VITE_NEOXR_PRIMARY=/gpt4Mini
+//        VITE_NEOXR_FALLBACK=/llama
 //
-//  ⚠️  SECURITY NOTE: keys placed here (Option A or B) are bundled into the
-//  browser build and are therefore visible to visitors. For a public/production
-//  site, prefer the serverless proxy in `api/chat.ts` and set the key there as
-//  the server-side `OPENAI_API_KEY` environment variable (never shipped to the
-//  browser). The client keys below are only used as a fallback when that proxy
-//  is not deployed or returns an error.
+//  ⚠️  SECURITY NOTE: the Neoxr key is a lightweight usage key designed to be
+//  used from the client. Lock down usage / rate limits in your Neoxr dashboard.
 // ============================================================================
 
-/** Option B: paste your keys directly here (leave '' if you use Option A). */
-const MANUAL_API_KEY = '';
-const MANUAL_API_KEY_2 = '';
+function envStr(value: unknown, fallback: string): string {
+  const v = typeof value === 'string' ? value.trim() : '';
+  return v.length > 0 ? v : fallback;
+}
 
-const ENV_KEY_1 = ((import.meta.env.VITE_AI_API_KEY as string | undefined) ?? '').trim();
-const ENV_KEY_2 = ((import.meta.env.VITE_AI_API_KEY_2 as string | undefined) ?? '').trim();
+/** Base URL of the Neoxr API (no trailing slash). */
+export const NEOXR_BASE_URL = envStr(
+  import.meta.env.VITE_NEOXR_BASE_URL,
+  'https://api.neoxr.eu/api'
+).replace(/\/+$/, '');
 
-/** Primary resolved key (.env wins, otherwise the manual key above). */
-export const AI_API_KEY: string = ENV_KEY_1 || MANUAL_API_KEY.trim();
+/** Neoxr usage key sent as the `apikey` query parameter. */
+export const NEOXR_API_KEY = envStr(import.meta.env.VITE_NEOXR_API_KEY, 'oggwWy');
 
-/** Secondary/backup key used as automatic fallback. */
-export const AI_API_KEY_2: string = ENV_KEY_2 || MANUAL_API_KEY_2.trim();
+/** Primary chat endpoint path (tried first). */
+export const NEOXR_PRIMARY_ENDPOINT = envStr(import.meta.env.VITE_NEOXR_PRIMARY, '/gpt4Mini');
 
-/**
- * Ordered list of usable client keys (de-duplicated, empty entries removed).
- * The assistant tries them in order, falling back from one to the next.
- */
-export const AI_API_KEYS: string[] = Array.from(
-  new Set([AI_API_KEY, AI_API_KEY_2].filter((k) => k.length > 0))
+/** Fallback chat endpoint path (used when the primary fails). */
+export const NEOXR_FALLBACK_ENDPOINT = envStr(import.meta.env.VITE_NEOXR_FALLBACK, '/llama');
+
+/** Ordered list of endpoints the assistant tries, primary first. */
+export const NEOXR_ENDPOINTS: string[] = Array.from(
+  new Set([NEOXR_PRIMARY_ENDPOINT, NEOXR_FALLBACK_ENDPOINT].filter((e) => e.length > 0))
 );
 
-/** Default model used by the assistant. Change here if needed. */
-export const AI_MODEL = 'gpt-4o-mini';
-
-/** True when at least one usable key has been configured. */
-export const hasAIKey = (): boolean => AI_API_KEYS.length > 0;
+/** True when the assistant has a usable Neoxr configuration. */
+export const hasAIKey = (): boolean => NEOXR_API_KEY.length > 0 && NEOXR_ENDPOINTS.length > 0;
