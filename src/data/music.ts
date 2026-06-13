@@ -18,16 +18,18 @@ export interface MusicTrack {
 
 /**
  * Background-music tracks. Drop your own audio files into `public/music/`
- * using the exact filenames below (or edit the `src` paths here).
- *   public/music/ambient.mp3
- *   public/music/lofi.mp3
- *   public/music/electronic.mp3
+ * using the exact filenames below (or edit the `src` paths here). Files in
+ * `public/` are served from the site root, so the path is `/music/...`
+ * (NOT `/public/music/...`).
+ *   public/music/ambient.mp3      ->  /music/ambient.mp3
+ *   public/music/lofi.mp3         ->  /music/lofi.mp3
+ *   public/music/electronic.mp3   ->  /music/electronic.mp3
  */
 export const musicTracks: MusicTrack[] = [
   {
     id: 'ambient',
     labelKey: 'settings.music.playlistOptions.ambient',
-    src: '/public/music/ambient.mp3',
+    src: '/music/ambient.mp3',
     icon: Waves,
     iconClass: 'text-terracotta',
     barClass: 'bg-terracotta',
@@ -35,7 +37,7 @@ export const musicTracks: MusicTrack[] = [
   {
     id: 'lofi',
     labelKey: 'settings.music.playlistOptions.lofi',
-    src: '/public/music/lofi.mp3',
+    src: '/music/lofi.mp3',
     icon: Disc3,
     iconClass: 'text-sage',
     barClass: 'bg-sage',
@@ -43,7 +45,7 @@ export const musicTracks: MusicTrack[] = [
   {
     id: 'electronic',
     labelKey: 'settings.music.playlistOptions.electronic',
-    src: '/public/music/electronic.mp3',
+    src: '/music/electronic.mp3',
     icon: Radio,
     iconClass: 'text-gold',
     barClass: 'bg-gold',

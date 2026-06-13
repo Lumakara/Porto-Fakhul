@@ -112,7 +112,6 @@ export default async function handler(req: Request): Promise<Response> {
         Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify({ model: safeModel, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
-      body: JSON.stringify({ model, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
     });
   } catch {
     return new Response(JSON.stringify({ error: 'Failed to reach OpenAI' }), {
