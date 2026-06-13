@@ -1,8 +1,5 @@
 import type { ChatMessage, AISettings } from '../types';
-import { AI_API_KEYS } from '../config/ai';
-
-const OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
-const PROXY_ENDPOINT = '/api/chat';
+import { NEOXR_BASE_URL, NEOXR_API_KEY, NEOXR_ENDPOINTS } from '../config/ai';
 
 export interface ChatRequestResult {
   ok: boolean;
@@ -18,154 +15,143 @@ export interface SendOptions {
   onToken?: (fullText: string) => void;
 }
 
-interface OpenAIErrorBody {
-  error?: { message?: string; code?: string; type?: string };
+/** Shape of a successful Neoxr chat response. */
+interface NeoxrResponse {
+  status?: boolean;
+  data?: { message?: string };
+  msg?: string;
 }
 
 function ts(): string {
   return new Date().toLocaleTimeString('en-GB', { hour12: false });
 }
 
-function buildMessages(history: ChatMessage[], settings: AISettings) {
-  const system = {
-    role: 'system' as const,
-    content: settings.personality?.trim() || 'You are a helpful assistant.',
-  };
-  const turns = history
-    .filter((m) => m.role === 'user' || m.role === 'assistant')
-    .map((m) => ({ role: m.role, content: m.content }));
-  return [system, ...turns];
+/** How many recent turns of context to send to the single-shot Neoxr endpoint. */
+const MAX_CONTEXT_TURNS = 8;
+
+/**
+ * Neoxr's chat endpoints are single-shot (one `q` string), so we flatten the
+ * system persona + the most recent conversation turns into one prompt. The
+ * model is asked to answer the final user message directly.
+ */
+function buildPrompt(history: ChatMessage[], settings: AISettings): string {
+  const persona =
+    settings.personality?.trim() || 'You are a helpful, concise and friendly assistant.';
+
+  const turns = history.filter((m) => m.role === 'user' || m.role === 'assistant');
+  const recent = turns.slice(-MAX_CONTEXT_TURNS);
+
+  const transcript = recent
+    .map((m) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
+    .join('\n');
+
+  return [
+    persona,
+    '',
+    'Conversation so far:',
+    transcript,
+    '',
+    'Reply to the last user message directly, in the same language as the user.',
+    'Keep it short and friendly. Do not prefix your reply with "Assistant:".',
+  ].join('\n');
 }
 
-function friendlyError(status: number, apiMessage?: string): string {
-  if (status === 401) return 'Invalid API key (HTTP 401). The key was rejected by OpenAI.';
-  if (status === 429) return 'Rate limit or quota exceeded (HTTP 429).';
-  if (status === 404) return 'Model not found or not accessible for this key (HTTP 404).';
-  if (status === 500 || status === 503) return `OpenAI is temporarily unavailable (HTTP ${status}).`;
-  return apiMessage || `Request failed (HTTP ${status}).`;
+/** Build the full Neoxr request URL for a given endpoint + prompt. */
+function buildUrl(endpoint: string, prompt: string): string {
+  const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const params = new URLSearchParams({ q: prompt, apikey: NEOXR_API_KEY });
+  return `${NEOXR_BASE_URL}${path}?${params.toString()}`;
 }
 
-/** Mask a key for safe display in logs: sk-abcd…WXYZ */
-function maskKey(key: string): string {
-  if (key.length <= 10) return 'sk-****';
-  return `${key.slice(0, 5)}…${key.slice(-4)}`;
+/** Remove a leading "Assistant:" the model sometimes adds despite instructions. */
+function cleanReply(text: string): string {
+  return text.replace(/^\s*assistant\s*:\s*/i, '').trim();
 }
 
 /**
- * Read an OpenAI-style SSE stream, accumulating `delta.content` tokens.
- * Calls `onToken` with the running text so the UI can render incrementally.
+ * Stream `text` to `onToken` word-by-word so the chat UI keeps its typewriter
+ * feel even though Neoxr returns the full answer at once.
  */
-async function readStream(res: Response, onToken?: (text: string) => void): Promise<string> {
-  if (!res.body) {
-    const data = await res.json().catch(() => ({}));
-    const content =
-      (data as { choices?: { message?: { content?: string } }[] })?.choices?.[0]?.message?.content ||
-      '';
-    if (content && onToken) onToken(content);
-    return content;
+async function simulateStream(
+  text: string,
+  onToken: ((fullText: string) => void) | undefined,
+  signal: AbortSignal | undefined
+): Promise<void> {
+  if (!onToken) return;
+  const tokens = text.split(/(\s+)/); // keep whitespace as its own chunks
+  let acc = '';
+  for (const tok of tokens) {
+    if (signal?.aborted) break;
+    acc += tok;
+    onToken(acc);
+    // Small delay for the typing effect; skip for very long answers.
+    if (tokens.length < 200) await new Promise((r) => setTimeout(r, 18));
   }
-
-  const reader = res.body.getReader();
-  const decoder = new TextDecoder();
-  let buffer = '';
-  let full = '';
-
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-
-    const lines = buffer.split('\n');
-    buffer = lines.pop() || '';
-
-    for (const raw of lines) {
-      const line = raw.trim();
-      if (!line.startsWith('data:')) continue;
-      const data = line.slice(5).trim();
-      if (data === '[DONE]') return full;
-      try {
-        const json = JSON.parse(data);
-        const token = json?.choices?.[0]?.delta?.content || '';
-        if (token) {
-          full += token;
-          onToken?.(full);
-        }
-      } catch {
-        // Ignore keep-alive / non-JSON lines
-      }
-    }
-  }
-  return full;
 }
 
-/** True when a response looks like a streaming/JSON API response (not SPA HTML). */
-function isApiResponse(res: Response): boolean {
-  const ct = res.headers.get('content-type') || '';
-  return ct.includes('text/event-stream') || ct.includes('application/json');
-}
-
-/** Attempt a direct OpenAI call with a specific key. Returns ok + content or an error. */
-async function tryDirectKey(
-  key: string,
-  label: string,
-  messages: ReturnType<typeof buildMessages>,
-  settings: AISettings,
+/** Call a single Neoxr endpoint. Returns ok + message, or an error to fall back on. */
+async function tryEndpoint(
+  endpoint: string,
+  prompt: string,
   logs: string[],
-  options: SendOptions
-): Promise<ChatRequestResult> {
-  const { signal, onToken } = options;
-  const model = settings.model || 'gpt-4o-mini';
-  logs.push(`[${ts()}] → OpenAI direct via ${label} (${maskKey(key)}), model=${model}`);
+  signal: AbortSignal | undefined
+): Promise<{ ok: boolean; content: string; error?: string; aborted?: boolean }> {
+  const url = buildUrl(endpoint, prompt);
+  logs.push(`[${ts()}] → Neoxr ${endpoint}…`);
 
+  let res: Response;
   try {
-    const res = await fetch(OPENAI_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-      body: JSON.stringify({
-        model,
-        messages,
-        temperature: settings.temperature ?? 0.7,
-        max_tokens: 600,
-        stream: true,
-      }),
-      signal,
-    });
-
-    if (!res.ok) {
-      const data: OpenAIErrorBody = await res.json().catch(() => ({}));
-      const detail = data?.error?.message || '';
-      const code = data?.error?.code ? ` [code: ${data.error.code}]` : '';
-      logs.push(`[${ts()}] ✗ ${label} failed: HTTP ${res.status}${code} ${detail}`.trim());
-      return { ok: false, content: '', error: friendlyError(res.status, detail) };
-    }
-
-    logs.push(`[${ts()}] ✓ ${label} connected (HTTP 200), streaming…`);
-    const content = await readStream(res, onToken);
-    if (!content.trim()) {
-      logs.push(`[${ts()}] ✗ ${label} returned an empty response.`);
-      return { ok: false, content: '', error: 'The assistant returned an empty response.' };
-    }
-    return { ok: true, content };
+    res = await fetch(url, { method: 'GET', signal });
   } catch (err) {
     if (err instanceof DOMException && err.name === 'AbortError') {
-      return { ok: false, content: '', error: 'Request cancelled.' };
+      return { ok: false, content: '', error: 'Request cancelled.', aborted: true };
     }
     const msg = err instanceof Error ? err.message : String(err);
-    logs.push(`[${ts()}] ✗ ${label} network error: ${msg}`);
-    return { ok: false, content: '', error: `Network error reaching OpenAI (${label}).` };
+    logs.push(`[${ts()}] ✗ ${endpoint} network error: ${msg}`);
+    return { ok: false, content: '', error: `Network error reaching Neoxr (${endpoint}).` };
   }
+
+  if (!res.ok) {
+    logs.push(`[${ts()}] ✗ ${endpoint} failed: HTTP ${res.status}`);
+    return { ok: false, content: '', error: `Neoxr ${endpoint} failed (HTTP ${res.status}).` };
+  }
+
+  // The API serves its website HTML for unknown/unavailable routes, so guard
+  // against non-JSON responses before trusting the body.
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    logs.push(`[${ts()}] ✗ ${endpoint} returned non-JSON (likely unavailable). Falling back…`);
+    return { ok: false, content: '', error: `Neoxr ${endpoint} is unavailable.` };
+  }
+
+  let data: NeoxrResponse;
+  try {
+    data = (await res.json()) as NeoxrResponse;
+  } catch {
+    logs.push(`[${ts()}] ✗ ${endpoint} returned invalid JSON. Falling back…`);
+    return { ok: false, content: '', error: `Neoxr ${endpoint} returned invalid data.` };
+  }
+
+  const message = cleanReply(data?.data?.message ?? '');
+  if (data?.status !== true || !message) {
+    const detail = data?.msg ? ` (${data.msg})` : '';
+    logs.push(`[${ts()}] ✗ ${endpoint} returned no message${detail}. Falling back…`);
+    return { ok: false, content: '', error: `Neoxr ${endpoint} returned an empty response.` };
+  }
+
+  logs.push(`[${ts()}] ✓ ${endpoint} responded (${message.length} chars).`);
+  return { ok: true, content: message };
 }
 
 /**
- * Send a conversation to the assistant.
+ * Send a conversation to the assistant via the Neoxr API.
  *
  * Order of attempts:
- *   1. Serverless proxy (`/api/chat`) — holds the server-side OpenAI key.
- *   2. Direct OpenAI with the user's Settings key (if provided).
- *   3. Direct OpenAI with configured key #1, then key #2 (automatic fallback).
+ *   1. Primary endpoint  (default /gpt4Mini)
+ *   2. Fallback endpoint (default /llama)
  *
  * Every attempt is recorded in `logs` so the UI can show a detailed trace on
- * failure. Streaming tokens are delivered via `onToken`.
+ * failure. The (single-shot) reply is streamed to `onToken` word-by-word.
  */
 export async function sendChatMessage(
   history: ChatMessage[],
@@ -173,84 +159,40 @@ export async function sendChatMessage(
   options: SendOptions = {}
 ): Promise<ChatRequestResult> {
   const { signal, onToken } = options;
-  const messages = buildMessages(history, settings);
   const logs: string[] = [];
 
-  // Ordered, de-duplicated list of candidate keys: Settings key first, then the
-  // configured keys (primary, then backup).
-  const settingsKey = settings.apiKey.trim();
-  const candidateKeys: { key: string; label: string }[] = [];
-  if (settingsKey) candidateKeys.push({ key: settingsKey, label: 'Settings key' });
-  AI_API_KEYS.forEach((k, i) => {
-    if (k !== settingsKey) candidateKeys.push({ key: k, label: `Config key #${i + 1}` });
-  });
-  const hasAnyKey = candidateKeys.length > 0;
-
-  // ── 1. Primary: serverless proxy ──────────────────────────────────────────
-  logs.push(`[${ts()}] → Trying serverless proxy ${PROXY_ENDPOINT}…`);
-  try {
-    const res = await fetch(PROXY_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages,
-        model: settings.model || 'gpt-4o-mini',
-        temperature: settings.temperature ?? 0.7,
-        apiKey: candidateKeys[0]?.key || undefined,
-      }),
-      signal,
-    });
-
-    const proxyAvailable = res.status !== 404 && res.status !== 501 && isApiResponse(res);
-    if (!proxyAvailable) {
-      logs.push(`[${ts()}] · Proxy not deployed (HTTP ${res.status}). Falling back to direct keys.`);
-    } else if (res.ok) {
-      logs.push(`[${ts()}] ✓ Proxy connected (HTTP 200), streaming…`);
-      const content = await readStream(res, onToken);
-      if (!content.trim()) {
-        logs.push(`[${ts()}] ✗ Proxy returned an empty response.`);
-        return { ok: false, content: '', error: 'The assistant returned an empty response.', logs };
-      }
-      return { ok: true, content, logs };
-    } else {
-      const data: OpenAIErrorBody = await res.json().catch(() => ({}));
-      const detail = data?.error?.message || '';
-      logs.push(`[${ts()}] ✗ Proxy error: HTTP ${res.status} ${detail}`.trim());
-      if (!hasAnyKey) {
-        return { ok: false, content: '', error: friendlyError(res.status, detail), logs };
-      }
-      logs.push(`[${ts()}] · Falling back to direct key(s)…`);
-    }
-  } catch (err) {
-    if (err instanceof DOMException && err.name === 'AbortError') {
-      return { ok: false, content: '', error: 'Request cancelled.', logs };
-    }
-    const msg = err instanceof Error ? err.message : String(err);
-    logs.push(`[${ts()}] · Proxy unreachable (${msg}). Falling back to direct keys.`);
-  }
-
-  // ── 2/3. Fallback: direct BYO-key calls, trying each key in order ───────────
-  if (!hasAnyKey) {
-    logs.push(`[${ts()}] ✗ No API key configured (proxy + client keys both empty).`);
+  if (!NEOXR_API_KEY) {
+    logs.push(`[${ts()}] ✗ No Neoxr API key configured.`);
     return {
       ok: false,
       content: '',
-      error:
-        'No API key configured. Add VITE_AI_API_KEY (and optional VITE_AI_API_KEY_2) in .env, paste a key in Settings, or deploy the serverless proxy with OPENAI_API_KEY.',
+      error: 'No Neoxr API key configured. Set VITE_NEOXR_API_KEY in your environment.',
       logs,
     };
   }
 
-  let lastError = 'All API keys failed.';
-  for (const { key, label } of candidateKeys) {
-    const result = await tryDirectKey(key, label, messages, settings, logs, options);
-    if (result.ok) return { ...result, logs };
-    if (result.error === 'Request cancelled.') return { ...result, logs };
+  const prompt = buildPrompt(history, settings);
+  logs.push(`[${ts()}] Initialising Neoxr transport…`);
+
+  let lastError = 'All Neoxr endpoints failed.';
+  for (let i = 0; i < NEOXR_ENDPOINTS.length; i++) {
+    const endpoint = NEOXR_ENDPOINTS[i];
+    const result = await tryEndpoint(endpoint, prompt, logs, signal);
+
+    if (result.aborted) return { ok: false, content: '', error: result.error, logs };
+
+    if (result.ok) {
+      await simulateStream(result.content, onToken, signal);
+      return { ok: true, content: result.content, logs };
+    }
+
     lastError = result.error || lastError;
-    logs.push(`[${ts()}] · Trying next key…`);
+    if (i < NEOXR_ENDPOINTS.length - 1) {
+      logs.push(`[${ts()}] · Trying fallback endpoint…`);
+    }
   }
 
-  logs.push(`[${ts()}] ✗ Exhausted all ${candidateKeys.length} key(s).`);
+  logs.push(`[${ts()}] ✗ Exhausted all ${NEOXR_ENDPOINTS.length} endpoint(s).`);
   return { ok: false, content: '', error: lastError, logs };
 }
 

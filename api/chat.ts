@@ -1,154 +1,157 @@
-// Vercel Edge Function: OpenAI chat proxy with SSE streaming.
+// Vercel Edge Function: Neoxr chat proxy.
 //
-// Deployed automatically by Vercel from the `/api` directory. The server-side
-// OpenAI key is read from the `OPENAI_API_KEY` environment variable so it is
-// never shipped to the browser. If a request includes a `apiKey` field (the
-// visitor's own "bring-your-own" key) it is used as a fallback when no server
-// key is configured.
+// Deployed automatically by Vercel from the `/api` directory. The assistant
+// normally calls the Neoxr API directly from the browser (it supports CORS),
+// but this proxy provides a server-side option that keeps the Neoxr key out of
+// the client bundle and centralises the primary/fallback endpoint logic.
 //
-// Configure on Vercel: Project Settings → Environment Variables → OPENAI_API_KEY
+//   • Primary  →  /gpt4Mini
+//   • Fallback →  /llama
+//
+// Configure on Vercel (Project Settings → Environment Variables), all optional:
+//   NEOXR_BASE_URL   (default https://api.neoxr.eu/api)
+//   NEOXR_API_KEY    (default oggwWy)
+//   NEOXR_PRIMARY    (default /gpt4Mini)
+//   NEOXR_FALLBACK   (default /llama)
 
 export const config = { runtime: 'edge' };
 
-const OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
+interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
 
 interface ChatRequestBody {
-  messages?: { role: 'system' | 'user' | 'assistant'; content: string }[];
-  model?: string;
-  temperature?: number;
-  apiKey?: string;
+  messages?: ChatMessage[];
+  /** Optional explicit prompt; when omitted it is built from `messages`. */
+  prompt?: string;
+}
+
+interface NeoxrResponse {
+  status?: boolean;
+  data?: { message?: string };
+  msg?: string;
+}
+
+const MAX_MESSAGES = 50;
+const MAX_TOTAL_CHARS = 24_000;
+const MAX_CONTEXT_TURNS = 8;
+
+function json(body: unknown, status: number): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+/** Flatten the persona + recent turns into a single Neoxr prompt string. */
+function buildPrompt(messages: ChatMessage[]): string {
+  const system = messages.find((m) => m.role === 'system')?.content?.trim();
+  const persona = system || 'You are a helpful, concise and friendly assistant.';
+
+  const turns = messages.filter((m) => m.role === 'user' || m.role === 'assistant');
+  const recent = turns.slice(-MAX_CONTEXT_TURNS);
+  const transcript = recent
+    .map((m) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
+    .join('\n');
+
+  return [
+    persona,
+    '',
+    'Conversation so far:',
+    transcript,
+    '',
+    'Reply to the last user message directly, in the same language as the user.',
+    'Keep it short and friendly. Do not prefix your reply with "Assistant:".',
+  ].join('\n');
+}
+
+function cleanReply(text: string): string {
+  return text.replace(/^\s*assistant\s*:\s*/i, '').trim();
 }
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return json({ error: 'Method not allowed' }, 405);
   }
 
   let body: ChatRequestBody;
   try {
     body = (await req.json()) as ChatRequestBody;
   } catch {
-    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return json({ error: 'Invalid JSON body' }, 400);
   }
 
-  const { messages, model = 'gpt-4o-mini', temperature = 0.7, apiKey: byoKey } = body;
-
-  if (!Array.isArray(messages) || messages.length === 0) {
-    return new Response(JSON.stringify({ error: 'No messages provided' }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
+  const messages = Array.isArray(body.messages) ? body.messages : [];
+  if (!body.prompt && messages.length === 0) {
+    return json({ error: 'No messages provided' }, 400);
   }
 
-  // ── Abuse / cost guards ─────────────────────────────────────────────────
-  // This endpoint is public, so cap the request size to limit how much a
-  // single caller can spend against the server-side OpenAI key.
-  const MAX_MESSAGES = 50;
-  const MAX_TOTAL_CHARS = 24_000;
-  const VALID_ROLES = new Set(['system', 'user', 'assistant']);
-
+  // Basic abuse / cost guards (this endpoint is public).
   if (messages.length > MAX_MESSAGES) {
-    return new Response(
-      JSON.stringify({ error: `Too many messages (max ${MAX_MESSAGES}).` }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+    return json({ error: `Too many messages (max ${MAX_MESSAGES}).` }, 400);
   }
-
-  let totalChars = 0;
-  for (const m of messages) {
-    if (
-      m === null ||
-      typeof m !== 'object' ||
-      !VALID_ROLES.has((m as { role?: string }).role ?? '') ||
-      typeof (m as { content?: unknown }).content !== 'string'
-    ) {
-      return new Response(JSON.stringify({ error: 'Invalid message format' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-    totalChars += (m as { content: string }).content.length;
-  }
-
+  const totalChars = messages.reduce((sum, m) => sum + (m?.content?.length || 0), 0);
   if (totalChars > MAX_TOTAL_CHARS) {
-    return new Response(
-      JSON.stringify({ error: `Conversation too long (max ${MAX_TOTAL_CHARS} characters).` }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+    return json({ error: `Conversation too long (max ${MAX_TOTAL_CHARS} characters).` }, 400);
   }
 
-  // Clamp temperature to a sane range regardless of client input.
-  const safeTemperature = Math.min(Math.max(Number(temperature) || 0.7, 0), 2);
+  const env =
+    (typeof process !== 'undefined' && process.env) || ({} as Record<string, string | undefined>);
+  const baseUrl = (env.NEOXR_BASE_URL || 'https://api.neoxr.eu/api').replace(/\/+$/, '');
+  const apiKey = (env.NEOXR_API_KEY || 'oggwWy').trim();
+  const primary = env.NEOXR_PRIMARY || '/gpt4Mini';
+  const fallback = env.NEOXR_FALLBACK || '/llama';
+  const endpoints = Array.from(new Set([primary, fallback].filter(Boolean)));
 
-  // Pin the model to a small allowlist of inexpensive models. The endpoint is
-  // public, so we never let a caller pick a costly model (e.g. gpt-4o, o1).
-  const ALLOWED_MODELS = new Set(['gpt-4o-mini', 'gpt-4.1-mini', 'gpt-3.5-turbo']);
-  const safeModel = ALLOWED_MODELS.has(model) ? model : 'gpt-4o-mini';
-
-  // Prefer server-side keys; fall back to a visitor-provided key. Two server
-  // keys are supported so the proxy can fail over automatically.
-  const env = (typeof process !== 'undefined' && process.env) || ({} as Record<string, string | undefined>);
-  const serverKey1 = (env.OPENAI_API_KEY || '').trim();
-  const serverKey2 = (env.OPENAI_API_KEY_2 || '').trim();
-  const trimmedByo = byoKey ? byoKey.trim() : '';
-  const keys = Array.from(new Set([serverKey1, serverKey2, trimmedByo].filter(Boolean)));
-
-  if (keys.length === 0) {
-    return new Response(
-      JSON.stringify({ error: 'No server API key configured. Add OPENAI_API_KEY in Vercel env, or your own key in Settings.' }),
-      { status: 400, headers: { 'Content-Type': 'application/json' } }
-    );
+  if (!apiKey) {
+    return json({ error: 'No Neoxr API key configured (set NEOXR_API_KEY).' }, 400);
   }
 
-  // Try each key in order; fail over to the next on error (e.g. quota/invalid).
-  let lastStatus = 502;
-  let lastMessage = 'Failed to reach OpenAI';
+  const prompt = body.prompt?.trim() || buildPrompt(messages);
 
-  for (let i = 0; i < keys.length; i++) {
+  let lastError = 'All Neoxr endpoints failed.';
+  for (const endpoint of endpoints) {
+    const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const params = new URLSearchParams({ q: prompt, apikey: apiKey });
+    const url = `${baseUrl}${path}?${params.toString()}`;
+
     let upstream: Response;
     try {
-      upstream = await fetch(OPENAI_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${keys[i]}`,
-        },
-        body: JSON.stringify({ model: safeModel, messages, temperature: safeTemperature, max_tokens: 600, stream: true }),
-      });
+      upstream = await fetch(url, { method: 'GET' });
     } catch {
-      lastStatus = 502;
-      lastMessage = `Failed to reach OpenAI (key #${i + 1})`;
+      lastError = `Failed to reach Neoxr (${endpoint}).`;
       continue;
     }
 
-    if (upstream.ok && upstream.body) {
-      // Pass the OpenAI SSE stream straight through to the client.
-      return new Response(upstream.body, {
-        status: 200,
-        headers: {
-          'Content-Type': 'text/event-stream; charset=utf-8',
-          'Cache-Control': 'no-cache, no-transform',
-          Connection: 'keep-alive',
-        },
-      });
+    if (!upstream.ok) {
+      lastError = `Neoxr ${endpoint} failed (HTTP ${upstream.status}).`;
+      continue;
     }
 
-    const errData = await upstream.json().catch(() => ({}));
-    lastStatus = upstream.status;
-    lastMessage =
-      (errData as { error?: { message?: string } })?.error?.message ||
-      `OpenAI request failed (HTTP ${upstream.status}) on key #${i + 1}`;
-    // Continue to the next key.
+    // Unknown routes serve the website HTML — only trust JSON responses.
+    const contentType = upstream.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      lastError = `Neoxr ${endpoint} is unavailable.`;
+      continue;
+    }
+
+    let data: NeoxrResponse;
+    try {
+      data = (await upstream.json()) as NeoxrResponse;
+    } catch {
+      lastError = `Neoxr ${endpoint} returned invalid data.`;
+      continue;
+    }
+
+    const message = cleanReply(data?.data?.message ?? '');
+    if (data?.status !== true || !message) {
+      lastError = `Neoxr ${endpoint} returned an empty response.`;
+      continue;
+    }
+
+    return json({ ok: true, content: message, endpoint }, 200);
   }
 
-  return new Response(JSON.stringify({ error: lastMessage }), {
-    status: lastStatus,
-    headers: { 'Content-Type': 'application/json' },
-  });
+  return json({ error: lastError }, 502);
 }
