@@ -1,5 +1,5 @@
 import type { ChatMessage, AISettings } from '../types';
-import { AI_API_KEY } from '../config/ai';
+import { AI_API_KEYS } from '../config/ai';
 
 const OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
 const PROXY_ENDPOINT = '/api/chat';
@@ -8,6 +8,8 @@ export interface ChatRequestResult {
   ok: boolean;
   content: string;
   error?: string;
+  /** Detailed, human-readable diagnostic log lines (shown in the UI on error). */
+  logs?: string[];
 }
 
 export interface SendOptions {
@@ -17,7 +19,11 @@ export interface SendOptions {
 }
 
 interface OpenAIErrorBody {
-  error?: { message?: string };
+  error?: { message?: string; code?: string; type?: string };
+}
+
+function ts(): string {
+  return new Date().toLocaleTimeString('en-GB', { hour12: false });
 }
 
 function buildMessages(history: ChatMessage[], settings: AISettings) {
@@ -32,9 +38,17 @@ function buildMessages(history: ChatMessage[], settings: AISettings) {
 }
 
 function friendlyError(status: number, apiMessage?: string): string {
-  if (status === 401) return 'Invalid API key. Please check the key in src/config/ai.ts.';
-  if (status === 429) return 'Rate limit or quota exceeded. Try again shortly.';
+  if (status === 401) return 'Invalid API key (HTTP 401). The key was rejected by OpenAI.';
+  if (status === 429) return 'Rate limit or quota exceeded (HTTP 429).';
+  if (status === 404) return 'Model not found or not accessible for this key (HTTP 404).';
+  if (status === 500 || status === 503) return `OpenAI is temporarily unavailable (HTTP ${status}).`;
   return apiMessage || `Request failed (HTTP ${status}).`;
+}
+
+/** Mask a key for safe display in logs: sk-abcd…WXYZ */
+function maskKey(key: string): string {
+  if (key.length <= 10) return 'sk-****';
+  return `${key.slice(0, 5)}…${key.slice(-4)}`;
 }
 
 /**
@@ -43,7 +57,6 @@ function friendlyError(status: number, apiMessage?: string): string {
  */
 async function readStream(res: Response, onToken?: (text: string) => void): Promise<string> {
   if (!res.body) {
-    // Non-streaming fallback: parse a normal completion payload.
     const data = await res.json().catch(() => ({}));
     const content =
       (data as { choices?: { message?: { content?: string } }[] })?.choices?.[0]?.message?.content ||
@@ -91,84 +104,25 @@ function isApiResponse(res: Response): boolean {
   return ct.includes('text/event-stream') || ct.includes('application/json');
 }
 
-/**
- * Send a conversation to the assistant.
- *
- * Primary path: the serverless proxy (`/api/chat`) which holds the OpenAI key
- * server-side. Fallback path: a direct, bring-your-own-key call to OpenAI when
- * the proxy is unavailable (e.g. static hosting / local dev) and the user has
- * supplied their own key in Settings. Both paths stream tokens via `onToken`.
- */
-export async function sendChatMessage(
-  history: ChatMessage[],
+/** Attempt a direct OpenAI call with a specific key. Returns ok + content or an error. */
+async function tryDirectKey(
+  key: string,
+  label: string,
+  messages: ReturnType<typeof buildMessages>,
   settings: AISettings,
-  options: SendOptions = {}
+  logs: string[],
+  options: SendOptions
 ): Promise<ChatRequestResult> {
   const { signal, onToken } = options;
-  const messages = buildMessages(history, settings);
-  // The key comes from src/config/ai.ts (env var or manual constant). A key
-  // typed into settings still takes precedence if one is ever set.
-  const effectiveKey = settings.apiKey.trim() || AI_API_KEY;
-  const hasByoKey = effectiveKey.length > 0;
-
-  // ── 1. Primary: serverless proxy ──────────────────────────────────────────
-  try {
-    const res = await fetch(PROXY_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages,
-        model: settings.model || 'gpt-4o-mini',
-        temperature: settings.temperature ?? 0.7,
-        // Pass BYO key so the proxy can use it if it has no server key.
-        apiKey: effectiveKey || undefined,
-      }),
-      signal,
-    });
-
-    // 404/501 or an SPA HTML response => proxy not deployed; fall through to BYO.
-    const proxyAvailable = res.status !== 404 && res.status !== 501 && isApiResponse(res);
-    if (proxyAvailable) {
-      if (res.ok) {
-        const content = await readStream(res, onToken);
-        if (!content.trim()) {
-          return { ok: false, content: '', error: 'The assistant returned an empty response.' };
-        }
-        return { ok: true, content };
-      }
-      // Proxy reachable but errored. If the user has their own key, fall back;
-      // otherwise surface the proxy's error.
-      if (!hasByoKey) {
-        const data: OpenAIErrorBody = await res.json().catch(() => ({}));
-        return { ok: false, content: '', error: friendlyError(res.status, data?.error?.message) };
-      }
-    }
-  } catch (err) {
-    if (err instanceof DOMException && err.name === 'AbortError') {
-      return { ok: false, content: '', error: 'Request cancelled.' };
-    }
-    // Network error reaching the proxy: fall through to BYO if possible.
-  }
-
-  // ── 2. Fallback: direct BYO-key call to OpenAI ──────────────────────────────
-  if (!hasByoKey) {
-    return {
-      ok: false,
-      content: '',
-      error:
-        'The AI assistant has no API key configured. Add it in src/config/ai.ts (VITE_AI_API_KEY or MANUAL_API_KEY), or deploy the serverless proxy.',
-    };
-  }
+  const model = settings.model || 'gpt-4o-mini';
+  logs.push(`[${ts()}] → OpenAI direct via ${label} (${maskKey(key)}), model=${model}`);
 
   try {
     const res = await fetch(OPENAI_ENDPOINT, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${effectiveKey}`,
-      },
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
       body: JSON.stringify({
-        model: settings.model || 'gpt-4o-mini',
+        model,
         messages,
         temperature: settings.temperature ?? 0.7,
         max_tokens: 600,
@@ -179,11 +133,16 @@ export async function sendChatMessage(
 
     if (!res.ok) {
       const data: OpenAIErrorBody = await res.json().catch(() => ({}));
-      return { ok: false, content: '', error: friendlyError(res.status, data?.error?.message) };
+      const detail = data?.error?.message || '';
+      const code = data?.error?.code ? ` [code: ${data.error.code}]` : '';
+      logs.push(`[${ts()}] ✗ ${label} failed: HTTP ${res.status}${code} ${detail}`.trim());
+      return { ok: false, content: '', error: friendlyError(res.status, detail) };
     }
 
+    logs.push(`[${ts()}] ✓ ${label} connected (HTTP 200), streaming…`);
     const content = await readStream(res, onToken);
     if (!content.trim()) {
+      logs.push(`[${ts()}] ✗ ${label} returned an empty response.`);
       return { ok: false, content: '', error: 'The assistant returned an empty response.' };
     }
     return { ok: true, content };
@@ -191,12 +150,108 @@ export async function sendChatMessage(
     if (err instanceof DOMException && err.name === 'AbortError') {
       return { ok: false, content: '', error: 'Request cancelled.' };
     }
+    const msg = err instanceof Error ? err.message : String(err);
+    logs.push(`[${ts()}] ✗ ${label} network error: ${msg}`);
+    return { ok: false, content: '', error: `Network error reaching OpenAI (${label}).` };
+  }
+}
+
+/**
+ * Send a conversation to the assistant.
+ *
+ * Order of attempts:
+ *   1. Serverless proxy (`/api/chat`) — holds the server-side OpenAI key.
+ *   2. Direct OpenAI with the user's Settings key (if provided).
+ *   3. Direct OpenAI with configured key #1, then key #2 (automatic fallback).
+ *
+ * Every attempt is recorded in `logs` so the UI can show a detailed trace on
+ * failure. Streaming tokens are delivered via `onToken`.
+ */
+export async function sendChatMessage(
+  history: ChatMessage[],
+  settings: AISettings,
+  options: SendOptions = {}
+): Promise<ChatRequestResult> {
+  const { signal, onToken } = options;
+  const messages = buildMessages(history, settings);
+  const logs: string[] = [];
+
+  // Ordered, de-duplicated list of candidate keys: Settings key first, then the
+  // configured keys (primary, then backup).
+  const settingsKey = settings.apiKey.trim();
+  const candidateKeys: { key: string; label: string }[] = [];
+  if (settingsKey) candidateKeys.push({ key: settingsKey, label: 'Settings key' });
+  AI_API_KEYS.forEach((k, i) => {
+    if (k !== settingsKey) candidateKeys.push({ key: k, label: `Config key #${i + 1}` });
+  });
+  const hasAnyKey = candidateKeys.length > 0;
+
+  // ── 1. Primary: serverless proxy ──────────────────────────────────────────
+  logs.push(`[${ts()}] → Trying serverless proxy ${PROXY_ENDPOINT}…`);
+  try {
+    const res = await fetch(PROXY_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages,
+        model: settings.model || 'gpt-4o-mini',
+        temperature: settings.temperature ?? 0.7,
+        apiKey: candidateKeys[0]?.key || undefined,
+      }),
+      signal,
+    });
+
+    const proxyAvailable = res.status !== 404 && res.status !== 501 && isApiResponse(res);
+    if (!proxyAvailable) {
+      logs.push(`[${ts()}] · Proxy not deployed (HTTP ${res.status}). Falling back to direct keys.`);
+    } else if (res.ok) {
+      logs.push(`[${ts()}] ✓ Proxy connected (HTTP 200), streaming…`);
+      const content = await readStream(res, onToken);
+      if (!content.trim()) {
+        logs.push(`[${ts()}] ✗ Proxy returned an empty response.`);
+        return { ok: false, content: '', error: 'The assistant returned an empty response.', logs };
+      }
+      return { ok: true, content, logs };
+    } else {
+      const data: OpenAIErrorBody = await res.json().catch(() => ({}));
+      const detail = data?.error?.message || '';
+      logs.push(`[${ts()}] ✗ Proxy error: HTTP ${res.status} ${detail}`.trim());
+      if (!hasAnyKey) {
+        return { ok: false, content: '', error: friendlyError(res.status, detail), logs };
+      }
+      logs.push(`[${ts()}] · Falling back to direct key(s)…`);
+    }
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'AbortError') {
+      return { ok: false, content: '', error: 'Request cancelled.', logs };
+    }
+    const msg = err instanceof Error ? err.message : String(err);
+    logs.push(`[${ts()}] · Proxy unreachable (${msg}). Falling back to direct keys.`);
+  }
+
+  // ── 2/3. Fallback: direct BYO-key calls, trying each key in order ───────────
+  if (!hasAnyKey) {
+    logs.push(`[${ts()}] ✗ No API key configured (proxy + client keys both empty).`);
     return {
       ok: false,
       content: '',
-      error: 'Network error reaching OpenAI. Check your connection and try again.',
+      error:
+        'No API key configured. Add VITE_AI_API_KEY (and optional VITE_AI_API_KEY_2) in .env, paste a key in Settings, or deploy the serverless proxy with OPENAI_API_KEY.',
+      logs,
     };
   }
+
+  let lastError = 'All API keys failed.';
+  for (const { key, label } of candidateKeys) {
+    const result = await tryDirectKey(key, label, messages, settings, logs, options);
+    if (result.ok) return { ...result, logs };
+    if (result.error === 'Request cancelled.') return { ...result, logs };
+    lastError = result.error || lastError;
+    logs.push(`[${ts()}] · Trying next key…`);
+  }
+
+  logs.push(`[${ts()}] ✗ Exhausted all ${candidateKeys.length} key(s).`);
+  return { ok: false, content: '', error: lastError, logs };
 }
 
 /** Generate a reasonably-unique id for chat messages. */

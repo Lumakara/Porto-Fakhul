@@ -51,4 +51,6 @@ export interface ChatMessage {
   content: string;
   timestamp: number;
   error?: boolean;
+  /** Detailed diagnostic log lines shown under an error message. */
+  logs?: string[];
 }

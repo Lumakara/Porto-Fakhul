@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Terminal, Sparkles } from 'lucide-react';
 import { Section, TextReveal, premiumEase } from '../components/Section';
 import { Tilt } from '../components/Tilt';
+import { LocalImage } from '../components/LocalImage';
 import { useLanguage } from '../contexts/LanguageContext';
-import { projectsData, getStatusMeta, type Project } from '../data/projects';
+import { projectsData, getStatusMeta, getProjectCover, type Project } from '../data/projects';
 
 /* ─── Card sub-component ─── */
 interface ProjectCardProps {
@@ -62,12 +63,6 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
     horizontal: 'text-xl md:text-2xl',
   };
 
-  const watermarkSize: Record<string, string> = {
-    featured: 'text-[6rem] md:text-[10rem]',
-    standard: 'text-[4rem] md:text-[6rem]',
-    horizontal: 'text-[4rem] md:text-[7rem]',
-  };
-
   return (
     <Tilt
       className={`${wrapperClasses[layout]} max-md:!col-span-1 max-md:!min-h-0`}
@@ -99,31 +94,17 @@ const ProjectCard = ({ project, index, layout, onClick }: ProjectCardProps) => {
         {/* ── Visual Preview Area ── */}
         <div
           className={`relative overflow-hidden ${visualSize[layout]} max-md:!w-full max-md:!min-h-[120px]`}
-          style={{ background: project.gradient }}
         >
-          {/* Dark overlay so watermark shows subtly */}
-          <div className="absolute inset-0 bg-sand/30" />
-
-          {/* Ghosted watermark title */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-            <span
-              className={`font-display font-medium text-charcoal opacity-[0.08] leading-none whitespace-nowrap ${watermarkSize[layout]} max-md:!text-[3rem]`}
-            >
-              {project.title}
-            </span>
-          </div>
-
-          {/* Noise texture overlay */}
-          <div className="absolute inset-0 bg-charcoal/5 mix-blend-overlay" />
-
-          {/* Hover scale animation on gradient area */}
-          <motion.div
-            className="absolute inset-0"
-            style={{ background: project.gradient }}
-            initial={false}
-            whileHover={{ scale: 1.05, opacity: 0.9 }}
-            transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] as [number, number, number, number] }}
+          {/* Local cover image (drop /projects/{id}/cover.webp, else first screenshot) */}
+          <LocalImage
+            src={getProjectCover(project)}
+            alt={`${project.title} preview`}
+            className="absolute inset-0 w-full h-full"
+            imgClassName="transition-transform duration-700 ease-out group-hover:scale-105"
           />
+
+          {/* Subtle scrim so badges stay legible on bright images */}
+          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/35 via-transparent to-charcoal/10 pointer-events-none" />
 
           {/* Category pill - top-left */}
           <div className="absolute top-3 left-3 md:top-4 md:left-4 z-10 flex items-center gap-2" style={{ transform: 'translateZ(30px)' }}>

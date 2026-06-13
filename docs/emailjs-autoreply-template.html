@@ -1,0 +1,169 @@
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  EMAILJS AUTO-REPLY TEMPLATE  —  copy ALL of this and paste it into your
+  EmailJS "Auto-Reply" template (switch the editor to Code / HTML mode).
+  ────────────────────────────────────────────────────────────────────────
+  Uses these EmailJS variables (already sent by the app):
+      {{name}}     → visitor's name
+      {{message}}  → the message they wrote (echoed back)
+      {{time}}     → time the message was sent (WIB)
+  Set the template's "To Email" field to:  {{to_email}}
+
+  ✦ Animated GIFs: replace the two GIF URLs marked "REPLACE GIF" with your own
+    (e.g. from giphy.com / tenor.com — use the direct .gif link). The email
+    still looks great if a GIF fails to load (emoji icons everywhere).
+  ════════════════════════════════════════════════════════════════════════
+-->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terima kasih sudah menghubungi</title>
+</head>
+<body style="margin:0;padding:0;background-color:#F5F2EB;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
+  <!-- Preheader (hidden preview text) -->
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
+    Halo {{name}}! ✨ Pesanmu sudah aku terima — terima kasih sudah menyapa.
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F5F2EB;padding:24px 12px;">
+    <tr>
+      <td align="center">
+        <!-- ░░░ CARD ░░░ -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background-color:#FFFFFF;border-radius:24px;overflow:hidden;box-shadow:0 18px 50px -20px rgba(42,42,42,0.25);">
+
+          <!-- ░░░ HERO BANNER (animated) ░░░ -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#C68A7C 0%,#A3B19B 55%,#2A2A2A 100%);padding:0;text-align:center;">
+              <!-- REPLACE GIF: hero animation -->
+              <img
+                src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif"
+                alt="✦ Thank you ✦"
+                width="600"
+                style="display:block;width:100%;max-width:600px;height:auto;opacity:0.92;"
+              />
+            </td>
+          </tr>
+
+          <!-- ░░░ TITLE STRIP ░░░ -->
+          <tr>
+            <td style="padding:34px 36px 8px 36px;text-align:center;">
+              <div style="font-size:46px;line-height:1;margin-bottom:10px;">👋✨</div>
+              <h1 style="margin:0;color:#2A2A2A;font-size:28px;font-weight:700;letter-spacing:-0.3px;">
+                Halo {{name}}!
+              </h1>
+              <p style="margin:10px 0 0 0;color:#4A4A4A;font-size:15px;line-height:1.6;">
+                Terima kasih sudah menghubungi 🙌 — pesanmu <b>sudah aku terima</b>.
+                Aku akan membalas secepatnya, biasanya dalam <b>1×24 jam</b> ⏱️.
+              </p>
+            </td>
+          </tr>
+
+          <!-- ░░░ STATUS PILL ░░░ -->
+          <tr>
+            <td align="center" style="padding:18px 36px 6px 36px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="background-color:#A3B19B;border-radius:999px;padding:9px 20px;">
+                    <span style="color:#FFFFFF;font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;">
+                      ✅ Pesan Terkirim
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ░░░ MESSAGE ECHO CARD ░░░ -->
+          <tr>
+            <td style="padding:22px 36px 6px 36px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F5F2EB;border:1px solid #E5E2DA;border-radius:16px;">
+                <tr>
+                  <td style="padding:18px 20px;">
+                    <p style="margin:0 0 8px 0;color:#C68A7C;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">
+                      📝 Pesan yang kamu kirim
+                    </p>
+                    <p style="margin:0;color:#2A2A2A;font-size:15px;line-height:1.7;white-space:pre-wrap;">{{message}}</p>
+                    <p style="margin:14px 0 0 0;color:#4A4A4A;font-size:12px;">
+                      🕒 Dikirim: {{time}}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ░░░ WHAT'S NEXT (icon list) ░░░ -->
+          <tr>
+            <td style="padding:24px 36px 6px 36px;">
+              <p style="margin:0 0 14px 0;color:#2A2A2A;font-size:14px;font-weight:700;">Sambil menunggu balasan: 🚀</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:6px 0;color:#4A4A4A;font-size:14px;">💼 &nbsp; Lihat proyek-proyek terbaruku</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;color:#4A4A4A;font-size:14px;">🤖 &nbsp; Ngobrol dengan AI assistant di website</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;color:#4A4A4A;font-size:14px;">☕ &nbsp; Santai — aku akan segera membalas</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ░░░ SOCIAL / CTA ░░░ -->
+          <tr>
+            <td align="center" style="padding:26px 36px 10px 36px;">
+              <!-- REPLACE GIF: small divider/sparkle animation (optional) -->
+              <img
+                src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif"
+                alt="✦"
+                width="120"
+                style="display:block;width:120px;height:auto;margin:0 auto 18px auto;opacity:0.9;"
+              />
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding:0 6px;">
+                    <a href="https://github.com/lumakara" target="_blank"
+                       style="display:inline-block;background-color:#2A2A2A;color:#FDFBF7;text-decoration:none;font-size:13px;font-weight:600;padding:11px 22px;border-radius:999px;">
+                      💻 GitHub
+                    </a>
+                  </td>
+                  <td style="padding:0 6px;">
+                    <a href="https://www.linkedin.com/in/fakhul-rohman-nurokhim-b24276411" target="_blank"
+                       style="display:inline-block;background-color:#C68A7C;color:#FFFFFF;text-decoration:none;font-size:13px;font-weight:600;padding:11px 22px;border-radius:999px;">
+                      🔗 LinkedIn
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ░░░ SIGNATURE ░░░ -->
+          <tr>
+            <td style="padding:22px 36px 8px 36px;border-top:1px solid #E5E2DA;">
+              <p style="margin:0;color:#2A2A2A;font-size:15px;font-weight:700;">Fakhul Rohman ✦</p>
+              <p style="margin:3px 0 0 0;color:#4A4A4A;font-size:12px;">Web Developer · Depok, Jawa Barat 📍</p>
+              <p style="margin:3px 0 0 0;color:#4A4A4A;font-size:12px;">✉️ fakhulrohman2@gmail.com</p>
+            </td>
+          </tr>
+
+          <!-- ░░░ FOOTER ░░░ -->
+          <tr>
+            <td style="padding:16px 36px 28px 36px;text-align:center;">
+              <p style="margin:0;color:#9c9c9c;font-size:11px;line-height:1.6;">
+                Email ini dikirim otomatis sebagai konfirmasi 🤖. Tidak perlu dibalas —
+                aku akan menghubungimu langsung. ✨
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /CARD -->
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

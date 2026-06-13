@@ -19,6 +19,7 @@ import { Section, premiumEase, Parallax } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useToast } from '../contexts/ToastContext';
+import { sendContactEmails } from '../lib/emailService';
 
 const MAX_MESSAGE_LENGTH = 500;
 const CONTACT_EMAIL = 'fakhulrohman2@gmail.com';
@@ -80,6 +81,7 @@ export const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
+  const [errorDetail, setErrorDetail] = useState('');
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [sendingProgress, setSendingProgress] = useState(0);
@@ -163,41 +165,36 @@ export const Contact = () => {
   ].filter(Boolean).length;
 
   const executeConsoleLogs = async () => {
-    const logs = [
+    // Brief "preparing" lines for texture, then the real EmailJS transport logs.
+    const prepLogs = [
       t('sections.contact.sending.establishing'),
       t('sections.contact.sending.encrypting'),
-      t('sections.contact.sending.validating'),
-      t('sections.contact.sending.routing'),
     ];
-
-    for (let i = 0; i < logs.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, 400));
-      setConsoleLogs((prev) => [...prev, logs[i]]);
-      setSendingProgress(((i + 1) / (logs.length + 1)) * 80);
+    for (let i = 0; i < prepLogs.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 350));
+      setConsoleLogs((prev) => [...prev, prepLogs[i]]);
+      setSendingProgress(((i + 1) / 6) * 55);
     }
 
-    try {
-      const response = await fetch('https://formspree.io/f/xvgzzyoy', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message }),
-      });
+    // Real send: notification to owner's Gmail + automatic reply to the visitor.
+    const result = await sendContactEmails({
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+    });
 
-      if (response.ok) {
-        setSendingProgress(100);
-        setConsoleLogs((prev) => [...prev, t('sections.contact.sending.success')]);
-        await new Promise((resolve) => setTimeout(resolve, 600));
-        setStatus('success');
-      } else {
-        throw new Error('Network error');
-      }
-    } catch {
-      setConsoleLogs((prev) => [...prev, t('sections.contact.sending.error')]);
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      setStatus('error');
-    } finally {
-      isSubmitting.current = false;
+    // Stream the detailed diagnostic logs into the on-screen console.
+    for (let i = 0; i < result.logs.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 140));
+      setConsoleLogs((prev) => [...prev, result.logs[i]]);
+      setSendingProgress(55 + ((i + 1) / result.logs.length) * 45);
     }
+
+    setSendingProgress(100);
+    setErrorDetail(result.error ?? '');
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    setStatus(result.ok ? 'success' : 'error');
+    isSubmitting.current = false;
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -223,6 +220,7 @@ export const Contact = () => {
     setFormData({ name: '', email: '', message: '' });
     setStatus('idle');
     setConsoleLogs([]);
+    setErrorDetail('');
     setErrors({});
     setTouched({});
     setSendingProgress(0);
@@ -367,75 +365,74 @@ export const Contact = () => {
             transition={{ duration: 1.1, delay: 0.2, ease: premiumEase }}
             className="lg:col-span-5 flex flex-col gap-4"
           >
-            <div className="rounded-3xl bg-surface/60 border border-charcoal/5 shadow-sm p-2 sm:p-3">
-              <div className="flex items-center justify-between px-3 py-2.5">
-                <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest">Direct channels</span>
-                <ShieldCheck className="w-3.5 h-3.5 text-sage" />
+            <div className="rounded-3xl bg-surface/60 border border-charcoal/5 shadow-sm p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-[0.25em]">
+                  {t('sections.contact.connectTitle')}
+                </span>
+                <span className="flex items-center gap-1.5 font-hud text-[10px] text-sage uppercase tracking-widest">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  {t('sections.contact.verified')}
+                </span>
               </div>
 
-              <ul className="flex flex-col">
+              {/* Minimalist 2-column channel cards */}
+              <div className="grid grid-cols-2 gap-3">
                 {channels.map((ch) => {
-                  const inner = (
+                  const cardInner = (
                     <>
-                      {/* Animated left accent */}
-                      <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 group-hover:h-3/5 bg-terracotta rounded-full transition-all duration-300" />
-                      <span className="font-mono text-[11px] text-charcoal-light/40 tabular-nums w-6 text-center">{ch.index}</span>
-                      <span className={`flex items-center justify-center w-10 h-10 rounded-xl bg-charcoal/[0.04] group-hover:bg-terracotta/10 transition-colors duration-300 ${ch.accent}`}>
+                      <span className={`flex items-center justify-center w-9 h-9 rounded-xl bg-charcoal/[0.04] group-hover:bg-terracotta/10 transition-colors duration-300 ${ch.accent}`}>
                         {ch.icon}
                       </span>
-                      <span className="flex flex-col flex-1 min-w-0">
-                        <span className="text-[10px] font-hud text-charcoal-light uppercase tracking-wider">{ch.label}</span>
-                        <span className="text-sm text-charcoal font-medium font-sans truncate group-hover:text-terracotta transition-colors duration-300">
-                          {ch.value}
-                        </span>
+                      <span className="mt-3 block text-[9px] font-hud text-charcoal-light uppercase tracking-widest">{ch.label}</span>
+                      <span className="block text-sm text-charcoal font-medium font-sans truncate w-full group-hover:text-terracotta transition-colors duration-300">
+                        {ch.value}
                       </span>
+                      {/* Bottom hover accent line */}
+                      <span className="absolute bottom-0 left-4 right-4 h-px bg-terracotta/0 group-hover:bg-terracotta/40 transition-colors duration-300" />
                     </>
                   );
 
-                  const rowClass =
-                    'group relative flex items-center gap-3 w-full px-3 py-3.5 rounded-2xl text-left cursor-none transition-colors duration-300 hover:bg-charcoal/[0.03]';
+                  const cardClass =
+                    'group relative flex flex-col items-start p-4 rounded-2xl bg-surface border border-charcoal/5 hover:border-terracotta/25 hover:shadow-sm transition-all duration-300 cursor-none text-left overflow-hidden min-w-0';
 
                   if (ch.kind === 'copy') {
                     return (
-                      <li key={ch.key}>
-                        <button onClick={handleCopyEmail} data-sound="click" className={rowClass} data-cursor="magnetic" aria-label={`Copy ${ch.value}`}>
-                          {inner}
-                          <span className="flex-shrink-0 w-9 h-9 rounded-xl bg-surface border border-charcoal/5 flex items-center justify-center text-charcoal-light group-hover:text-terracotta group-hover:border-terracotta/30 transition-colors">
-                            <AnimatePresence mode="wait" initial={false}>
-                              {copied ? (
-                                <motion.span key="c" initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
-                                  <Check className="w-4 h-4 text-sage" />
-                                </motion.span>
-                              ) : (
-                                <motion.span key="p" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
-                                  <Copy className="w-4 h-4" />
-                                </motion.span>
-                              )}
-                            </AnimatePresence>
-                          </span>
-                        </button>
-                      </li>
+                      <button key={ch.key} onClick={handleCopyEmail} data-sound="click" className={cardClass} data-cursor="magnetic" aria-label={`Copy ${ch.value}`}>
+                        {cardInner}
+                        <span className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-charcoal/[0.03] flex items-center justify-center text-charcoal-light group-hover:text-terracotta transition-colors">
+                          <AnimatePresence mode="wait" initial={false}>
+                            {copied ? (
+                              <motion.span key="c" initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
+                                <Check className="w-3.5 h-3.5 text-sage" />
+                              </motion.span>
+                            ) : (
+                              <motion.span key="p" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
+                                <Copy className="w-3.5 h-3.5" />
+                              </motion.span>
+                            )}
+                          </AnimatePresence>
+                        </span>
+                      </button>
                     );
                   }
 
                   if (ch.kind === 'link') {
                     return (
-                      <li key={ch.key}>
-                        <a href={ch.href} target="_blank" rel="noopener noreferrer" className={rowClass} data-cursor="magnetic">
-                          {inner}
-                          <ArrowUpRight className="flex-shrink-0 w-4 h-4 text-charcoal-light/40 group-hover:text-terracotta group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                        </a>
-                      </li>
+                      <a key={ch.key} href={ch.href} target="_blank" rel="noopener noreferrer" className={cardClass} data-cursor="magnetic">
+                        {cardInner}
+                        <ArrowUpRight className="absolute top-3 right-3 w-4 h-4 text-charcoal-light/40 group-hover:text-terracotta group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                      </a>
                     );
                   }
 
                   return (
-                    <li key={ch.key}>
-                      <div className={rowClass}>{inner}</div>
-                    </li>
+                    <div key={ch.key} className={`${cardClass} cursor-default`}>
+                      {cardInner}
+                    </div>
                   );
                 })}
-              </ul>
+              </div>
             </div>
 
             {/* Assistant bridge */}
@@ -697,18 +694,46 @@ export const Contact = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.4 }}
-                      className="flex flex-col items-center justify-center text-center my-auto py-12 gap-6 w-full relative z-10"
+                      className="flex flex-col items-stretch text-left h-full w-full relative z-10"
                     >
-                      <div className="w-16 h-16 rounded-full bg-terracotta/5 border border-terracotta/20 flex items-center justify-center">
-                        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.1 }}>
-                          <AlertCircle className="w-6 h-6 text-red-400" />
-                        </motion.div>
+                      <div className="flex flex-col items-center text-center gap-3 mb-5">
+                        <div className="w-14 h-14 rounded-full bg-terracotta/5 border border-terracotta/20 flex items-center justify-center">
+                          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.1 }}>
+                            <AlertCircle className="w-6 h-6 text-red-400" />
+                          </motion.div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">{t('sections.contact.error.title')}</h3>
+                          <p className="text-sm text-charcoal-light max-w-sm font-sans leading-relaxed mx-auto">
+                            {errorDetail || t('sections.contact.error.description')}
+                          </p>
+                        </div>
                       </div>
-                      <div className="space-y-3">
-                        <h3 className="text-xl md:text-2xl font-display font-medium text-charcoal tracking-wide">{t('sections.contact.error.title')}</h3>
-                        <p className="text-sm text-charcoal-light max-w-sm font-sans leading-relaxed">{t('sections.contact.error.description')}</p>
+
+                      {/* Detailed diagnostic console — shows exactly where it failed */}
+                      <div className="flex items-center gap-2 text-charcoal-light font-hud text-[10px] uppercase tracking-widest mb-2">
+                        <Terminal className="w-3.5 h-3.5" />
+                        <span>{t('sections.contact.error.logsTitle')}</span>
                       </div>
-                      <div className="flex items-center gap-3">
+                      <div className="flex-1 w-full bg-charcoal rounded-xl border border-white/10 shadow-inner p-4 font-mono text-[11px] text-sand/90 space-y-1.5 overflow-y-auto select-text max-h-56">
+                        {consoleLogs.map((log, idx) => {
+                          const isFail = /✗|fail|error|missing/i.test(log);
+                          const isWarn = /⚠/.test(log);
+                          const isOk = /✓/.test(log);
+                          return (
+                            <div key={idx} className="flex items-start gap-2">
+                              <span className={`select-none ${isFail ? 'text-red-400' : isWarn ? 'text-gold' : isOk ? 'text-sage' : 'text-sand/40'}`}>
+                                {isFail ? '✗' : isWarn ? '⚠' : isOk ? '✓' : '›'}
+                              </span>
+                              <span className={`break-words ${isFail ? 'text-red-300' : isWarn ? 'text-gold/90' : 'text-sand/80'}`}>
+                                {log.replace(/^\[[^\]]*\]\s*[✗⚠✓·→]?\s*/, '')}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div className="flex items-center justify-center gap-3 mt-5">
                         <Magnetic range={0.35}>
                           <button
                             onClick={handleRetry}

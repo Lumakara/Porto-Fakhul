@@ -145,20 +145,31 @@ export const Navbar = () => {
               : 'bg-transparent border border-transparent'
           }`}
         >
-          {/* Logo */}
+          {/* Logo + dynamic section label */}
           <button
             onClick={() => handleNavClick('home')}
-            className="flex items-center space-x-2 text-left bg-transparent border-none outline-none group cursor-none"
+            className="flex items-center space-x-2.5 text-left bg-transparent border-none outline-none group cursor-none"
             data-cursor="magnetic"
+            aria-label={`${t('nav.logo')} — ${t(`nav.${activeSection}`)}`}
           >
-            <div className="relative w-8 h-8 flex items-center justify-center rounded-full border border-terracotta/30 group-hover:border-sage/50 transition-colors duration-300">
-              <span className="text-xs font-black text-terracotta group-hover:text-sage transition-colors duration-300 font-hud">
-                FR
-              </span>
+            <div className="relative w-9 h-9 flex items-center justify-center rounded-full overflow-hidden border border-charcoal/10 group-hover:border-terracotta/40 transition-colors duration-300 bg-surface shadow-sm">
+              <img src="/icons.svg" alt="Fakhul Rohman logo" className="w-full h-full object-contain" />
             </div>
-            <span className="text-sm font-black text-charcoal tracking-widest font-display">
-              FR
-            </span>
+            <div className="flex flex-col leading-none gap-0.5">
+              <span className="text-sm font-black text-charcoal tracking-widest font-display leading-none">FR</span>
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={activeSection}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={reducedMotion ? { duration: 0 } : { duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-[9px] font-hud font-medium uppercase tracking-[0.25em] text-terracotta leading-none"
+                >
+                  {t(`nav.${activeSection}`)}
+                </motion.span>
+              </AnimatePresence>
+            </div>
           </button>
 
           {/* Desktop Navigation Links */}

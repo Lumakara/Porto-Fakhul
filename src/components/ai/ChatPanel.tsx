@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Trash2, Sparkles, Bot, User, Loader2 } from 'lucide-react';
+import { Send, Trash2, Sparkles, Bot, User, Loader2, Terminal } from 'lucide-react';
 import type { ChatMessage } from '../../types';
 import { usePreferences } from '../../contexts/PreferencesContext';
 import { loadChatHistory, saveChatHistory, clearChatHistory } from '../../lib/chatStorage';
@@ -90,13 +90,14 @@ export function ChatPanel() {
             { id: assistantId, role: 'assistant', content: result.content, timestamp: Date.now() },
           ];
         }
-        // Error: replace any partial stream with the error message.
+        // Error: replace any partial stream with the error message + diagnostic logs.
         const errorMsg: ChatMessage = {
           id: assistantId,
           role: 'assistant',
           content: result.error || 'Something went wrong.',
           timestamp: Date.now(),
           error: true,
+          logs: result.logs,
         };
         if (streamStarted) {
           return prev.map((m) => (m.id === assistantId ? errorMsg : m));
@@ -205,6 +206,20 @@ export function ChatPanel() {
                 }`}
               >
                 {m.content}
+                {/* Detailed diagnostic logs for error messages */}
+                {m.error && m.logs && m.logs.length > 0 && (
+                  <details className="mt-2.5 group/logs">
+                    <summary className="flex items-center gap-1.5 cursor-pointer list-none text-[10px] font-hud uppercase tracking-widest text-red-500/80 hover:text-red-500 transition-colors">
+                      <Terminal className="w-3 h-3" />
+                      <span>Error logs ({m.logs.length})</span>
+                    </summary>
+                    <div className="mt-2 rounded-lg bg-charcoal/90 border border-white/10 p-2.5 max-h-44 overflow-y-auto">
+                      <pre className="font-mono text-[10px] leading-relaxed text-sand/90 whitespace-pre-wrap break-words">
+                        {m.logs.join('\n')}
+                      </pre>
+                    </div>
+                  </details>
+                )}
               </div>
             </motion.div>
           ))}

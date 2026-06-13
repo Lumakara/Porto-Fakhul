@@ -137,6 +137,7 @@ function AppContent() {
         {selectedProject && (
           <Suspense fallback={<div className="fixed inset-0 z-50 bg-sand flex items-center justify-center text-charcoal-light font-hud text-[10px] tracking-widest uppercase animate-pulse">{t('common.loading')}</div>}>
             <ProjectDetail
+              key={selectedProject.id}
               project={selectedProject}
               onBack={() => setSelectedProjectId(null)}
               nextProject={nextProject}

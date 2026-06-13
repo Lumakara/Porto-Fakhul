@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, type PanInfo } from 'framer-motion';
 import {
   Compass,
@@ -16,11 +16,16 @@ import {
   Lightbulb,
   Flag,
   BadgeCheck,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
 } from 'lucide-react';
 import { Section, premiumEase, springEase } from '../components/Section';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Magnetic } from '../components/Magnetic';
 import { BrandPhoto } from '../components/BrandPhoto';
+import { LocalImage } from '../components/LocalImage';
 import { brandPhotos } from '../data/brandPhotos';
 
 const GithubIcon = ({ className }: { className?: string }) => (
@@ -67,6 +72,25 @@ export const About = () => {
   const { t } = useLanguage();
   const constraintsRef = useRef<HTMLDivElement>(null);
 
+  // Photo-strip lightbox (click a portrait to enlarge, navigate with prev/next).
+  const [photoIndex, setPhotoIndex] = useState<number | null>(null);
+  const closePhoto = () => setPhotoIndex(null);
+  const prevPhoto = () =>
+    setPhotoIndex((i) => (i === null ? i : (i - 1 + brandPhotos.length) % brandPhotos.length));
+  const nextPhoto = () =>
+    setPhotoIndex((i) => (i === null ? i : (i + 1) % brandPhotos.length));
+
+  useEffect(() => {
+    if (photoIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setPhotoIndex(null);
+      if (e.key === 'ArrowLeft') prevPhoto();
+      if (e.key === 'ArrowRight') nextPhoto();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [photoIndex]);
+
   const tabs = [
     { id: 'story', label: t('sections.about.tabs.story'), icon: Compass },
     { id: 'experience', label: t('sections.about.tabs.experience'), icon: History },
@@ -112,16 +136,16 @@ export const About = () => {
           transition={{ duration: 1.2, ease: premiumEase }}
           className="rounded-3xl overflow-hidden shadow-2xl relative bg-surface border border-charcoal/5"
         >
-          {/* Cover Banner — colourful gradient in both themes, keeps white text */}
+          {/* Cover Banner — local image (drop /public/brand/cover.webp) */}
           <div className="relative h-36 md:h-44 overflow-hidden">
-            <div
-              className="absolute inset-0"
-              style={{ background: 'linear-gradient(135deg, #C68A7C 0%, #A3B19B 50%, #2A2A2A 100%)' }}
+            <LocalImage
+              src="/brand/cover.webp"
+              alt="Fakhul Rohman — cover banner"
+              priority
+              className="absolute inset-0 w-full h-full"
             />
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-4 right-8 w-32 h-32 rounded-full bg-white/10 blur-2xl" />
-              <div className="absolute bottom-4 left-12 w-24 h-24 rounded-full bg-white/5 blur-xl" />
-            </div>
+            {/* Solid scrim so the white text/badges stay legible over any photo */}
+            <div className="absolute inset-0 bg-charcoal/45" />
             {/* Decorative icons on cover */}
             <Sparkles className="absolute top-6 right-1/3 w-4 h-4 text-white/40" />
             <Zap className="absolute bottom-8 right-16 w-3.5 h-3.5 text-white/30" />
@@ -166,12 +190,14 @@ export const About = () => {
                   className="-mt-14 md:-mt-16 mb-4 flex justify-center lg:justify-start"
                 >
                   <div className="relative">
-                    <div
-                      className="w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center border-4 shadow-xl"
-                      style={{ background: 'linear-gradient(135deg, #C68A7C, #D4AF37)', borderColor: 'var(--color-surface)' }}
-                    >
-                      <span className="text-3xl font-display font-bold text-white tracking-wide">FR</span>
-                    </div>
+                    <LocalImage
+                      src="/brand/avatar.webp"
+                      alt="Fakhul Rohman — avatar"
+                      fallbackText="FR"
+                      priority
+                      className="w-24 h-24 md:w-28 md:h-28 rounded-2xl border-4 border-surface shadow-xl"
+                      imgClassName="rounded-xl"
+                    />
                     <div className="absolute -bottom-1.5 -right-1.5 w-7 h-7 rounded-full bg-surface flex items-center justify-center shadow">
                       <BadgeCheck className="w-5 h-5 text-terracotta" />
                     </div>
@@ -247,7 +273,7 @@ export const About = () => {
                   })}
                 </motion.div>
 
-                {/* Photo strip — personal branding */}
+                {/* Photo strip — personal branding (click to enlarge) */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -256,7 +282,17 @@ export const About = () => {
                   className="grid grid-cols-4 gap-2 mb-5"
                 >
                   {brandPhotos.slice(0, 4).map((photo, i) => (
-                    <motion.div key={photo.src} whileHover={{ y: -3, scale: 1.03 }} transition={{ duration: 0.25 }}>
+                    <motion.button
+                      key={photo.src}
+                      type="button"
+                      onClick={() => setPhotoIndex(i)}
+                      data-sound="click"
+                      data-cursor="grow"
+                      whileHover={{ y: -3, scale: 1.03 }}
+                      transition={{ duration: 0.25 }}
+                      className="group/photo relative cursor-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 rounded-xl"
+                      aria-label={`${photo.alt} — enlarge`}
+                    >
                       <BrandPhoto
                         src={photo.src}
                         alt={photo.alt}
@@ -264,7 +300,13 @@ export const About = () => {
                         showCaption={false}
                         className="aspect-square rounded-xl border border-charcoal/10"
                       />
-                    </motion.div>
+                      {/* Enlarge affordance */}
+                      <span className="absolute inset-0 flex items-center justify-center rounded-xl bg-charcoal/30 opacity-0 group-hover/photo:opacity-100 transition-opacity duration-300">
+                        <span className="w-7 h-7 rounded-full bg-white/85 flex items-center justify-center">
+                          <Maximize2 className="w-3.5 h-3.5 text-charcoal" />
+                        </span>
+                      </span>
+                    </motion.button>
                   ))}
                 </motion.div>
 
@@ -496,6 +538,75 @@ export const About = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Photo lightbox — enlarge brand photos with prev/next */}
+      <AnimatePresence>
+        {photoIndex !== null && (
+          <motion.div
+            key="about-lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[130] flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-md"
+            onClick={closePhoto}
+            role="dialog"
+            aria-modal="true"
+            aria-label={brandPhotos[photoIndex].alt}
+          >
+            <button
+              onClick={closePhoto}
+              data-sound="click"
+              className="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white cursor-none transition-colors"
+              data-cursor="magnetic"
+              aria-label="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <span className="absolute top-6 left-6 text-[11px] font-hud text-white/70 tracking-widest">
+              {String(photoIndex + 1).padStart(2, '0')} / {String(brandPhotos.length).padStart(2, '0')}
+            </span>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+              data-sound="click"
+              className="absolute left-3 sm:left-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white cursor-none transition-colors"
+              data-cursor="magnetic"
+              aria-label="Previous photo"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+              data-sound="click"
+              className="absolute right-3 sm:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 flex items-center justify-center text-white cursor-none transition-colors"
+              data-cursor="magnetic"
+              aria-label="Next photo"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+
+            <motion.div
+              key={photoIndex}
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-md aspect-[3/4] rounded-2xl overflow-hidden border border-white/15 shadow-2xl"
+            >
+              <BrandPhoto
+                src={brandPhotos[photoIndex].src}
+                alt={brandPhotos[photoIndex].alt}
+                variant={photoIndex}
+                caption={brandPhotos[photoIndex].caption}
+                showCaption
+                className="w-full h-full"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Section>
   );
 };
