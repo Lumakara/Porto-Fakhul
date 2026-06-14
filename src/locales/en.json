@@ -172,6 +172,12 @@
         "hardTitle": "Hard Skills",
         "soft": ["Communication", "Teamwork", "Adaptability", "Problem Solving", "Time Management", "Leadership"],
         "hard": ["React/Next.js", "TypeScript", "Tailwind CSS", "Git/GitHub", "Figma", "Node.js"]
+      },
+      "cv": {
+        "button": "Download CV",
+        "atsWebDev": "CV ATS Web Dev",
+        "atsGeneral": "CV ATS General",
+        "designGeneral": "CV Design General"
       }
     },
     "projects": {

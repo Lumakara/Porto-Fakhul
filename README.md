@@ -1,131 +1,148 @@
-# React + TypeScript + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# ✦ Fakhul Rohman — Portfolio ✦
 
-Currently, two official plugins are available:
+### A cinematic, motion-driven personal portfolio
+**Web Dev · Editing · Quality Control**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white&style=for-the-badge)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white&style=for-the-badge)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white&style=for-the-badge)](https://vite.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?logo=tailwindcss&logoColor=white&style=for-the-badge)](https://tailwindcss.com)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?logo=framer&logoColor=white&style=for-the-badge)](https://www.framer.com/motion/)
+[![Three.js](https://img.shields.io/badge/Three.js-r184-000000?logo=threedotjs&logoColor=white&style=for-the-badge)](https://threejs.org)
 
-## React Compiler
+🌐 **Live:** [porto-fakhul.vercel.app](https://porto-fakhul.vercel.app)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+</div>
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ Overview
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+A single-page, immersive portfolio built with **React 19 + TypeScript + Vite**. It blends an editorial design language with **ultra-smooth motion** — WebGL backgrounds, magnetic cursor interactions, scroll-linked reveals, and a built-in AI assistant — while staying fast and accessible on low-end mobile devices.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+> Replace the placeholders below with your own GIF captures (drop them in `public/` and update the paths) for an even more eye-catching README.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+<div align="center">
+
+<!-- Add your own demo GIFs here, e.g. public/demo-hero.gif -->
+<img src="public/og-preview.jpg" alt="Portfolio preview" width="80%" />
+
+</div>
+
+---
+
+## 🎯 Features
+
+| Area | Highlights |
+| --- | --- |
+| 🪐 **Hero** | WebGL / Three.js background, animated headline, magnetic CTAs |
+| 👤 **About** | Story / Experience / Skills tabs, **3-variant CV download menu**, text-only **Hard Skills** with animated brand icons, mobile-friendly **Soft Skills** grid, brand photo lightbox |
+| 🗂️ **Projects** | Tilt cards, category filtering, rich **Project Detail** view (2-layer hero, gallery lightbox, lightweight tech-stack reveal) |
+| 🤖 **AI Assistant** | Floating chat powered by the Neoxr API (GPT-4 primary, Llama fallback) |
+| ✉️ **Contact** | EmailJS-powered form with validation, loading states, and optional auto-reply |
+| 🌍 **i18n** | Full **English / Indonesian / 中文** localization |
+| 🎚️ **Preferences** | Settings panel: motion reduction, visual effects, audio feedback, background music |
+| 🛠️ **On-device debug** | [eruda](https://github.com/liriliri/eruda) console, lazy-loaded and opt-in via `?eruda` |
+
+---
+
+## 🎬 Motion & Animation
+
+- **Framer Motion** for entrance reveals, shared-layout tab indicators, and micro-interactions.
+- **Three.js / React Three Fiber** for the WebGL hero backdrop (lazy-loaded, capability-gated).
+- **Lenis** smooth scrolling + **GSAP** for select sequences.
+- **Reduced-motion aware** — every heavy animation respects `prefers-reduced-motion` and the in-app motion toggle, so low-end phones stay smooth.
+
+---
+
+## 🧱 Tech Stack
+
+- **Framework:** React 19, TypeScript, Vite 8
+- **Styling:** Tailwind CSS 4
+- **Animation:** Framer Motion, GSAP, Lenis, Three.js (`@react-three/fiber`, `@react-three/drei`)
+- **Icons:** lucide-react + Simple Icons CDN (brand logos)
+- **Integrations:** EmailJS (contact), Neoxr API (AI chat)
+- **Tooling:** ESLint, TypeScript ESLint, eruda
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── sections/      # Hero, About, Projects, ProjectDetail, Contact, NotFound
+├── components/    # UI building blocks (Navbar, Cursor, TechMarquee, …)
+├── contexts/      # Language, Preferences, Toast
+├── data/          # projects, techIcons, brandPhotos, music
+├── lib/           # motion, aiChat, emailService, storage, eruda, …
+├── config/        # ai (Neoxr), email (EmailJS)
+└── locales/       # en.json, id.json, zh.json
+public/
+├── brand/         # avatar, cover, portraits
+├── projects/      # per-project screenshots & covers
+├── cv/            # ← drop your CV PDFs here (see public/cv/README.md)
+└── music/         # ambient tracks
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🚀 Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Create your environment file
+cp .env.example .env      # then fill in the values
+
+# 3. Start the dev server
+npm run dev
+
+# 4. Build for production
+npm run build
 ```
-# Porto-Fakhul
 
+### 📜 Scripts
 
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server |
+| `npm run build` | Type-check + production build |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint |
+| `npm run setup:emailjs` | Interactive EmailJS setup helper |
 
-## 📧 EmailJS Contact Form
+---
 
-The portfolio includes a fully functional contact form powered by EmailJS. The form sends messages directly to your email and can optionally send auto-replies to visitors.
+## 🔧 Manual Setup
 
-### Quick Setup
+Some assets and credentials must be configured by hand. **See [`SETUP.md`](SETUP.md) for the full checklist**, but in short:
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+- **CV PDFs** → drop 3 files in `public/cv/` (see [`public/cv/README.md`](public/cv/README.md)).
+- **EmailJS** → set `VITE_EMAILJS_*` in `.env` (see [`docs/EMAILJS_SETUP_GUIDE.md`](docs/EMAILJS_SETUP_GUIDE.md)).
+- **AI Assistant (Neoxr)** → optional `VITE_NEOXR_*` overrides in `.env`.
+- **Brand & project images** → drop `.webp` files in `public/brand/` and `public/projects/`.
 
-2. **Set up EmailJS:**
-   ```bash
-   npm run setup:emailjs
-   ```
-   Or manually create `.env` file from `.env.example`
+---
 
-3. **Run the development server:**
-   ```bash
-   npm run dev
-   ```
+## 🔒 Security
 
-4. **Test the contact form:**
-   - Navigate to Contact section
-   - Fill out the form
-   - Check your email for notifications
+This project ships with hardened HTTP headers (`vercel.json`) and a documented production checklist covering DDoS/DoS mitigation, secret handling, and abuse protection.
 
-### Documentation
+➡️ **Read [`docs/SECURITY_PRODUCTION.md`](docs/SECURITY_PRODUCTION.md) before going live.**
 
-- 📖 [Full EmailJS Setup Guide](docs/EMAILJS_SETUP_GUIDE.md)
-- ✅ [Setup Checklist](docs/EMAILJS_CHECKLIST.md)
-- 🎨 [Email Templates](public/emailjs-templates/README.md)
-- ⚙️ [Manual Setup](docs/MANUAL_SETUP.md)
+---
 
-### Features
+## ☁️ Deployment
 
-- ✅ Real-time email delivery
-- ✅ Auto-reply to visitors (optional)
-- ✅ Console logging for debugging
-- ✅ Form validation
-- ✅ Loading states and error handling
-- ✅ Mobile responsive design
+Optimized for **Vercel** (zero-config). Push to your connected repo, set the environment variables in *Project Settings → Environment Variables*, and deploy. The included `vercel.json` handles SPA rewrites, clean URLs, and security headers.
 
-### Troubleshooting
+---
 
-If emails are not sending:
+<div align="center">
 
-1. Check browser console for error messages
-2. Verify `.env` file configuration
-3. Check EmailJS dashboard for activity logs
-4. Ensure templates are published (not draft)
-5. Verify allowed origins in EmailJS security settings
+Built with care by **Fakhul Rohman** · Depok, West Java 🇮🇩
 
-For detailed troubleshooting, see the [EmailJS Setup Guide](docs/EMAILJS_SETUP_GUIDE.md#troubleshooting).
+</div>

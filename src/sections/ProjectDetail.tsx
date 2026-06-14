@@ -136,44 +136,44 @@ export const ProjectDetail = ({ project, onBack, nextProject, onNavigate }: Proj
 
       <div className="absolute inset-0 bg-sand">
         <div className="h-full overflow-y-auto">
-          {/* Hero banner — local cover image (drop /projects/{id}/cover.webp) */}
-          <div className="relative w-full h-64 md:h-80 flex items-end overflow-hidden">
+          {/* Hero — Layer 1: cover image only (no overlaid text → tidy on mobile) */}
+          <div className="relative w-full h-44 sm:h-60 md:h-80 overflow-hidden">
             <LocalImage
               src={cover}
               alt={`${project.title} banner`}
               priority
               className="absolute inset-0 w-full h-full"
             />
-            {/* Solid scrim for legible header text over any photo */}
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/35 to-charcoal/20" />
-            <Sparkles className="absolute top-24 right-16 w-5 h-5 text-white/30" />
+            {/* Soft bottom fade so the image blends into the text layer below */}
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent" />
+            <Sparkles className="absolute top-5 right-6 w-5 h-5 text-white/40" />
+          </div>
 
-            {/* Header content */}
-            <div className="relative w-full max-w-4xl mx-auto px-6 md:px-8 pb-8 md:pb-10">
-              <motion.div custom={0.2} variants={contentVariants} initial="initial" animate="animate" className="flex flex-wrap items-center gap-2 mb-4">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur border border-white/20 text-[9px] font-hud text-white uppercase tracking-widest">
-                  {project.categoryLabel}
+          {/* Hero — Layer 2: title + meta on a clean surface block */}
+          <div className="relative w-full max-w-4xl mx-auto px-6 md:px-8 pt-6 md:pt-8">
+            <motion.div custom={0.2} variants={contentVariants} initial="initial" animate="animate" className="flex flex-wrap items-center gap-2 mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-charcoal/5 border border-charcoal/10 text-[9px] font-hud text-charcoal-light uppercase tracking-widest">
+                {project.categoryLabel}
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-charcoal/5 border border-charcoal/10 text-[9px] font-hud uppercase tracking-widest text-charcoal-light">
+                <span className="relative flex h-1.5 w-1.5">
+                  {project.status === 'live' && <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: status.color }} />}
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ backgroundColor: status.color }} />
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 backdrop-blur border border-white/20 text-[9px] font-hud uppercase tracking-widest text-white">
-                  <span className="relative flex h-1.5 w-1.5">
-                    {project.status === 'live' && <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: status.color }} />}
-                    <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ backgroundColor: status.color }} />
-                  </span>
-                  {status.label}
-                </span>
-              </motion.div>
+                {status.label}
+              </span>
+            </motion.div>
 
-              <motion.h1 custom={0.25} variants={contentVariants} initial="initial" animate="animate" className="text-3xl md:text-5xl font-display font-medium text-white tracking-tight drop-shadow-sm">
-                {project.title}
-              </motion.h1>
-              <motion.p custom={0.3} variants={contentVariants} initial="initial" animate="animate" className="mt-2 text-base md:text-lg text-white/80 font-sans max-w-2xl">
-                {project.tagline}
-              </motion.p>
-            </div>
+            <motion.h1 custom={0.25} variants={contentVariants} initial="initial" animate="animate" className="text-3xl md:text-5xl font-display font-medium text-charcoal tracking-tight">
+              {project.title}
+            </motion.h1>
+            <motion.p custom={0.3} variants={contentVariants} initial="initial" animate="animate" className="mt-2 text-base md:text-lg text-charcoal-light font-sans max-w-2xl">
+              {project.tagline}
+            </motion.p>
           </div>
 
           {/* Content */}
-          <div className="relative w-full max-w-4xl mx-auto px-6 md:px-8 py-8 md:py-10">
+          <div className="relative w-full max-w-4xl mx-auto px-6 md:px-8 pt-6 md:pt-8 pb-8 md:pb-10">
             {/* Action links */}
             <motion.div custom={0.35} variants={contentVariants} initial="initial" animate="animate" className="flex flex-wrap gap-2.5 pb-6 border-b border-charcoal/10">
               {project.links.map((link, i) => {

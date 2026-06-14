@@ -20,12 +20,23 @@ import {
   ChevronLeft,
   ChevronRight,
   Maximize2,
+  Download,
+  FileText,
+  FileBadge,
+  Palette,
+  ChevronDown,
+  Code2,
+  Server,
+  Database,
+  Wrench,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Section, premiumEase, springEase } from '../components/Section';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Magnetic } from '../components/Magnetic';
 import { BrandPhoto } from '../components/BrandPhoto';
 import { LocalImage } from '../components/LocalImage';
+import { getTechIconUrl } from '../data/techIcons';
 import { brandPhotos } from '../data/brandPhotos';
 
 const GithubIcon = ({ className }: { className?: string }) => (
@@ -58,14 +69,64 @@ const softSkills = [
   { label: 'Leadership', icon: Flag },
 ];
 
-const hardSkills = [
-  { label: 'React / Next.js', level: 88 },
-  { label: 'TypeScript', level: 82 },
-  { label: 'Tailwind CSS', level: 90 },
-  { label: 'Git / GitHub', level: 85 },
-  { label: 'Figma', level: 78 },
-  { label: 'Node.js', level: 72 },
+const hardSkillGroups: { category: string; icon: LucideIcon; items: string[] }[] = [
+  { category: 'Frontend', icon: Code2, items: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS'] },
+  { category: 'Backend', icon: Server, items: ['Node.js', 'Express.js', 'REST API'] },
+  { category: 'Database', icon: Database, items: ['MongoDB'] },
+  { category: 'Tools', icon: Wrench, items: ['Git', 'GitHub', 'Vercel'] },
 ];
+
+// Downloadable CV variants — drop the PDFs in /public/cv (see public/cv/README.md).
+const cvFiles: { key: string; file: string; icon: LucideIcon }[] = [
+  { key: 'atsWebDev', file: '/cv/cv-ats-web-dev.pdf', icon: FileBadge },
+  { key: 'atsGeneral', file: '/cv/cv-ats-umum.pdf', icon: FileText },
+  { key: 'designGeneral', file: '/cv/cv-design-umum.pdf', icon: Palette },
+];
+
+/**
+ * A single hard-skill tool rendered as a text-only chip with its brand icon.
+ * The icon has a soft, GPU-cheap hover animation (lift + gentle tilt) to feel
+ * interactive without the cost of an always-running loop.
+ */
+function HardSkillChip({ label, index }: { label: string; index: number }) {
+  const iconUrl = getTechIconUrl(label);
+  const [iconFailed, setIconFailed] = useState(false);
+  const showIcon = iconUrl && !iconFailed;
+
+  return (
+    <motion.span
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.04, duration: 0.35, ease: premiumEase }}
+      whileHover={{ y: -2 }}
+      className="group/skill inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-charcoal/5 border border-charcoal/10 text-charcoal text-xs font-hud transition-colors duration-300 hover:border-terracotta/40 hover:bg-terracotta/10"
+    >
+      <motion.span
+        className="inline-flex"
+        whileHover={{ scale: 1.2, rotate: -8 }}
+        transition={{ type: 'spring', stiffness: 320, damping: 14 }}
+      >
+        {showIcon ? (
+          <img
+            src={iconUrl}
+            alt=""
+            aria-hidden="true"
+            width={15}
+            height={15}
+            loading="lazy"
+            decoding="async"
+            onError={() => setIconFailed(true)}
+            className="w-[15px] h-[15px] object-contain"
+          />
+        ) : (
+          <Code2 className="w-[15px] h-[15px] text-terracotta" />
+        )}
+      </motion.span>
+      {label}
+    </motion.span>
+  );
+}
 
 export const About = () => {
   const [activeTab, setActiveTab] = useState<TabType>('story');
@@ -90,6 +151,29 @@ export const About = () => {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [photoIndex]);
+
+  // CV download dropdown (3 variants — PDFs served from /public/cv).
+  const [cvOpen, setCvOpen] = useState(false);
+  const cvMenuRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!cvOpen) return;
+    const onPointer = (e: MouseEvent | TouchEvent) => {
+      if (cvMenuRef.current && !cvMenuRef.current.contains(e.target as Node)) {
+        setCvOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setCvOpen(false);
+    };
+    document.addEventListener('mousedown', onPointer);
+    document.addEventListener('touchstart', onPointer);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onPointer);
+      document.removeEventListener('touchstart', onPointer);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [cvOpen]);
 
   const tabs = [
     { id: 'story', label: t('sections.about.tabs.story'), icon: Compass },
@@ -273,6 +357,64 @@ export const About = () => {
                   })}
                 </motion.div>
 
+                {/* CV download — choose one of three resume variants (PDFs in /public/cv) */}
+                <div ref={cvMenuRef} className="relative flex justify-center lg:justify-start mb-5">
+                  <motion.button
+                    type="button"
+                    onClick={() => setCvOpen((v) => !v)}
+                    aria-haspopup="menu"
+                    aria-expanded={cvOpen}
+                    data-sound="click"
+                    data-cursor="grow"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-charcoal text-sand text-xs font-hud uppercase tracking-widest shadow-sm transition-colors duration-300 hover:bg-terracotta cursor-none"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    {t('sections.about.cv.button')}
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${cvOpen ? 'rotate-180' : ''}`} />
+                  </motion.button>
+
+                  <AnimatePresence>
+                    {cvOpen && (
+                      <motion.div
+                        role="menu"
+                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                        transition={{ duration: 0.22, ease: premiumEase }}
+                        className="absolute top-full left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 mt-2 w-60 z-30 origin-top rounded-2xl bg-surface border border-charcoal/10 shadow-xl p-1.5"
+                      >
+                        {cvFiles.map((cv) => {
+                          const Icon = cv.icon;
+                          return (
+                            <a
+                              key={cv.key}
+                              href={cv.file}
+                              download
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => setCvOpen(false)}
+                              role="menuitem"
+                              data-sound="click"
+                              data-cursor="magnetic"
+                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-charcoal hover:bg-terracotta/10 transition-colors duration-200 cursor-none"
+                            >
+                              <span className="w-8 h-8 shrink-0 rounded-lg bg-charcoal/5 flex items-center justify-center">
+                                <Icon className="w-4 h-4 text-terracotta" />
+                              </span>
+                              <span className="flex flex-col">
+                                <span className="text-xs font-hud font-medium tracking-wide">{t(`sections.about.cv.${cv.key}`)}</span>
+                                <span className="text-[9px] font-hud text-charcoal-light/70 uppercase tracking-widest">PDF</span>
+                              </span>
+                            </a>
+                          );
+                        })}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
                 {/* Photo strip — personal branding (click to enlarge) */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -455,51 +597,50 @@ export const About = () => {
                               transition={{ duration: 0.6, ease: premiumEase }}
                               className="text-left space-y-6"
                             >
-                              {/* Soft skills */}
+                              {/* Soft skills — tidy 2-col grid on mobile, wraps to pills on larger screens */}
                               <div className="space-y-3">
                                 <h3 className="text-sm font-hud font-medium text-charcoal tracking-widest uppercase">{t('sections.about.skills.softTitle')}</h3>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
                                   {softSkills.map((skill, index) => {
                                     const Icon = skill.icon;
                                     return (
                                       <motion.span
                                         key={skill.label}
                                         initial={{ opacity: 0, scale: 0.9 }}
-                                        animate={{ opacity: 1, scale: 1 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true }}
                                         transition={{ delay: index * 0.04, duration: 0.3, ease: premiumEase }}
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-terracotta/15 border border-terracotta/25 text-charcoal text-xs font-hud rounded-full cursor-none transition-colors duration-300 hover:bg-terracotta/25"
-                                        data-cursor="magnetic"
+                                        whileHover={{ y: -2 }}
+                                        className="flex min-w-0 items-center justify-center sm:justify-start gap-1.5 px-3 py-1.5 bg-terracotta/15 border border-terracotta/25 text-charcoal text-[11px] sm:text-xs font-hud rounded-full text-center leading-tight transition-colors duration-300 hover:bg-terracotta/25"
                                       >
-                                        <Icon className="w-3.5 h-3.5 text-terracotta" />
-                                        {skill.label}
+                                        <Icon className="w-3.5 h-3.5 text-terracotta shrink-0" />
+                                        <span>{skill.label}</span>
                                       </motion.span>
                                     );
                                   })}
                                 </div>
                               </div>
 
-                              {/* Hard skills with proficiency */}
-                              <div className="space-y-3">
+                              {/* Hard skills — text only, grouped by category, with soft animated brand icons */}
+                              <div className="space-y-4">
                                 <h3 className="text-sm font-hud font-medium text-charcoal tracking-widest uppercase">{t('sections.about.skills.hardTitle')}</h3>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-3">
-                                  {hardSkills.map((skill, index) => (
-                                    <div key={skill.label} className="space-y-1">
-                                      <div className="flex items-center justify-between">
-                                        <span className="text-xs text-charcoal-light font-hud">{skill.label}</span>
-                                        <span className="text-[10px] text-sage font-hud">{skill.level}%</span>
+                                <div className="space-y-4">
+                                  {hardSkillGroups.map((group) => {
+                                    const GroupIcon = group.icon;
+                                    return (
+                                      <div key={group.category} className="space-y-2">
+                                        <div className="flex items-center gap-2">
+                                          <GroupIcon className="w-3.5 h-3.5 text-sage" />
+                                          <span className="text-[11px] font-hud text-charcoal-light uppercase tracking-widest">{group.category}</span>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2">
+                                          {group.items.map((item, i) => (
+                                            <HardSkillChip key={item} label={item} index={i} />
+                                          ))}
+                                        </div>
                                       </div>
-                                      <div className="h-1.5 rounded-full bg-charcoal/10 overflow-hidden">
-                                        <motion.div
-                                          className="h-full rounded-full bg-gradient-to-r from-sage to-terracotta"
-                                          initial={{ width: 0 }}
-                                          whileInView={{ width: `${skill.level}%` }}
-                                          viewport={{ once: true }}
-                                          transition={{ duration: 1, delay: 0.2 + index * 0.08, ease: premiumEase }}
-                                        />
-                                      </div>
-                                    </div>
-                                  ))}
+                                    );
+                                  })}
                                 </div>
                               </div>
                             </motion.div>
