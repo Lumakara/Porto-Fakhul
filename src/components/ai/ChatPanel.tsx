@@ -149,7 +149,10 @@ export function ChatPanel() {
       </div>
 
       {/* Messages */}
-      <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1 py-2">
+      <div
+        ref={scrollRef}
+        className="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth space-y-3 pr-1 py-2 [-webkit-overflow-scrolling:touch]"
+      >
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center text-center h-full py-8 px-2">
             <div className="w-12 h-12 rounded-2xl bg-terracotta/10 border border-terracotta/20 flex items-center justify-center mb-4">
@@ -197,7 +200,7 @@ export function ChatPanel() {
                 {m.role === 'user' ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
               </div>
               <div
-                className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm font-sans leading-relaxed whitespace-pre-wrap break-words ${
+                className={`max-w-[85%] sm:max-w-[78%] rounded-2xl px-3 py-2 sm:px-3.5 sm:py-2.5 text-[13px] sm:text-sm font-sans leading-relaxed whitespace-pre-wrap break-words ${
                   m.role === 'user'
                     ? 'bg-charcoal text-sand rounded-br-sm'
                     : m.error
@@ -252,7 +255,7 @@ export function ChatPanel() {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message..."
           aria-label="Chat message"
-          className="flex-1 bg-surface border border-charcoal/10 rounded-full px-4 py-2.5 text-sm font-sans text-charcoal outline-none focus:border-terracotta/50 transition-colors cursor-none placeholder:text-charcoal-light/50"
+          className="flex-1 min-w-0 bg-surface border border-charcoal/10 rounded-full px-4 py-2.5 text-base sm:text-sm font-sans text-charcoal outline-none focus:border-terracotta/50 transition-colors cursor-none placeholder:text-charcoal-light/50"
           data-cursor="grow"
         />
         <button
