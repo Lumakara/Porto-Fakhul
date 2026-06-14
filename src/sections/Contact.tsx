@@ -1,31 +1,21 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import type { FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Send,
   Terminal,
-  MapPin,
-  Mail,
   ArrowUpRight,
   AlertCircle,
   RotateCcw,
-  Copy,
-  Check,
   MessageSquare,
   Sparkles,
-  ShieldCheck,
 } from 'lucide-react';
 import { Section, premiumEase, Parallax } from '../components/Section';
 import { Magnetic } from '../components/Magnetic';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useToast } from '../contexts/ToastContext';
 import { sendContactEmails } from '../lib/emailService';
 
 const MAX_MESSAGE_LENGTH = 500;
-const CONTACT_EMAIL = 'fakhulrohman2@gmail.com';
-const GITHUB_URL = 'https://github.com/lumakara';
-const LINKEDIN_URL =
-  'https://www.linkedin.com/in/fakhul-rohman-nurokhim-b24276411?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app';
 
 interface ValidationErrors {
   name?: string;
@@ -34,21 +24,6 @@ interface ValidationErrors {
 }
 
 const validateEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-const GithubGlyph = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
-  </svg>
-);
-
-const LinkedinGlyph = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
 
 /** Circular completion ring driven by how many fields are valid. */
 function CompletionRing({ progress }: { progress: number }) {
@@ -85,44 +60,8 @@ export const Contact = () => {
   const [errors, setErrors] = useState<ValidationErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [sendingProgress, setSendingProgress] = useState(0);
-  const [copied, setCopied] = useState(false);
-  const [localTime, setLocalTime] = useState('');
   const isSubmitting = useRef(false);
   const { t } = useLanguage();
-  const { showToast } = useToast();
-
-  // Live local clock (Depok / WIB = Asia/Jakarta).
-  useEffect(() => {
-    const tick = () => {
-      try {
-        setLocalTime(
-          new Intl.DateTimeFormat('en-GB', {
-            timeZone: 'Asia/Jakarta',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false,
-          }).format(new Date())
-        );
-      } catch {
-        setLocalTime(new Date().toLocaleTimeString());
-      }
-    };
-    tick();
-    const id = window.setInterval(tick, 1000);
-    return () => window.clearInterval(id);
-  }, []);
-
-  const handleCopyEmail = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(CONTACT_EMAIL);
-      setCopied(true);
-      showToast(t('toasts.emailCopied'), 'success');
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      // Clipboard unavailable - silently ignore
-    }
-  }, [showToast, t]);
 
   const validateField = useCallback(
     (name: string, value: string): string | undefined => {
@@ -241,48 +180,6 @@ export const Contact = () => {
   const labelBase =
     'absolute left-4 top-1/2 -translate-y-1/2 text-charcoal-light/50 text-sm font-sans pointer-events-none transition-all duration-300 peer-focus:top-3 peer-focus:text-[10px] peer-focus:font-hud peer-focus:uppercase peer-focus:tracking-widest peer-focus:text-terracotta peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-[10px] peer-[:not(:placeholder-shown)]:font-hud peer-[:not(:placeholder-shown)]:uppercase peer-[:not(:placeholder-shown)]:tracking-widest peer-[:not(:placeholder-shown)]:text-charcoal-light';
 
-  // Interactive channel rows for the left rail.
-  const channels = [
-    {
-      key: 'email',
-      index: '01',
-      icon: <Mail className="w-4 h-4" />,
-      label: t('sections.contact.emailLabel'),
-      value: CONTACT_EMAIL,
-      kind: 'copy' as const,
-      accent: 'text-sage',
-    },
-    {
-      key: 'github',
-      index: '02',
-      icon: <GithubGlyph className="w-4 h-4" />,
-      label: t('sections.contact.github'),
-      value: t('sections.contact.githubHover'),
-      kind: 'link' as const,
-      href: GITHUB_URL,
-      accent: 'text-charcoal',
-    },
-    {
-      key: 'linkedin',
-      index: '03',
-      icon: <LinkedinGlyph className="w-4 h-4" />,
-      label: t('sections.contact.linkedin'),
-      value: t('sections.contact.linkedinHover'),
-      kind: 'link' as const,
-      href: LINKEDIN_URL,
-      accent: 'text-terracotta',
-    },
-    {
-      key: 'location',
-      index: '04',
-      icon: <MapPin className="w-4 h-4" />,
-      label: t('sections.contact.locationLabel'),
-      value: t('sections.contact.locationValue'),
-      kind: 'static' as const,
-      accent: 'text-gold',
-    },
-  ];
-
   return (
     <Section id="contact" className="relative px-4 sm:px-6 md:px-12">
       {/* Ambient background */}
@@ -329,30 +226,6 @@ export const Contact = () => {
               {t('sections.contact.description')}
             </motion.p>
           </div>
-
-          {/* Live status console chip */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.25, ease: premiumEase }}
-            className="flex-shrink-0 rounded-2xl bg-surface border border-charcoal/5 shadow-sm p-4 w-full sm:w-auto lg:min-w-[220px]"
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sage opacity-75" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-sage" />
-              </span>
-              <span className="text-xs font-hud text-charcoal tracking-wide">Available for work</span>
-            </div>
-            <div className="flex items-end justify-between gap-4">
-              <div className="flex flex-col">
-                <span className="font-mono text-2xl text-charcoal tabular-nums leading-none">{localTime || '--:--:--'}</span>
-                <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-widest mt-1.5">Depok &bull; WIB</span>
-              </div>
-              <Terminal className="w-5 h-5 text-charcoal-light/40" />
-            </div>
-          </motion.div>
         </div>
 
         {/* ── Body grid ── */}
@@ -365,76 +238,6 @@ export const Contact = () => {
             transition={{ duration: 1.1, delay: 0.2, ease: premiumEase }}
             className="lg:col-span-5 flex flex-col gap-4"
           >
-            <div className="rounded-3xl bg-surface/60 border border-charcoal/5 shadow-sm p-4 sm:p-5">
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-hud text-[10px] text-charcoal-light uppercase tracking-[0.25em]">
-                  {t('sections.contact.connectTitle')}
-                </span>
-                <span className="flex items-center gap-1.5 font-hud text-[10px] text-sage uppercase tracking-widest">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  {t('sections.contact.verified')}
-                </span>
-              </div>
-
-              {/* Minimalist 2-column channel cards */}
-              <div className="grid grid-cols-2 gap-3">
-                {channels.map((ch) => {
-                  const cardInner = (
-                    <>
-                      <span className={`flex items-center justify-center w-9 h-9 rounded-xl bg-charcoal/[0.04] group-hover:bg-terracotta/10 transition-colors duration-300 ${ch.accent}`}>
-                        {ch.icon}
-                      </span>
-                      <span className="mt-3 block text-[9px] font-hud text-charcoal-light uppercase tracking-widest">{ch.label}</span>
-                      <span className="block text-sm text-charcoal font-medium font-sans truncate w-full group-hover:text-terracotta transition-colors duration-300">
-                        {ch.value}
-                      </span>
-                      {/* Bottom hover accent line */}
-                      <span className="absolute bottom-0 left-4 right-4 h-px bg-terracotta/0 group-hover:bg-terracotta/40 transition-colors duration-300" />
-                    </>
-                  );
-
-                  const cardClass =
-                    'group relative flex flex-col items-start p-4 rounded-2xl bg-surface border border-charcoal/5 hover:border-terracotta/25 hover:shadow-sm transition-all duration-300 cursor-none text-left overflow-hidden min-w-0';
-
-                  if (ch.kind === 'copy') {
-                    return (
-                      <button key={ch.key} onClick={handleCopyEmail} data-sound="click" className={cardClass} data-cursor="magnetic" aria-label={`Copy ${ch.value}`}>
-                        {cardInner}
-                        <span className="absolute top-3 right-3 w-7 h-7 rounded-lg bg-charcoal/[0.03] flex items-center justify-center text-charcoal-light group-hover:text-terracotta transition-colors">
-                          <AnimatePresence mode="wait" initial={false}>
-                            {copied ? (
-                              <motion.span key="c" initial={{ scale: 0, rotate: -90 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
-                                <Check className="w-3.5 h-3.5 text-sage" />
-                              </motion.span>
-                            ) : (
-                              <motion.span key="p" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={{ duration: 0.2 }}>
-                                <Copy className="w-3.5 h-3.5" />
-                              </motion.span>
-                            )}
-                          </AnimatePresence>
-                        </span>
-                      </button>
-                    );
-                  }
-
-                  if (ch.kind === 'link') {
-                    return (
-                      <a key={ch.key} href={ch.href} target="_blank" rel="noopener noreferrer" className={cardClass} data-cursor="magnetic">
-                        {cardInner}
-                        <ArrowUpRight className="absolute top-3 right-3 w-4 h-4 text-charcoal-light/40 group-hover:text-terracotta group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                      </a>
-                    );
-                  }
-
-                  return (
-                    <div key={ch.key} className={`${cardClass} cursor-default`}>
-                      {cardInner}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
             {/* Assistant bridge */}
             <Magnetic range={0.25}>
               <motion.button

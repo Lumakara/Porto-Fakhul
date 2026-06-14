@@ -326,6 +326,15 @@ body.scroll-locked {
   overflow: hidden;
 }
 
+/* Hide scrollbar while keeping scroll functionality (horizontal pill rows, etc.) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Focus visible utility */
 *:focus-visible {
   outline: 2px solid var(--color-terracotta);

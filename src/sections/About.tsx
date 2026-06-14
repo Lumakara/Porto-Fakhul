@@ -305,20 +305,20 @@ export const About = () => {
                   </p>
                 </motion.div>
 
-                {/* Meta pills */}
+                {/* Meta pills — horizontal scroll row (swipe / drag left & right) */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.4, ease: premiumEase }}
-                  className="flex flex-wrap justify-center lg:justify-start gap-2 mb-5"
+                  className="flex flex-nowrap items-center gap-2 mb-5 -mx-1 px-1 overflow-x-auto no-scrollbar snap-x snap-mandatory [-webkit-overflow-scrolling:touch] overscroll-x-contain"
                 >
                   {metaPills.map((pill) => {
                     const Icon = pill.icon;
                     return (
                       <span
                         key={pill.label}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-charcoal/5 border border-charcoal/10 text-[11px] font-hud text-charcoal-light"
+                        className="flex-shrink-0 snap-start flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-charcoal/5 border border-charcoal/10 text-[11px] font-hud text-charcoal-light whitespace-nowrap"
                       >
                         <Icon className={`w-3.5 h-3.5 ${pill.accent}`} />
                         {pill.label}
@@ -327,93 +327,96 @@ export const About = () => {
                   })}
                 </motion.div>
 
-                {/* Social links */}
+                {/* Social links (left) + CV download (right) — 2 columns, 1 row */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.45, ease: premiumEase }}
-                  className="flex justify-center lg:justify-start gap-2.5 mb-5"
+                  className="grid grid-cols-2 items-center gap-3 mb-5"
                 >
-                  {socialLinks.map((social) => {
-                    const Icon = social.icon;
-                    return (
-                      <Magnetic key={social.label} range={0.3}>
-                        <motion.a
-                          href={social.href}
-                          target={social.href.startsWith('http') ? '_blank' : undefined}
-                          rel="noopener noreferrer"
-                          onClick={(e: React.MouseEvent) => { if (social.href === '#') e.preventDefault(); }}
-                          aria-label={social.label}
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="w-9 h-9 rounded-full bg-charcoal/5 border border-charcoal/10 flex items-center justify-center text-charcoal-light hover:text-terracotta hover:bg-charcoal/10 hover:border-charcoal/20 transition-colors duration-300 cursor-none"
-                          data-cursor="magnetic"
+                  {/* Left cell: social links */}
+                  <div className="flex justify-center lg:justify-start gap-2.5">
+                    {socialLinks.map((social) => {
+                      const Icon = social.icon;
+                      return (
+                        <Magnetic key={social.label} range={0.3}>
+                          <motion.a
+                            href={social.href}
+                            target={social.href.startsWith('http') ? '_blank' : undefined}
+                            rel="noopener noreferrer"
+                            onClick={(e: React.MouseEvent) => { if (social.href === '#') e.preventDefault(); }}
+                            aria-label={social.label}
+                            whileHover={{ scale: 1.1, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="w-9 h-9 rounded-full bg-charcoal/5 border border-charcoal/10 flex items-center justify-center text-charcoal-light hover:text-terracotta hover:bg-charcoal/10 hover:border-charcoal/20 transition-colors duration-300 cursor-none"
+                            data-cursor="magnetic"
+                          >
+                            <Icon className="w-4 h-4" />
+                          </motion.a>
+                        </Magnetic>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right cell: CV download — choose one of three resume variants (PDFs in /public/cv) */}
+                  <div ref={cvMenuRef} className="relative flex justify-center lg:justify-end">
+                    <motion.button
+                      type="button"
+                      onClick={() => setCvOpen((v) => !v)}
+                      aria-haspopup="menu"
+                      aria-expanded={cvOpen}
+                      data-sound="click"
+                      data-cursor="grow"
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-charcoal text-sand text-xs font-hud uppercase tracking-widest shadow-sm transition-colors duration-300 hover:bg-terracotta cursor-none"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      {t('sections.about.cv.button')}
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${cvOpen ? 'rotate-180' : ''}`} />
+                    </motion.button>
+
+                    <AnimatePresence>
+                      {cvOpen && (
+                        <motion.div
+                          role="menu"
+                          initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                          transition={{ duration: 0.22, ease: premiumEase }}
+                          className="absolute top-full right-0 mt-2 w-60 max-w-[calc(100vw-3rem)] z-30 origin-top rounded-2xl bg-surface border border-charcoal/10 shadow-xl p-1.5"
                         >
-                          <Icon className="w-4 h-4" />
-                        </motion.a>
-                      </Magnetic>
-                    );
-                  })}
+                          {cvFiles.map((cv) => {
+                            const Icon = cv.icon;
+                            return (
+                              <a
+                                key={cv.key}
+                                href={cv.file}
+                                download
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={() => setCvOpen(false)}
+                                role="menuitem"
+                                data-sound="click"
+                                data-cursor="magnetic"
+                                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-charcoal hover:bg-terracotta/10 transition-colors duration-200 cursor-none"
+                              >
+                                <span className="w-8 h-8 shrink-0 rounded-lg bg-charcoal/5 flex items-center justify-center">
+                                  <Icon className="w-4 h-4 text-terracotta" />
+                                </span>
+                                <span className="flex flex-col">
+                                  <span className="text-xs font-hud font-medium tracking-wide">{t(`sections.about.cv.${cv.key}`)}</span>
+                                  <span className="text-[9px] font-hud text-charcoal-light/70 uppercase tracking-widest">PDF</span>
+                                </span>
+                              </a>
+                            );
+                          })}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </motion.div>
-
-                {/* CV download — choose one of three resume variants (PDFs in /public/cv) */}
-                <div ref={cvMenuRef} className="relative flex justify-center lg:justify-start mb-5">
-                  <motion.button
-                    type="button"
-                    onClick={() => setCvOpen((v) => !v)}
-                    aria-haspopup="menu"
-                    aria-expanded={cvOpen}
-                    data-sound="click"
-                    data-cursor="grow"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-charcoal text-sand text-xs font-hud uppercase tracking-widest shadow-sm transition-colors duration-300 hover:bg-terracotta cursor-none"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    {t('sections.about.cv.button')}
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${cvOpen ? 'rotate-180' : ''}`} />
-                  </motion.button>
-
-                  <AnimatePresence>
-                    {cvOpen && (
-                      <motion.div
-                        role="menu"
-                        initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                        transition={{ duration: 0.22, ease: premiumEase }}
-                        className="absolute top-full left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 mt-2 w-60 z-30 origin-top rounded-2xl bg-surface border border-charcoal/10 shadow-xl p-1.5"
-                      >
-                        {cvFiles.map((cv) => {
-                          const Icon = cv.icon;
-                          return (
-                            <a
-                              key={cv.key}
-                              href={cv.file}
-                              download
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() => setCvOpen(false)}
-                              role="menuitem"
-                              data-sound="click"
-                              data-cursor="magnetic"
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-charcoal hover:bg-terracotta/10 transition-colors duration-200 cursor-none"
-                            >
-                              <span className="w-8 h-8 shrink-0 rounded-lg bg-charcoal/5 flex items-center justify-center">
-                                <Icon className="w-4 h-4 text-terracotta" />
-                              </span>
-                              <span className="flex flex-col">
-                                <span className="text-xs font-hud font-medium tracking-wide">{t(`sections.about.cv.${cv.key}`)}</span>
-                                <span className="text-[9px] font-hud text-charcoal-light/70 uppercase tracking-widest">PDF</span>
-                              </span>
-                            </a>
-                          );
-                        })}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
 
                 {/* Photo strip — personal branding (click to enlarge) */}
                 <motion.div
