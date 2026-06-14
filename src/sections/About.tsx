@@ -311,14 +311,14 @@ export const About = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.4, ease: premiumEase }}
-                  className="flex flex-wrap justify-center lg:justify-start gap-2 mb-5"
+                  className="flex gap-2 mb-5 overflow-x-auto flex-nowrap -mx-1 px-1 pb-1 snap-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
                 >
                   {metaPills.map((pill) => {
                     const Icon = pill.icon;
                     return (
                       <span
                         key={pill.label}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-charcoal/5 border border-charcoal/10 text-[11px] font-hud text-charcoal-light"
+                        className="flex shrink-0 snap-start whitespace-nowrap items-center gap-1.5 px-3 py-1.5 rounded-full bg-charcoal/5 border border-charcoal/10 text-[11px] font-hud text-charcoal-light"
                       >
                         <Icon className={`w-3.5 h-3.5 ${pill.accent}`} />
                         {pill.label}
@@ -327,14 +327,16 @@ export const About = () => {
                   })}
                 </motion.div>
 
-                {/* Social links */}
+                {/* Social links (left) + CV download (right) — 2 columns, 1 row */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.45, ease: premiumEase }}
-                  className="flex justify-center lg:justify-start gap-2.5 mb-5"
+                  className="grid grid-cols-2 gap-3 items-center mb-5"
                 >
+                  {/* Left cell: social links */}
+                  <div className="flex flex-wrap justify-center lg:justify-start gap-2.5">
                   {socialLinks.map((social) => {
                     const Icon = social.icon;
                     return (
@@ -355,10 +357,10 @@ export const About = () => {
                       </Magnetic>
                     );
                   })}
-                </motion.div>
+                  </div>
 
-                {/* CV download — choose one of three resume variants (PDFs in /public/cv) */}
-                <div ref={cvMenuRef} className="relative flex justify-center lg:justify-start mb-5">
+                  {/* Right cell: CV download — choose one of three resume variants (PDFs in /public/cv) */}
+                  <div ref={cvMenuRef} className="relative flex justify-center lg:justify-end">
                   <motion.button
                     type="button"
                     onClick={() => setCvOpen((v) => !v)}
@@ -383,7 +385,7 @@ export const About = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.96 }}
                         transition={{ duration: 0.22, ease: premiumEase }}
-                        className="absolute top-full left-1/2 lg:left-0 -translate-x-1/2 lg:translate-x-0 mt-2 w-60 z-30 origin-top rounded-2xl bg-surface border border-charcoal/10 shadow-xl p-1.5"
+                        className="absolute top-full right-0 mt-2 w-56 sm:w-60 z-30 origin-top-right rounded-2xl bg-surface border border-charcoal/10 shadow-xl p-1.5"
                       >
                         {cvFiles.map((cv) => {
                           const Icon = cv.icon;
@@ -414,6 +416,7 @@ export const About = () => {
                     )}
                   </AnimatePresence>
                 </div>
+                </motion.div>
 
                 {/* Photo strip — personal branding (click to enlarge) */}
                 <motion.div
