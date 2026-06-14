@@ -172,6 +172,12 @@
         "hardTitle": "Hard Skills",
         "soft": ["Komunikasi", "Kerja Tim", "Adaptabilitas", "Pemecahan Masalah", "Manajemen Waktu", "Kepemimpinan"],
         "hard": ["React/Next.js", "TypeScript", "Tailwind CSS", "Git/GitHub", "Figma", "Node.js"]
+      },
+      "cv": {
+        "button": "Unduh CV",
+        "atsWebDev": "CV ATS Web Dev",
+        "atsGeneral": "CV ATS Umum",
+        "designGeneral": "CV Design Umum"
       }
     },
     "projects": {

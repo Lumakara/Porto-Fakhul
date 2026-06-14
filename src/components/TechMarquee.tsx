@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Code2 } from 'lucide-react';
 import { getTechIconUrl } from '../data/techIcons';
-import { useReducedMotion } from '../lib/motion';
+import { useReducedMotion, premiumEase } from '../lib/motion';
 
 interface TechMarqueeProps {
   /** Technology labels to display (from project.tech). */
   items: string[];
-  /** Seconds for one full loop. Lower = faster. */
-  speed?: number;
 }
 
 /** Single tech pill: brand icon (Simple Icons CDN) + label, with chip fallback. */
@@ -40,45 +38,29 @@ function TechChip({ label }: { label: string }) {
 }
 
 /**
- * Horizontal, infinitely looping tech-stack strip that scrolls right → left.
- * The list is duplicated so the animation wraps seamlessly. Respects reduced
- * motion (falls back to a static wrapped row).
+ * Tech-stack list. Renders a wrapped row of chips that softly fade/rise in once
+ * when scrolled into view. There is no continuous/looping animation, so it stays
+ * smooth on low-end devices. Respects reduced motion (renders statically).
  */
-export function TechMarquee({ items, speed = 22 }: TechMarqueeProps) {
+export function TechMarquee({ items }: TechMarqueeProps) {
   const reducedMotion = useReducedMotion();
 
-  if (reducedMotion || items.length === 0) {
-    return (
-      <div className="flex flex-wrap gap-2.5">
-        {items.map((tech) => (
-          <TechChip key={tech} label={tech} />
-        ))}
-      </div>
-    );
-  }
-
-  // Duplicate the items so translating by -50% produces a seamless loop.
-  const loop = [...items, ...items];
+  if (items.length === 0) return null;
 
   return (
-    <div
-      className="relative w-full overflow-hidden"
-      style={{
-        maskImage:
-          'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
-        WebkitMaskImage:
-          'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
-      }}
-    >
-      <motion.div
-        className="flex items-center gap-2.5 w-max"
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: speed, ease: 'linear', repeat: Infinity }}
-      >
-        {loop.map((tech, i) => (
-          <TechChip key={`${tech}-${i}`} label={tech} />
-        ))}
-      </motion.div>
+    <div className="flex flex-wrap gap-2.5">
+      {items.map((tech, i) => (
+        <motion.div
+          key={tech}
+          initial={reducedMotion ? false : { opacity: 0, y: 10, scale: 0.96 }}
+          whileInView={reducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ delay: i * 0.05, duration: 0.4, ease: premiumEase }}
+          whileHover={reducedMotion ? undefined : { y: -3 }}
+        >
+          <TechChip label={tech} />
+        </motion.div>
+      ))}
     </div>
   );
 }
