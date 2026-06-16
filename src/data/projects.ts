@@ -125,7 +125,10 @@ export const projectsData: Project[] = [
       { label: 'Tema', value: '4' },
       { label: 'Bahasa', value: '2' },
     ],
-
+links: [
+      { label: 'Live', href: '/maintenance', type: 'live' },
+      { label: 'Repository', href: '/maintenance', type: 'repo' },
+    ],
     status: 'live',
     year: '2025',
     role: 'Full-Stack Developer',
