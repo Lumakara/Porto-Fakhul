@@ -19,6 +19,7 @@ import { getDeviceCapability } from './lib/deviceCapability';
 import { useReducedMotion } from './lib/motion';
 
 import { NotFound } from './sections/NotFound';
+import { Maintenance } from './sections/Maintenance';
 
 // Lazy loaded components for performance
 const Projects = lazy(() => import('./sections/Projects'));
@@ -275,16 +276,41 @@ function AppContent() {
 }
 
 function AppRouter() {
-  const [isNotFound, setIsNotFound] = useState(false);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   useEffect(() => {
-    // Basic client-side routing check
-    if (window.location.pathname !== '/') {
-      setIsNotFound(true);
-    }
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    // Listen to history changes (popstate)
+    window.addEventListener('popstate', handleLocationChange);
+
+    // Patch pushState and replaceState to catch client-side redirects
+    const originalPushState = window.history.pushState;
+    window.history.pushState = function (...args) {
+      originalPushState.apply(this, args);
+      handleLocationChange();
+    };
+
+    const originalReplaceState = window.history.replaceState;
+    window.history.replaceState = function (...args) {
+      originalReplaceState.apply(this, args);
+      handleLocationChange();
+    };
+
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.history.pushState = originalPushState;
+      window.history.replaceState = originalReplaceState;
+    };
   }, []);
 
-  if (isNotFound) {
+  if (currentPath === '/maintenance') {
+    return <Maintenance />;
+  }
+
+  if (currentPath !== '/') {
     return <NotFound />;
   }
 

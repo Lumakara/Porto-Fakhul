@@ -348,5 +348,28 @@
       "noProjects": "Tidak ada proyek untuk ditampilkan",
       "noSkills": "Tidak ada keahlian untuk ditampilkan"
     }
+  },
+  "errorPages": {
+    "notFound": {
+      "title": "Halaman tidak",
+      "titleItalic": "ditemukan",
+      "subtitle": "Halaman yang Anda cari telah dipindahkan, dihapus, atau mungkin tidak pernah ada.",
+      "button": "KEMBALI KE BERANDA",
+      "detailsTitle": "DIAGNOSTIK SISTEM",
+      "requestPath": "Path Permintaan",
+      "errorCode": "Kode Eror",
+      "explanation": "Kemungkinan Penyebab",
+      "explanationDetail": "Tidak ada rute yang cocok yang ditemukan dalam konfigurasi aplikasi portofolio ini. URL mungkin salah diketik, atau sumber daya telah dihapus.",
+      "toggleLogs": "Tampilkan Log Diagnostik",
+      "logMessage": "Resolusi rute sistem gagal. Sumber daya yang diminta pada path target tidak cocok dengan aset statis atau dinamis apa pun."
+    },
+    "maintenance": {
+      "title": "Dalam",
+      "titleItalic": "pemeliharaan",
+      "badge": "MODE PEMELIHARAAN",
+      "subtitle": "Bagian ini saat ini sedang dalam pemeliharaan.",
+      "description": "Saya sedang mempersiapkan repositori kode sumber dan demonstrasi langsung untuk proyek ini. Proyek akan segera tersedia! Silakan periksa kembali nanti.",
+      "button": "KEMBALI KE BERANDA"
+    }
   }
 }

@@ -607,7 +607,7 @@ export const About = () => {
                                   {softSkills.map((skill, index) => {
                                     const Icon = skill.icon;
                                     return (
-                                      <motion.span
+                                      <motion.div
                                         key={skill.label}
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
@@ -618,7 +618,7 @@ export const About = () => {
                                       >
                                         <Icon className="w-3.5 h-3.5 text-terracotta shrink-0" />
                                         <span>{skill.label}</span>
-                                      </motion.span>
+                                      </motion.div>
                                     );
                                   })}
                                 </div>

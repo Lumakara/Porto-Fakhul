@@ -357,5 +357,28 @@
       "noProjects": "No projects to display",
       "noSkills": "No skills to display"
     }
+  },
+  "errorPages": {
+    "notFound": {
+      "title": "Page not",
+      "titleItalic": "found",
+      "subtitle": "The page you are looking for has been moved, deleted, or possibly never existed.",
+      "button": "RETURN HOME",
+      "detailsTitle": "SYSTEM DIAGNOSTICS",
+      "requestPath": "Request Path",
+      "errorCode": "Error Code",
+      "explanation": "Possible Cause",
+      "explanationDetail": "No matching route was found in the portfolio application configuration. The URL may be mistyped, or the resource has been removed.",
+      "toggleLogs": "Toggle Diagnostic Log",
+      "logMessage": "System route resolution failed. Resource requested at target path does not match any static or dynamic assets."
+    },
+    "maintenance": {
+      "title": "Under",
+      "titleItalic": "maintenance",
+      "badge": "MAINTENANCE MODE",
+      "subtitle": "This section is currently undergoing maintenance.",
+      "description": "I am preparing the source code repository and live demonstration for this project. It will be available shortly! Please check back later.",
+      "button": "RETURN HOME"
+    }
   }
 }
