@@ -82,8 +82,8 @@ export const projectsData: Project[] = [
       { label: 'Hak Akses', value: '4 Tier' },
     ],
     links: [
-      { label: 'Repository', href: '/maintenance', type: 'repo' },
-      { label: 'Demo', href: '/maintenance', type: 'demo' },
+      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
+      { label: 'Demo', href: PORTFOLIO_REPO, type: 'demo' },
     ],
     status: 'live',
     year: '2025',
