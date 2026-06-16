@@ -82,8 +82,8 @@ export const projectsData: Project[] = [
       { label: 'Hak Akses', value: '4 Tier' },
     ],
     links: [
-      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
-      { label: 'Demo', href: GITHUB_PROFILE, type: 'demo' },
+      { label: 'Repository', href: '/maintenance', type: 'repo' },
+      { label: 'Demo', href: '/maintenance', type: 'demo' },
     ],
     status: 'live',
     year: '2025',
@@ -125,10 +125,7 @@ export const projectsData: Project[] = [
       { label: 'Tema', value: '4' },
       { label: 'Bahasa', value: '2' },
     ],
-    links: [
-      { label: 'Live', href: GITHUB_PROFILE, type: 'live' },
-      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
-    ],
+
     status: 'live',
     year: '2025',
     role: 'Full-Stack Developer',
@@ -170,8 +167,8 @@ export const projectsData: Project[] = [
       { label: 'Database', value: 'PostgreSQL' },
     ],
     links: [
-      { label: 'Live', href: GITHUB_PROFILE, type: 'live' },
-      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
+      { label: 'Live', href: '/maintenance', type: 'live' },
+      { label: 'Repository', href: '/maintenance', type: 'repo' },
     ],
     status: 'live',
     year: '2026',
@@ -214,8 +211,8 @@ export const projectsData: Project[] = [
       { label: 'Stack', value: 'MERN' },
     ],
     links: [
-      { label: 'Repository', href: GITHUB_PROFILE, type: 'repo' },
-      { label: 'Demo', href: GITHUB_PROFILE, type: 'demo' },
+      { label: 'Repository', href: '/maintenance', type: 'repo' },
+      { label: 'Demo', href: '/maintenance', type: 'demo' },
     ],
     status: 'in-progress',
     year: '2026',
@@ -258,8 +255,8 @@ export const projectsData: Project[] = [
       { label: 'Database', value: 'MongoDB' },
     ],
     links: [
-      { label: 'Live', href: GITHUB_PROFILE, type: 'live' },
-      { label: 'Repository', href: PORTFOLIO_REPO, type: 'repo' },
+      { label: 'Live', href: '/maintenance', type: 'live' },
+      { label: 'Repository', href: '/maintenance', type: 'repo' },
     ],
     status: 'live',
     year: '2024',
