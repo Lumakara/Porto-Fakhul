@@ -1,5 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Preloader } from './components/Preloader';
 import { CustomCursor } from './components/CustomCursor';
 import { AudioFeedbackManager } from './components/AudioFeedbackManager';
@@ -323,6 +324,7 @@ function App() {
       <PreferencesProvider>
         <ToastProvider>
           <AppRouter />
+          <SpeedInsights />
         </ToastProvider>
       </PreferencesProvider>
     </LanguageProvider>
